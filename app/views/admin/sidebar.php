@@ -155,6 +155,15 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                 </div>
             </div>
 
+            <!-- 6. Single Item: Pembaruan Sistem (Upgrade GitHub) -->
+            <a href="/admin/upgrade" class="w-full rounded-2xl px-3.5 py-3 flex items-center justify-between transition <?= $active === 'upgrade' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-cloud-arrow-down text-base <?= $active === 'upgrade' ? 'text-white' : 'text-sky-400' ?>"></i>
+                    <span class="text-sm">Pembaruan Sistem</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30">GitHub</span>
+            </a>
+
         </div>
     </div>
 
@@ -302,6 +311,15 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     </a>
                 </div>
             </div>
+
+            <!-- Item: Pembaruan Sistem (Upgrade GitHub) -->
+            <a href="/admin/upgrade" class="w-full rounded-2xl px-4 py-3 flex items-center justify-between transition group <?= $active === 'upgrade' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                <div class="flex items-center gap-3.5 whitespace-nowrap">
+                    <i class="fa-solid fa-cloud-arrow-down text-base <?= $active === 'upgrade' ? 'text-white' : 'text-sky-400 group-hover:text-white' ?>"></i>
+                    <span class="text-sm">Pembaruan Sistem</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30 flex-shrink-0">GitHub</span>
+            </a>
 
         </div>
     </div>

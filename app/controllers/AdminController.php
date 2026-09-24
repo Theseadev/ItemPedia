@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Flight;
 use App\Config\Database;
+use App\Services\UpgradeService;
 use PDO;
 
 class AdminController
@@ -1094,5 +1095,40 @@ class AdminController
         }
 
         Flight::redirect('/admin/redeem-codes?msg=Status+kode+redeem+berhasil+diubah');
+    }
+
+    /**
+     * Halaman Modul Pembaruan Sistem (Upgrade via GitHub)
+     */
+    public static function upgradeView(): void
+    {
+        self::checkAuth();
+        $versionInfo = UpgradeService::getCurrentVersion();
+
+        Flight::render('admin/upgrade', [
+            'activeMenu' => 'upgrade',
+            'versionInfo' => $versionInfo
+        ]);
+    }
+
+    /**
+     * API Cek Pembaruan dari GitHub
+     */
+    public static function checkUpdate(): void
+    {
+        self::checkAuth();
+        $result = UpgradeService::checkRemoteUpdate();
+        Flight::json($result);
+    }
+
+    /**
+     * API Eksekusi Upgrade dari GitHub
+     */
+    public static function executeUpgrade(): void
+    {
+        self::checkAuth();
+        $mode = Flight::request()->data->mode ?? 'auto';
+        $result = UpgradeService::executeUpgrade($mode);
+        Flight::json($result);
     }
 }

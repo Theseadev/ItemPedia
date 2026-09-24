@@ -77,6 +77,11 @@ Flight::route('POST /admin/redeem-codes/delete', [AdminController::class, 'delet
 Flight::route('POST /admin/redeem-codes/toggle', [AdminController::class, 'toggleRedeemCode']);
 Flight::route('POST /admin/settings', [AdminController::class, 'updateSettings']);
 
+// Routing Modul Pembaruan Sistem (Upgrade via GitHub)
+Flight::route('GET /admin/upgrade', [AdminController::class, 'upgradeView']);
+Flight::route('POST /api/admin/upgrade/check', [AdminController::class, 'checkUpdate']);
+Flight::route('POST /api/admin/upgrade/execute', [AdminController::class, 'executeUpgrade']);
+
 // 404 Handler
 Flight::map('notFound', function () {
     Flight::redirect('/?error=Halaman+tidak+ditemukan');
