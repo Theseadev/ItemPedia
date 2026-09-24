@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pembaruan Sistem (Upgrade) - Seller Center ItemPedia</title>
+    <script>
+        tailwind = {
+            config: {
+                darkMode: 'class'
+            }
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (localStorage.getItem('admin_theme') === 'dark' || (!localStorage.getItem('admin_theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,7 +30,7 @@
         .terminal-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
     </style>
 </head>
-<body class="bg-[#f0f2f5] text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-100 selection:text-blue-700">
+<body class="bg-[#f0f2f5] dark:bg-[#081220] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-100 dark:selection:bg-blue-900 selection:text-blue-700 dark:selection:text-blue-200">
 
     <?php 
     $activeMenu = 'upgrade';
@@ -30,24 +44,24 @@
         <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-grow">
 
             <!-- Page Header: Title & Quick Actions -->
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-[#0c1e33] p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
                 <div class="space-y-1">
                     <div class="flex items-center gap-2.5">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 text-white flex items-center justify-center shadow-md shadow-sky-500/20">
                             <i class="fa-solid fa-cloud-arrow-down text-lg"></i>
                         </div>
                         <div>
-                            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Pembaruan Sistem (Auto Upgrade)</h1>
-                            <p class="text-xs text-slate-500">Tarik pembaruan & fitur terbaru langsung dari repositori GitHub resmi</p>
+                            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Pembaruan Sistem (Auto Upgrade)</h1>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Tarik pembaruan & fitur terbaru langsung dari repositori GitHub resmi</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2.5">
-                    <a href="https://github.com/<?= htmlspecialchars($versionInfo['repo'] ?? 'Theseadev/ItemPedia') ?>" target="_blank" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5 border border-slate-200">
+                    <a href="https://github.com/<?= htmlspecialchars($versionInfo['repo'] ?? 'Theseadev/ItemPedia') ?>" target="_blank" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center gap-1.5 border border-slate-200 dark:border-slate-700">
                         <i class="fa-brands fa-github text-sm"></i>
                         <span>Buka GitHub</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 dark:text-slate-500"></i>
                     </a>
                     <button type="button" onclick="checkSystemUpdate(true)" id="btnCheckUpdate" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm shadow-sky-500/25 active:scale-95 cursor-pointer">
                         <i id="iconCheckUpdate" class="fa-solid fa-arrows-rotate text-xs"></i>
@@ -60,56 +74,56 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                 
                 <!-- Card 1: Versi Terpasang Saat Ini -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
+                <div class="bg-white dark:bg-[#0c1e33] p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Versi Terpasang</span>
-                        <span class="px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-sky-50 text-sky-700 border border-sky-200">v<?= htmlspecialchars($versionInfo['version'] ?? '1.1.0') ?></span>
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Versi Terpasang</span>
+                        <span class="px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">v<?= htmlspecialchars($versionInfo['version'] ?? '1.1.0') ?></span>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-2xl font-black text-slate-900 font-mono tracking-tight" id="badgeCurrentCommit"><?= htmlspecialchars($versionInfo['commit_hash'] ?? '232a5bf') ?></span>
-                        <span class="text-xs text-slate-500 font-medium">branch: <?= htmlspecialchars($versionInfo['branch'] ?? 'main') ?></span>
+                        <span class="text-2xl font-black text-slate-900 dark:text-white font-mono tracking-tight" id="badgeCurrentCommit"><?= htmlspecialchars($versionInfo['commit_hash'] ?? '232a5bf') ?></span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">branch: <?= htmlspecialchars($versionInfo['branch'] ?? 'main') ?></span>
                     </div>
-                    <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+                    <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
                         <span>Pembaruan terakhir:</span>
-                        <span class="font-semibold text-slate-700" id="textLastUpdated"><?= htmlspecialchars($versionInfo['last_updated'] ?? date('Y-m-d H:i')) ?></span>
+                        <span class="font-semibold text-slate-700 dark:text-slate-300" id="textLastUpdated"><?= htmlspecialchars($versionInfo['last_updated'] ?? date('Y-m-d H:i')) ?></span>
                     </div>
                 </div>
 
                 <!-- Card 2: Status GitHub Remote -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
+                <div class="bg-white dark:bg-[#0c1e33] p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Status GitHub Remote</span>
-                        <span id="pillRemoteStatus" class="px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-amber-50 text-amber-700 border border-amber-200 flex items-center gap-1">
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Status GitHub Remote</span>
+                        <span id="pillRemoteStatus" class="px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 flex items-center gap-1">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                             <span id="pillRemoteText">Memeriksa...</span>
                         </span>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-2xl font-black text-slate-900 font-mono tracking-tight" id="badgeLatestCommit">-</span>
-                        <span class="text-xs text-slate-500 font-medium">GitHub main</span>
+                        <span class="text-2xl font-black text-slate-900 dark:text-white font-mono tracking-tight" id="badgeLatestCommit">-</span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">GitHub main</span>
                     </div>
-                    <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+                    <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
                         <span>Repository:</span>
-                        <span class="font-semibold text-slate-700 truncate max-w-[170px]"><?= htmlspecialchars($versionInfo['repo'] ?? 'Theseadev/ItemPedia') ?></span>
+                        <span class="font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[170px]"><?= htmlspecialchars($versionInfo['repo'] ?? 'Theseadev/ItemPedia') ?></span>
                     </div>
                 </div>
 
                 <!-- Card 3: Mode Pembaruan & Lingkungan -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
+                <div class="bg-white dark:bg-[#0c1e33] p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Engine Pembaruan</span>
-                        <span class="px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Engine Pembaruan</span>
+                        <span class="px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                             <?= !empty($versionInfo['git_available']) ? 'Git CLI Engine' : 'ZIP Archive Engine' ?>
                         </span>
                     </div>
-                    <div class="text-xs text-slate-600 leading-relaxed">
+                    <div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                         <?= !empty($versionInfo['git_available']) 
-                            ? '<span class="font-bold text-emerald-600"><i class="fa-solid fa-bolt mr-1"></i> Mode Git Fast-Sync Aktif</span>. Mendukung fetch & pull langsung dari Git.' 
-                            : '<span class="font-bold text-sky-600"><i class="fa-solid fa-box mr-1"></i> Mode Universal ZIP Aktif</span>. Cocok untuk cPanel / shared hosting tanpa Git CLI.' ?>
+                            ? '<span class="font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-bolt mr-1"></i> Mode Git Fast-Sync Aktif</span>. Mendukung fetch & pull langsung dari Git.' 
+                            : '<span class="font-bold text-sky-600 dark:text-sky-400"><i class="fa-solid fa-box mr-1"></i> Mode Universal ZIP Aktif</span>. Cocok untuk cPanel / shared hosting tanpa Git CLI.' ?>
                     </div>
-                    <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+                    <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
                         <span>Status Hak Tulis:</span>
-                        <span class="font-semibold text-emerald-600 flex items-center gap-1">
+                        <span class="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                             <i class="fa-solid fa-circle-check text-[10px]"></i> Writable (Aman)
                         </span>
                     </div>
@@ -118,23 +132,23 @@
             </div>
 
             <!-- Action Banner: Update Available or Up to Date -->
-            <div id="upgradeActionBox" class="p-6 rounded-2xl border transition-all duration-300 bg-white border-slate-200/80 shadow-xs">
+            <div id="upgradeActionBox" class="p-6 rounded-2xl border transition-all duration-300 bg-white dark:bg-[#0c1e33] border-slate-200/80 dark:border-slate-800 shadow-xs">
                 <!-- Loading State placeholder -->
-                <div id="upgradeBoxLoading" class="py-4 flex items-center justify-center gap-3 text-slate-500 text-sm font-semibold">
+                <div id="upgradeBoxLoading" class="py-4 flex items-center justify-center gap-3 text-slate-500 dark:text-slate-400 text-sm font-semibold">
                     <i class="fa-solid fa-spinner fa-spin text-sky-500 text-lg"></i>
                     <span>Sedang memeriksa pembaruan dari GitHub...</span>
                 </div>
 
                 <!-- Update Available State (Hidden initially) -->
                 <div id="upgradeBoxAvailable" class="hidden space-y-4">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 rounded-xl bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-indigo-500/10 border border-sky-200/70">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 rounded-xl bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-indigo-500/10 dark:from-sky-950/40 dark:via-blue-950/40 dark:to-indigo-950/40 border border-sky-200/70 dark:border-sky-800/60">
                         <div class="flex items-start sm:items-center gap-3.5">
                             <div class="w-12 h-12 rounded-xl bg-sky-500 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-sky-500/30 text-xl">
                                 <i class="fa-solid fa-rocket animate-bounce"></i>
                             </div>
                             <div>
-                                <h3 class="font-black text-slate-900 text-base sm:text-lg tracking-tight">Pembaruan Sistem Tersedia!</h3>
-                                <p class="text-xs text-slate-600 mt-0.5" id="textUpdateAvailableMsg">Terdapat perubahan terbaru di GitHub yang siap dipasang ke hosting Anda.</p>
+                                <h3 class="font-black text-slate-900 dark:text-white text-base sm:text-lg tracking-tight">Pembaruan Sistem Tersedia!</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5" id="textUpdateAvailableMsg">Terdapat perubahan terbaru di GitHub yang siap dipasang ke hosting Anda.</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
@@ -147,29 +161,29 @@
                 </div>
 
                 <!-- Up to Date State (Hidden initially) -->
-                <div id="upgradeBoxUpToDate" class="hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/70">
+                <div id="upgradeBoxUpToDate" class="hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/70 dark:border-emerald-800/60">
                     <div class="flex items-center gap-3.5">
                         <div class="w-11 h-11 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-emerald-500/20 text-lg">
                             <i class="fa-solid fa-circle-check"></i>
                         </div>
                         <div>
-                            <h3 class="font-extrabold text-emerald-950 text-sm sm:text-base tracking-tight">Website Anda Sudah Menggunakan Versi Terbaru!</h3>
-                            <p class="text-xs text-emerald-700 mt-0.5">Sistem ItemPedia telah sinkron dengan commit terbaru repositori GitHub.</p>
+                            <h3 class="font-extrabold text-emerald-950 dark:text-emerald-200 text-sm sm:text-base tracking-tight">Website Anda Sudah Menggunakan Versi Terbaru!</h3>
+                            <p class="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">Sistem ItemPedia telah sinkron dengan commit terbaru repositori GitHub.</p>
                         </div>
                     </div>
-                    <button type="button" onclick="startUpgradeProcess(true)" class="px-3.5 py-2 rounded-xl bg-white hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300 transition flex items-center justify-center gap-1.5 shadow-2xs">
+                    <button type="button" onclick="startUpgradeProcess(true)" class="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-emerald-100 dark:hover:bg-slate-700 text-emerald-800 dark:text-emerald-300 text-xs font-bold border border-emerald-300 dark:border-emerald-700 transition flex items-center justify-center gap-1.5 shadow-2xs">
                         <i class="fa-solid fa-arrows-rotate text-xs"></i>
                         <span>Paksa Re-Sync / Update Ulang</span>
                     </button>
                 </div>
 
                 <!-- Error State (Hidden initially) -->
-                <div id="upgradeBoxError" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-center justify-between">
+                <div id="upgradeBoxError" class="hidden p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs font-semibold flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <i class="fa-solid fa-triangle-exclamation text-base text-rose-600"></i>
+                        <i class="fa-solid fa-triangle-exclamation text-base text-rose-600 dark:text-rose-400"></i>
                         <span id="textUpgradeError">Gagal terhubung ke GitHub API.</span>
                     </div>
-                    <button type="button" onclick="checkSystemUpdate(true)" class="px-3 py-1.5 rounded-lg bg-white text-rose-700 border border-rose-300 font-bold hover:bg-rose-100 transition">
+                    <button type="button" onclick="checkSystemUpdate(true)" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-rose-700 dark:text-rose-300 border border-rose-300 dark:border-rose-700 font-bold hover:bg-rose-100 dark:hover:bg-slate-700 transition">
                         Coba Lagi
                     </button>
                 </div>
@@ -179,17 +193,17 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
                 <!-- Left 2 Cols: Commit Timeline / Changelog -->
-                <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col">
-                    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <div class="lg:col-span-2 bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                         <div class="flex items-center gap-2.5">
-                            <i class="fa-solid fa-code-commit text-slate-400"></i>
-                            <h2 class="font-extrabold text-slate-900 text-sm sm:text-base">Riwayat Commit & Pembaruan GitHub</h2>
+                            <i class="fa-solid fa-code-commit text-slate-400 dark:text-slate-500"></i>
+                            <h2 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">Riwayat Commit & Pembaruan GitHub</h2>
                         </div>
-                        <span class="text-xs text-slate-400 font-medium">8 Commit Terakhir</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">8 Commit Terakhir</span>
                     </div>
 
                     <div class="p-5 flex-grow" id="changelogContainer">
-                        <div class="py-12 text-center text-slate-400 text-xs">
+                        <div class="py-12 text-center text-slate-400 dark:text-slate-500 text-xs">
                             <i class="fa-solid fa-spinner fa-spin text-sky-500 text-base mb-2"></i>
                             <p>Memuat riwayat pembaruan...</p>
                         </div>
@@ -229,14 +243,14 @@
                     </div>
 
                     <!-- Host & System Advice -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3">
-                        <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
+                    <div class="bg-white dark:bg-[#0c1e33] p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
+                        <h4 class="font-extrabold text-slate-900 dark:text-white text-xs uppercase tracking-wider flex items-center gap-2">
                             <i class="fa-solid fa-circle-info text-sky-500"></i>
                             <span>Panduan Alur Kerja</span>
                         </h4>
-                        <ol class="space-y-2 text-xs text-slate-600 list-decimal list-inside leading-relaxed">
+                        <ol class="space-y-2 text-xs text-slate-600 dark:text-slate-300 list-decimal list-inside leading-relaxed">
                             <li>Lakukan perubahan kode di lokal / komputer Anda.</li>
-                            <li>Push commit terbaru ke repository GitHub <span class="font-mono text-[11px] bg-slate-100 px-1 py-0.5 rounded text-slate-800">Theseadev/ItemPedia</span>.</li>
+                            <li>Push commit terbaru ke repository GitHub <span class="font-mono text-[11px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-slate-800 dark:text-slate-200">Theseadev/ItemPedia</span>.</li>
                             <li>Buka halaman ini di website hosting Anda dan klik <strong>Upgrade Sekarang</strong>.</li>
                             <li>Website hosting akan otomatis sinkron & fitur terbaru langsung aktif!</li>
                         </ol>
@@ -332,7 +346,7 @@
             if (!data.success) {
                 boxError.classList.remove('hidden');
                 document.getElementById('textUpgradeError').innerText = data.error || 'Gagal memeriksa pembaruan dari GitHub.';
-                pillRemote.className = 'px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1';
+                pillRemote.className = 'px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 flex items-center gap-1';
                 pillRemoteText.innerText = 'Gagal Cek';
                 changelogContainer.innerHTML = `<div class="py-8 text-center text-rose-500 text-xs font-semibold">${data.error || 'Gagal memuat riwayat GitHub'}</div>`;
                 return;
@@ -352,7 +366,7 @@
 
                 document.getElementById('textUpdateAvailableMsg').innerText = `Versi baru: "${data.latest_message}" (${data.latest_date})`;
 
-                pillRemote.className = 'px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-sky-50 text-sky-700 border border-sky-200 flex items-center gap-1';
+                pillRemote.className = 'px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 flex items-center gap-1';
                 pillRemoteText.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-ping"></span> Ada Update!';
             } else {
                 // Up to Date
@@ -360,7 +374,7 @@
                 boxUpToDate.classList.remove('hidden');
                 boxError.classList.add('hidden');
 
-                pillRemote.className = 'px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1';
+                pillRemote.className = 'px-2 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1';
                 pillRemoteText.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i> Terkini';
             }
 
@@ -378,30 +392,30 @@
     function renderChangelog(commits) {
         const container = document.getElementById('changelogContainer');
         if (!commits || commits.length === 0) {
-            container.innerHTML = '<div class="py-8 text-center text-slate-400 text-xs">Tidak ada riwayat commit ditemukan.</div>';
+            container.innerHTML = '<div class="py-8 text-center text-slate-400 dark:text-slate-500 text-xs">Tidak ada riwayat commit ditemukan.</div>';
             return;
         }
 
-        let html = '<div class="relative border-l-2 border-slate-100 ml-3 space-y-4">';
+        let html = '<div class="relative border-l-2 border-slate-100 dark:border-slate-800 ml-3 space-y-4">';
         commits.forEach((c, idx) => {
             const isCurrent = c.is_current;
             html += `
                 <div class="relative pl-6 group">
-                    <span class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full border-2 ${isCurrent ? 'bg-sky-500 border-white ring-2 ring-sky-300' : 'bg-slate-300 border-white'}"></span>
+                    <span class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full border-2 ${isCurrent ? 'bg-sky-500 border-white dark:border-slate-900 ring-2 ring-sky-300 dark:ring-sky-700' : 'bg-slate-300 dark:bg-slate-700 border-white dark:border-slate-900'}"></span>
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
                         <div class="space-y-0.5">
                             <div class="flex items-center gap-2">
-                                <span class="font-extrabold text-xs text-slate-900 group-hover:text-sky-600 transition">${escapeHtml(c.message)}</span>
-                                ${isCurrent ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-black bg-sky-100 text-sky-700 border border-sky-200">AKTIF</span>' : ''}
+                                <span class="font-extrabold text-xs text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">${escapeHtml(c.message)}</span>
+                                ${isCurrent ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-black bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">AKTIF</span>' : ''}
                             </div>
-                            <div class="text-[11px] text-slate-400 flex items-center gap-2">
+                            <div class="text-[11px] text-slate-400 dark:text-slate-500 flex items-center gap-2">
                                 <span><i class="fa-regular fa-user mr-1"></i>${escapeHtml(c.author)}</span>
                                 <span>&bull;</span>
                                 <span><i class="fa-regular fa-clock mr-1"></i>${escapeHtml(c.date)}</span>
                             </div>
                         </div>
-                        <a href="${c.url}" target="_blank" class="self-start sm:self-auto font-mono text-[11px] px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold border border-slate-200 transition">
-                            ${c.sha} <i class="fa-solid fa-arrow-up-right-from-square text-[9px] ml-0.5 text-slate-400"></i>
+                        <a href="${c.url}" target="_blank" class="self-start sm:self-auto font-mono text-[11px] px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 transition">
+                            ${c.sha} <i class="fa-solid fa-arrow-up-right-from-square text-[9px] ml-0.5 text-slate-400 dark:text-slate-500"></i>
                         </a>
                     </div>
                 </div>

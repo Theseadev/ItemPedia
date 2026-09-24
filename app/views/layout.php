@@ -18,10 +18,11 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
     <link rel="apple-touch-icon" href="/images/logo-icon@2x.png">
     
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN with Dark Mode -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -71,6 +72,15 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         }
     </script>
     
+    <!-- Instant Theme Initialization Script (Anti-Flicker) -->
+    <script>
+        if (localStorage.getItem('itempedia_theme') === 'dark' || (!('itempedia_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    
     <!-- Font Awesome 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -90,6 +100,19 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        html.dark body {
+            background: #081220;
+            color: #f1f5f9;
+        }
+        html.dark ::-webkit-scrollbar-track {
+            background: #0c182c;
+        }
+        html.dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        html.dark ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
         }
         /* Highlight Pulse Animation when Navigation Scrolldown Reaches Target */
         @keyframes targetSectionGlow {
@@ -223,7 +246,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     <div class="fixed -bottom-20 left-1/3 w-96 h-96 bg-indigo-100/35 rounded-full blur-3xl pointer-events-none -z-10 transform-gpu"></div>
 
     <!-- Master Header / Navbar: Lightweight Glass -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-sky-100 shadow-xs transition-colors">
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0c1e33]/95 backdrop-blur-md border-b-2 border-sky-100 dark:border-slate-800 shadow-xs transition-colors">
         <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20">
                 
@@ -235,12 +258,12 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         </div>
                         <div class="min-w-0">
                             <div class="flex items-center gap-1.5 sm:gap-2">
-                                <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-950 truncate">
-                                    Item<span class="text-sky-600">Pedia</span>
+                                <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-950 dark:text-white truncate">
+                                    Item<span class="text-sky-600 dark:text-sky-400">Pedia</span>
                                 </span>
-                                <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-sky-100 text-sky-700 border border-sky-300">ROBLOX</span>
+                                <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 border border-sky-300 dark:border-sky-700">ROBLOX</span>
                             </div>
-                            <p class="hidden sm:block text-[11px] text-slate-500 font-bold tracking-tight">
+                            <p class="hidden sm:block text-[11px] text-slate-500 dark:text-slate-400 font-bold tracking-tight">
                                 Toko Item & Akun Terpercaya
                             </p>
                         </div>
@@ -249,28 +272,38 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
                 <!-- Nav Links with Micro-Interactions -->
                 <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-                    <a href="/#katalog" class="p-2 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-black text-slate-700 hover:text-sky-600 rounded-xl sm:rounded-2xl hover:bg-sky-50 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5" title="Katalog Produk">
-                        <i class="fa-solid fa-gamepad text-sky-500 text-sm sm:text-base"></i>
+                    <a href="/#katalog" class="p-2 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 rounded-xl sm:rounded-2xl hover:bg-sky-50 dark:hover:bg-slate-800/80 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5" title="Katalog Produk">
+                        <i class="fa-solid fa-gamepad text-sky-500 dark:text-sky-400 text-sm sm:text-base"></i>
                         <span class="hidden sm:inline">Katalog</span>
                     </a>
 
                     <!-- Tombol Keranjang Belanja -->
                     <button type="button" 
                             onclick="openCartDrawer()" 
-                            class="relative p-2 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-black text-slate-700 hover:text-sky-600 rounded-xl sm:rounded-2xl hover:bg-sky-50 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer group"
+                            class="relative p-2 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 rounded-xl sm:rounded-2xl hover:bg-sky-50 dark:hover:bg-slate-800/80 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer group"
                             title="Keranjang Belanja">
                         <div class="relative flex items-center justify-center">
-                            <i class="fa-solid fa-cart-shopping text-sky-500 text-sm sm:text-base group-hover:rotate-6 transition-transform"></i>
-                            <span id="navCartCount" class="hidden absolute -top-2 -right-2 min-w-[16px] h-[16px] px-1 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-xs animate-pulse">0</span>
+                            <i class="fa-solid fa-cart-shopping text-sky-500 dark:text-sky-400 text-sm sm:text-base group-hover:rotate-6 transition-transform"></i>
+                            <span id="navCartCount" class="hidden absolute -top-2 -right-2 min-w-[16px] h-[16px] px-1 bg-rose-500 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white dark:border-slate-800 shadow-xs animate-pulse">0</span>
                         </div>
                         <span class="hidden sm:inline">Keranjang</span>
+                    </button>
+
+                    <!-- Tombol Ganti Tema Gelap / Terang (Dark Mode Toggle) -->
+                    <button type="button" 
+                            id="themeToggleBtn" 
+                            onclick="toggleSiteTheme()" 
+                            class="p-2 sm:px-3 sm:py-2 text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-amber-400 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-sky-50 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/80 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs" 
+                            title="Ganti Mode Gelap / Terang">
+                        <i id="themeToggleIcon" class="fa-solid fa-moon text-sky-500 dark:text-amber-400 text-sm sm:text-base transition-transform duration-300"></i>
+                        <span class="hidden xl:inline text-xs font-bold" id="themeToggleLabel">Mode</span>
                     </button>
 
                     <!-- Buyer Auth: Tombol Google Sign-In / Profil Pembeli -->
                     <?php if (empty($currentBuyer)): ?>
                         <button type="button" 
                                 onclick="openGoogleLoginModal()" 
-                                class="btn-shimmer flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-sky-300 rounded-xl sm:rounded-2xl shadow-2xs hover:shadow-xs transition-all active:scale-95 text-slate-800 font-bold text-xs sm:text-sm"
+                                class="btn-shimmer flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border-2 border-slate-200 dark:border-slate-700 hover:border-sky-300 dark:hover:border-sky-500 rounded-xl sm:rounded-2xl shadow-2xs hover:shadow-xs transition-all active:scale-95 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm"
                                 title="Masuk dengan Google">
                             <!-- Official Google 4-Color Icon -->
                             <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
@@ -287,7 +320,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         <div class="relative" id="buyerProfileDropdownWrap">
                             <button type="button" 
                                     onclick="toggleBuyerDropdown()" 
-                                    class="flex items-center gap-1.5 p-1 sm:px-2.5 sm:py-1.5 bg-white hover:bg-sky-50 border-2 border-sky-300 rounded-xl sm:rounded-2xl transition shadow-2xs active:scale-95">
+                                    class="flex items-center gap-1.5 p-1 sm:px-2.5 sm:py-1.5 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 border-2 border-sky-300 dark:border-sky-600 rounded-xl sm:rounded-2xl transition shadow-2xs active:scale-95">
                                 <div class="relative flex-shrink-0">
                                     <img src="<?= htmlspecialchars($currentBuyer['avatar_url']) ?>" 
                                          alt="Google User" 
@@ -301,24 +334,24 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                                         </svg>
                                     </div>
                                 </div>
-                                <span class="text-xs font-black text-slate-800 max-w-[80px] sm:max-w-[120px] truncate hidden md:inline">
+                                <span class="text-xs font-black text-slate-800 dark:text-slate-100 max-w-[80px] sm:max-w-[120px] truncate hidden md:inline">
                                     <?= htmlspecialchars($currentBuyer['name']) ?>
                                 </span>
                                 <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
                             </button>
 
                             <!-- Dropdown Menu -->
-                            <div id="buyerDropdownMenu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border-2 border-sky-100 py-2 z-50 animate-in fade-in zoom-in-95">
-                                <div class="px-4 py-2 border-b border-slate-100">
+                            <div id="buyerDropdownMenu" class="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-[#0f172a] rounded-2xl shadow-xl border-2 border-sky-100 dark:border-slate-800 py-2 z-50 animate-in fade-in zoom-in-95">
+                                <div class="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
                                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider">Akun Google</p>
-                                    <p class="text-xs font-bold text-slate-900 truncate"><?= htmlspecialchars($currentBuyer['name']) ?></p>
-                                    <p class="text-[11px] text-slate-500 font-medium truncate"><?= htmlspecialchars($currentBuyer['email']) ?></p>
+                                    <p class="text-xs font-bold text-slate-900 dark:text-white truncate"><?= htmlspecialchars($currentBuyer['name']) ?></p>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate"><?= htmlspecialchars($currentBuyer['email']) ?></p>
                                 </div>
-                                <a href="/pesanan-saya" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition">
+                                <a href="/pesanan-saya" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">
                                     <i class="fa-solid fa-receipt text-amber-500 text-sm"></i>
                                     <span>Pesanan Saya</span>
                                 </a>
-                                <a href="/auth/logout" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 transition border-t border-slate-100">
+                                <a href="/auth/logout" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition border-t border-slate-100 dark:border-slate-800">
                                     <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
                                     <span>Keluar Akun</span>
                                 </a>
@@ -337,7 +370,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     </main>
 
     <!-- Master Footer -->
-    <footer class="bg-white border-t-2 border-sky-100 mt-28 pt-16 pb-12">
+    <footer class="bg-white dark:bg-[#0c1e33] border-t-2 border-sky-100 dark:border-slate-800 mt-28 pt-16 pb-12 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-14">
                 
@@ -347,19 +380,19 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         <div class="w-10 h-10 flex items-center justify-center flex-shrink-0">
                             <img src="/images/logo-icon.png" srcset="/images/logo-icon@2x.png 2x" alt="ItemPedia" class="w-full h-full object-contain filter drop-shadow-xs">
                         </div>
-                        <span class="text-2xl font-black text-slate-900">
-                            Item<span class="text-sky-600">Pedia</span>
+                        <span class="text-2xl font-black text-slate-900 dark:text-white">
+                            Item<span class="text-sky-600 dark:text-sky-400">Pedia</span>
                         </span>
                     </div>
-                    <p class="text-sm text-slate-600 max-w-md leading-relaxed font-medium">
+                    <p class="text-sm text-slate-600 dark:text-slate-300 max-w-md leading-relaxed font-medium">
                         <?= htmlspecialchars($settings['store_tagline'] ?? 'Platform toko Roblox mandiri tangan pertama. Jual beli item game Chop Your Tree, Build A Zoo, Catch and Tame, dan Akun Roblox siap pakai.') ?>
                     </p>
-                    <div class="flex flex-wrap items-center gap-3 text-xs font-black text-slate-700 pt-2">
-                        <div class="flex items-center gap-1.5 text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                    <div class="flex flex-wrap items-center gap-3 text-xs font-black text-slate-700 dark:text-slate-200 pt-2">
+                        <div class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
                             <i class="fa-solid fa-shield-halved"></i>
                             <span>Akun Polosan Asli</span>
                         </div>
-                        <div class="flex items-center gap-1.5 text-sky-700 bg-sky-50 px-3 py-1.5 rounded-xl border border-sky-200">
+                        <div class="flex items-center gap-1.5 text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/50 px-3 py-1.5 rounded-xl border border-sky-200 dark:border-sky-800">
                             <i class="fa-solid fa-bolt"></i>
                             <span>Proses Cepat 3-5 Mnt</span>
                         </div>
@@ -368,13 +401,13 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
                 <!-- Col 2: Kategori Favorit -->
                 <div>
-                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 mb-4">
+                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4">
                         Kategori Game
                     </h4>
-                    <ul class="space-y-2.5 text-xs font-bold text-slate-600">
-                        <li><a href="/?game=Build+A+Zoo#katalog" class="hover:text-sky-600 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Build A Zoo (Mucy, Chomp, Dino)</a></li>
-                        <li><a href="/?kategori=item-game#katalog" class="hover:text-sky-600 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Item & Pet Game Roblox</a></li>
-                        <li><a href="/?kategori=akun-game#katalog" class="hover:text-sky-600 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Akun Sultan & Polosan Siap Pakai</a></li>
+                    <ul class="space-y-2.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+                        <li><a href="/?game=Build+A+Zoo#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Build A Zoo (Mucy, Chomp, Dino)</a></li>
+                        <li><a href="/?kategori=item-game#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Item & Pet Game Roblox</a></li>
+                        <li><a href="/?kategori=akun-game#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Akun Sultan & Polosan Siap Pakai</a></li>
                     </ul>
                 </div>
 
@@ -454,13 +487,13 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             </div>
 
             <!-- Bottom Disclaimer -->
-            <div class="border-t border-slate-100 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+            <div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-4">
                 <p>&copy; <?= date('Y') ?> <strong>ItemPedia</strong>. Toko Roblox Mandiri. Ditenagai oleh Flight PHP. 
-                    <a href="/admin/login" class="text-slate-300 hover:text-slate-500 transition ml-2 inline-block opacity-25 hover:opacity-100" title="Admin Portal">
+                    <a href="/admin/login" class="text-slate-300 dark:text-slate-600 hover:text-slate-500 dark:hover:text-slate-400 transition ml-2 inline-block opacity-25 hover:opacity-100" title="Admin Portal">
                         <i class="fa-solid fa-lock text-[10px]"></i>
                     </a>
                 </p>
-                <p class="text-[11px] text-slate-500 text-center sm:text-right">
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 text-center sm:text-right">
                     Roblox adalah merek dagang terdaftar milik Roblox Corporation. ItemPedia beroperasi sebagai platform transaksi mandiri.
                 </p>
             </div>
@@ -469,10 +502,10 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
     <!-- ================= MODAL LOGIN GOOGLE PEMBELI ================= -->
     <div id="googleLoginModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95">
+        <div class="bg-white dark:bg-[#0f172a] rounded-3xl w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in-95">
             
             <!-- Modal Header -->
-            <div class="p-6 pb-4 border-b border-slate-100 flex items-start justify-between">
+            <div class="p-6 pb-4 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between">
                 <div class="flex items-center gap-3">
                     <svg class="w-8 h-8 flex-shrink-0" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -481,12 +514,12 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                     </svg>
                     <div>
-                        <h3 class="text-base font-black text-slate-900 leading-tight">Pilih akun Google</h3>
-                        <p class="text-xs text-slate-500">untuk login pembeli di ItemPedia</p>
+                        <h3 class="text-base font-black text-slate-900 dark:text-white leading-tight">Pilih akun Google</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">untuk login pembeli di ItemPedia</p>
                     </div>
                 </div>
 
-                <button type="button" onclick="closeGoogleLoginModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition">
+                <button type="button" onclick="closeGoogleLoginModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
@@ -567,22 +600,22 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     <!-- ================= DRAWER KERANJANG BELANJA (GLOBAL SLIDE-OVER) ================= -->
     <div id="cartDrawerBackdrop" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[70] hidden transition-opacity duration-300 opacity-0 cursor-pointer" onclick="closeCartDrawer()"></div>
 
-    <div id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[460px] bg-white z-[80] shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[460px] bg-white dark:bg-[#0c1e33] z-[80] shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out border-l border-transparent dark:border-slate-800">
         <!-- Header Drawer -->
-        <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-white/95 backdrop-blur-sm sticky top-0 z-10">
+        <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-white/95 dark:bg-[#0c1e33]/95 backdrop-blur-sm sticky top-0 z-10">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-lg shadow-xs">
+                <div class="w-10 h-10 rounded-2xl bg-sky-100 dark:bg-sky-950/70 text-sky-600 dark:text-sky-400 flex items-center justify-center text-lg shadow-xs border border-sky-200/50 dark:border-sky-800/50">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
                 <div>
-                    <h3 class="font-black text-slate-900 text-base flex items-center gap-2">
+                    <h3 class="font-black text-slate-900 dark:text-white text-base flex items-center gap-2">
                         <span>Keranjang Belanja</span>
-                        <span id="cartDrawerHeaderCount" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-sky-100 text-sky-700">0 Item</span>
+                        <span id="cartDrawerHeaderCount" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 border border-sky-300 dark:border-sky-700">0 Item</span>
                     </h3>
-                    <p class="text-[11px] text-slate-400 font-medium">Checkout banyak item sekaligus via 1 QRIS</p>
+                    <p class="text-[11px] text-slate-400 dark:text-slate-400 font-medium">Checkout banyak item sekaligus via 1 QRIS</p>
                 </div>
             </div>
-            <button type="button" onclick="closeCartDrawer()" class="w-9 h-9 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition active:scale-90 cursor-pointer">
+            <button type="button" onclick="closeCartDrawer()" class="w-9 h-9 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition active:scale-90 cursor-pointer">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
@@ -593,12 +626,12 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         </div>
 
         <!-- Footer: Subtotal & Checkout Button -->
-        <div id="cartDrawerFooter" class="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/95 backdrop-blur-sm space-y-3">
+        <div id="cartDrawerFooter" class="p-4 sm:p-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/95 dark:bg-[#0f172a]/95 backdrop-blur-sm space-y-3">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-500">Total Pembayaran:</span>
+                <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Total Pembayaran:</span>
                 <div class="text-right">
-                    <div id="cartDrawerDiscountRow" class="text-[11px] font-bold text-emerald-600 hidden">Diskon: -Rp 0</div>
-                    <span id="cartDrawerTotalPrice" class="text-xl font-black text-sky-600">Rp 0</span>
+                    <div id="cartDrawerDiscountRow" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hidden">Diskon: -Rp 0</div>
+                    <span id="cartDrawerTotalPrice" class="text-xl font-black text-sky-600 dark:text-sky-400">Rp 0</span>
                 </div>
             </div>
             <button type="button" 
@@ -806,12 +839,12 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         if (cart.length === 0) {
             container.innerHTML = `
                 <div class="py-16 text-center space-y-4">
-                    <div class="w-20 h-20 rounded-3xl bg-sky-50 border-2 border-sky-100 text-sky-400 flex items-center justify-center text-3xl mx-auto shadow-xs">
+                    <div class="w-20 h-20 rounded-3xl bg-sky-50 dark:bg-slate-800/80 border-2 border-sky-100 dark:border-slate-700 text-sky-400 dark:text-sky-300 flex items-center justify-center text-3xl mx-auto shadow-xs">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="font-black text-slate-800 text-base">Keranjang Belanjamu Kosong</h4>
-                        <p class="text-xs text-slate-400 max-w-xs mx-auto">Yuk cari item, pet, atau akun Roblox favoritmu dan masukkan ke keranjang!</p>
+                        <h4 class="font-black text-slate-800 dark:text-white text-base">Keranjang Belanjamu Kosong</h4>
+                        <p class="text-xs text-slate-400 dark:text-slate-400 max-w-xs mx-auto">Yuk cari item, pet, atau akun Roblox favoritmu dan masukkan ke keranjang!</p>
                     </div>
                     <button type="button" onclick="closeCartDrawer(); window.location.href='/#katalog';" class="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-bold text-xs rounded-xl shadow-md shadow-sky-500/20 transition cursor-pointer">
                         <i class="fa-solid fa-gamepad"></i>
@@ -833,18 +866,18 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             subtotal += itemTotal;
 
             itemsHtml += `
-                <div class="p-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl flex items-center gap-3 relative group hover:border-sky-300 transition">
+                <div class="p-3.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 rounded-2xl flex items-center gap-3 relative group hover:border-sky-300 dark:hover:border-sky-500 transition">
                     <img src="${escapeHtml(item.image_url || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500')}" 
                          alt="" 
-                         class="w-16 h-16 rounded-xl object-cover bg-white border border-slate-200 flex-shrink-0"
+                         class="w-16 h-16 rounded-xl object-cover bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 flex-shrink-0"
                          onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500'">
                     
                     <div class="flex-1 min-w-0 pr-6">
                         <div class="flex items-center gap-1.5 flex-wrap">
-                            <span class="text-[10px] font-black uppercase tracking-wider text-sky-700 bg-sky-100 px-1.5 py-0.5 rounded">${escapeHtml(item.game || 'Roblox')}</span>
-                            <span class="text-[10px] font-bold text-slate-400">${escapeHtml(item.sub_category || 'Item')}</span>
+                            <span class="text-[10px] font-black uppercase tracking-wider text-sky-700 dark:text-sky-300 bg-sky-100 dark:bg-sky-950/80 border border-sky-200 dark:border-sky-800 px-1.5 py-0.5 rounded">${escapeHtml(item.game || 'Roblox')}</span>
+                            <span class="text-[10px] font-bold text-slate-400 dark:text-slate-400">${escapeHtml(item.sub_category || 'Item')}</span>
                         </div>
-                        <h4 class="font-bold text-slate-900 text-xs sm:text-[13px] leading-snug truncate mt-0.5" title="${escapeHtml(item.name)}">
+                        <h4 class="font-bold text-slate-900 dark:text-white text-xs sm:text-[13px] leading-snug truncate mt-0.5" title="${escapeHtml(item.name)}">
                             ${escapeHtml(item.name)}
                         </h4>
                         <div class="text-xs font-black text-orange-500 mt-1">
@@ -855,18 +888,18 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                     <!-- Delete Button -->
                     <button type="button" 
                             onclick="removeFromCart(${item.id})" 
-                            class="absolute top-3 right-3 text-slate-400 hover:text-rose-600 transition p-1 cursor-pointer"
+                            class="absolute top-3 right-3 text-slate-400 hover:text-rose-500 transition p-1 cursor-pointer"
                             title="Hapus dari keranjang">
                         <i class="fa-solid fa-trash-can text-xs"></i>
                     </button>
 
                     <!-- Quantity Buttons -->
-                    <div class="absolute bottom-3 right-3 flex items-center border border-slate-200 bg-white rounded-xl overflow-hidden shadow-2xs">
-                        <button type="button" onclick="updateCartItemQty(${item.id}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 text-xs font-bold transition cursor-pointer">
+                    <div class="absolute bottom-3 right-3 flex items-center border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-xl overflow-hidden shadow-2xs">
+                        <button type="button" onclick="updateCartItemQty(${item.id}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 active:bg-slate-200 text-xs font-bold transition cursor-pointer">
                             <i class="fa-solid fa-minus text-[10px]"></i>
                         </button>
-                        <span class="w-7 text-center text-xs font-black text-slate-800">${item.qty}</span>
-                        <button type="button" onclick="updateCartItemQty(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:bg-slate-100 active:bg-slate-200 text-xs font-bold transition cursor-pointer">
+                        <span class="w-7 text-center text-xs font-black text-slate-800 dark:text-white">${item.qty}</span>
+                        <button type="button" onclick="updateCartItemQty(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 active:bg-slate-200 text-xs font-bold transition cursor-pointer">
                             <i class="fa-solid fa-plus text-[10px]"></i>
                         </button>
                     </div>
@@ -895,63 +928,63 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
         // Form Checkout di dalam Drawer
         const formHtml = `
-            <div class="pt-3 border-t border-slate-100 space-y-4">
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-4">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                    <span class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-user-check text-sky-500"></i> Informasi Pembeli
                     </span>
-                    <button type="button" onclick="clearCart()" class="text-[11px] font-bold text-rose-500 hover:text-rose-700 transition cursor-pointer">
+                    <button type="button" onclick="clearCart()" class="text-[11px] font-bold text-rose-500 hover:text-rose-400 transition cursor-pointer">
                         Kosongkan Keranjang
                     </button>
                 </div>
 
                 <!-- Input Roblox Username -->
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-700">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">
                         Username Roblox Kamu <span class="text-rose-500">*</span>
                     </label>
                     <div class="relative">
                         <input type="text" 
                                id="cartRobloxUsername" 
                                placeholder="Contoh: fahru_sultan" 
-                               class="w-full pl-9 pr-24 py-2.5 bg-slate-50 border-2 border-slate-200 focus:border-sky-500 focus:bg-white rounded-xl text-xs font-bold text-slate-900 outline-none transition"
+                               class="w-full pl-9 pr-24 py-2.5 bg-slate-50 dark:bg-slate-800/80 border-2 border-slate-200 dark:border-slate-700 focus:border-sky-500 dark:focus:border-sky-400 focus:bg-white dark:focus:bg-slate-800 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none transition"
                                onblur="checkCartRobloxAvatar()">
                         <i class="fa-solid fa-at absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                         <button type="button" 
                                 onclick="checkCartRobloxAvatar()" 
                                 id="btnCheckCartAvatar" 
-                                class="absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-700 text-[11px] font-bold rounded-lg transition cursor-pointer">
+                                class="absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-sky-100 dark:bg-sky-900/60 hover:bg-sky-200 dark:hover:bg-sky-800 text-sky-700 dark:text-sky-300 text-[11px] font-bold rounded-lg transition cursor-pointer">
                             Cek Avatar
                         </button>
                     </div>
 
                     <!-- Box Preview Avatar -->
-                    <div id="cartRobloxAvatarPreview" class="hidden p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3">
+                    <div id="cartRobloxAvatarPreview" class="hidden p-2.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-xl flex items-center gap-3">
                         <img id="cartAvatarImg" src="" alt="Roblox Avatar" class="w-9 h-9 rounded-full border border-emerald-400 bg-white object-cover">
                         <div class="min-w-0">
-                            <div class="text-xs font-black text-slate-900 flex items-center gap-1">
+                            <div class="text-xs font-black text-slate-900 dark:text-white flex items-center gap-1">
                                 <span id="cartAvatarName">Username</span>
                                 <i class="fa-solid fa-circle-check text-emerald-600 text-[10px]"></i>
                             </div>
-                            <span class="text-[10px] text-emerald-700 font-bold">Avatar Roblox Terverifikasi</span>
+                            <span class="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">Avatar Roblox Terverifikasi</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Input Kode Promo / Redeem -->
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-700">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">
                         Kode Diskon / Promo
                     </label>
                     <div class="flex gap-2">
                         <input type="text" 
                                id="cartRedeemCodeInput" 
                                placeholder="Punya voucher?" 
-                               class="w-full px-3 py-2 bg-slate-50 border-2 border-slate-200 focus:border-sky-500 focus:bg-white rounded-xl text-xs font-bold uppercase text-slate-900 outline-none transition">
+                               class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800/80 border-2 border-slate-200 dark:border-slate-700 focus:border-sky-500 dark:focus:border-sky-400 focus:bg-white dark:focus:bg-slate-800 rounded-xl text-xs font-bold uppercase text-slate-900 dark:text-white outline-none transition">
                         <button type="button" 
                                 id="btnApplyCartRedeem" 
                                 onclick="applyCartRedeemCode()" 
-                                class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition flex-shrink-0 cursor-pointer">
+                                class="px-4 py-2 bg-slate-800 dark:bg-sky-600 hover:bg-slate-900 dark:hover:bg-sky-500 text-white font-bold text-xs rounded-xl transition flex-shrink-0 cursor-pointer">
                             Gunakan
                         </button>
                     </div>
@@ -960,10 +993,10 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
                 <!-- Input Catatan Pesanan -->
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-700">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">
                         Catatan Pesanan (Opsional)
                     </label>
-                    <textarea id="cartNote" rows="2" placeholder="Tulis pesan khusus untuk penjual jika ada..." class="w-full p-2.5 bg-slate-50 border-2 border-slate-200 focus:border-sky-500 focus:bg-white rounded-xl text-xs font-medium text-slate-900 outline-none transition resize-none"></textarea>
+                    <textarea id="cartNote" rows="2" placeholder="Tulis pesan khusus untuk penjual jika ada..." class="w-full p-2.5 bg-slate-50 dark:bg-slate-800/80 border-2 border-slate-200 dark:border-slate-700 focus:border-sky-500 dark:focus:border-sky-400 focus:bg-white dark:focus:bg-slate-800 rounded-xl text-xs font-medium text-slate-900 dark:text-white outline-none transition resize-none"></textarea>
                 </div>
             </div>
         `;
@@ -1696,7 +1729,28 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 }, 200);
             }
         }
+        updateSiteThemeIcon();
     });
+
+    // Theme Toggle Functionality (Dark / Light Mode)
+    function toggleSiteTheme() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('itempedia_theme', isDark ? 'dark' : 'light');
+        updateSiteThemeIcon();
+    }
+
+    function updateSiteThemeIcon() {
+        const icon = document.getElementById('themeToggleIcon');
+        const label = document.getElementById('themeToggleLabel');
+        if (!icon) return;
+        if (document.documentElement.classList.contains('dark')) {
+            icon.className = 'fa-solid fa-sun text-amber-400 text-sm sm:text-base transition-transform rotate-0 duration-300';
+            if (label) label.innerText = 'Terang';
+        } else {
+            icon.className = 'fa-solid fa-moon text-sky-500 text-sm sm:text-base transition-transform -rotate-12 duration-300';
+            if (label) label.innerText = 'Gelap';
+        }
+    }
     </script>
     <?php include __DIR__ . '/components/custom_confirm.php'; ?>
 </body>

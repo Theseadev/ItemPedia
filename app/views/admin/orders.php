@@ -4,7 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Pesanan - Seller Center ItemPedia</title>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (localStorage.getItem('admin_theme') === 'dark' || (!localStorage.getItem('admin_theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,7 +39,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-[#f0f2f5] text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-100 selection:text-blue-700">
+<body class="bg-[#f0f2f5] dark:bg-[#081220] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-100 selection:text-blue-700 transition-colors duration-200">
 
     <?php 
     $activeMenu = 'orders';
@@ -28,14 +53,14 @@
 
             <!-- Toast / Flash Notification -->
             <?php if (!empty($_GET['msg'])): ?>
-            <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-semibold flex items-center justify-between shadow-xs animate-in fade-in">
+            <div class="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm font-semibold flex items-center justify-between shadow-xs animate-in fade-in">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">
+                    <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
                         <i class="fa-solid fa-check"></i>
                     </div>
                     <span><?= htmlspecialchars($_GET['msg']) ?></span>
                 </div>
-                <button type="button" onclick="this.parentElement.remove()" class="text-emerald-500 hover:text-emerald-700 p-1">
+                <button type="button" onclick="this.parentElement.remove()" class="text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-300 p-1">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -43,23 +68,23 @@
 
             <!-- Page Header: Title on Left, Action on Right -->
             <div class="flex items-center justify-between gap-4">
-                <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Riwayat Pesanan</h1>
+                <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Riwayat Pesanan</h1>
 
                 <div class="flex items-center gap-2.5">
                     <button type="button" 
                             onclick="alert('Riwayat pesanan berhasil diekspor!')" 
-                            class="px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs transition flex items-center gap-2 shadow-2xs active:scale-95">
-                        <i class="fa-solid fa-arrow-down-to-bracket text-slate-400"></i>
+                            class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition flex items-center gap-2 shadow-2xs active:scale-95">
+                        <i class="fa-solid fa-arrow-down-to-bracket text-slate-400 dark:text-slate-500"></i>
                         <span>Unduh Riwayat Pesanan</span>
                     </button>
                 </div>
             </div>
 
             <!-- Main Order Card -->
-            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+            <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs overflow-hidden">
                 
                 <!-- 1. Horizontal Status Tabs Strip (Matching Image 2) -->
-                <div class="border-b border-slate-200 bg-white px-4 sm:px-6">
+                <div class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1e33] px-4 sm:px-6">
                     <div class="flex items-center gap-2 sm:gap-6 overflow-x-auto no-scrollbar text-xs sm:text-sm font-semibold whitespace-nowrap">
                         <?php 
                         $curTab = $statusFilter ?? 'ALL';
@@ -77,7 +102,7 @@
                             $isActive = ($curTab === $t['key']);
                         ?>
                             <a href="/admin/orders?status=<?= $t['key'] ?><?= !empty($searchQuery) ? '&q=' . urlencode($searchQuery) : '' ?><?= !empty($gameFilter) ? '&game=' . urlencode($gameFilter) : '' ?>" 
-                               class="py-3.5 px-2 border-b-2 font-bold flex items-center gap-2 transition relative <?= $isActive ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300' ?>">
+                               class="py-3.5 px-2 border-b-2 font-bold flex items-center gap-2 transition relative <?= $isActive ? 'border-sky-500 text-sky-500 dark:text-sky-400' : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700' ?>">
                                 <span><?= $t['label'] ?></span>
                                 <?php if ($t['count'] > 0): ?>
                                     <span class="px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center">
@@ -90,29 +115,29 @@
                 </div>
 
                 <!-- 2. Search & Multi-Filter Bar: SEBARIS (1 Single Inline Row) -->
-                <div class="p-4 sm:p-5 border-b border-slate-100 bg-white space-y-3.5">
+                <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0c1e33] space-y-3.5">
                     <form method="GET" action="/admin/orders" class="flex flex-col sm:flex-row items-center gap-3 w-full">
                         <input type="hidden" name="status" value="<?= htmlspecialchars($statusFilter ?? 'ALL') ?>">
 
                         <!-- Search Input with "Nomor Pesanan" Prefix -->
-                        <div class="w-full sm:flex-1 flex items-center rounded-xl bg-white border border-slate-200 shadow-2xs focus-within:border-blue-500 transition overflow-hidden">
-                            <div class="px-3.5 py-2.5 bg-slate-50 border-r border-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
+                        <div class="w-full sm:flex-1 flex items-center rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xs focus-within:border-sky-500 transition overflow-hidden">
+                            <div class="px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold flex items-center gap-1.5 whitespace-nowrap">
                                 <span>Nomor Pesanan</span>
-                                <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                                <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500"></i>
                             </div>
                             <div class="relative flex-grow flex items-center">
-                                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 pointer-events-none"></i>
+                                <i class="fa-solid fa-magnifying-glass text-slate-400 dark:text-slate-500 text-xs absolute left-3 pointer-events-none"></i>
                                 <input type="text" 
                                        name="q" 
                                        value="<?= htmlspecialchars($searchQuery ?? '') ?>"
                                        placeholder="Cari Nomor Pesanan" 
-                                       class="w-full pl-8 pr-3 py-2 text-xs bg-transparent text-slate-800 placeholder-slate-400 focus:outline-none">
+                                       class="w-full pl-8 pr-3 py-2 text-xs bg-transparent text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none">
                             </div>
                         </div>
 
                         <!-- Dropdown Pilih Filter / Game -->
                         <div class="w-full sm:w-60">
-                            <select name="game" onchange="this.form.submit()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-blue-500 shadow-2xs">
+                            <select name="game" onchange="this.form.submit()" class="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-sky-500 shadow-2xs">
                                 <option value="ALL">Pilih Filter</option>
                                 <?php if (!empty($availableGames)): ?>
                                     <?php foreach ($availableGames as $gName): ?>
@@ -126,7 +151,7 @@
 
                         <!-- Dropdown Urutan / Terbaru -->
                         <div class="w-full sm:w-44">
-                            <select name="sort" onchange="this.form.submit()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-blue-500 shadow-2xs">
+                            <select name="sort" onchange="this.form.submit()" class="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-sky-500 shadow-2xs">
                                 <option value="latest">Terbaru</option>
                                 <option value="oldest">Terlama</option>
                             </select>
@@ -136,19 +161,19 @@
                     <!-- Filter Pills Cepat (Sebaris persis Screenshot) -->
                     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
                         <a href="/admin/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>" 
-                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= empty($searchQuery) && empty($gameFilter) ? 'bg-blue-50 text-blue-600 border border-blue-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' ?>">
+                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= empty($searchQuery) && empty($gameFilter) ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Semua Pesanan
                         </a>
                         <a href="/admin/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>&q=Joki" 
-                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($searchQuery === 'Joki') ? 'bg-blue-50 text-blue-600 border border-blue-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' ?>">
+                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($searchQuery === 'Joki') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Joki
                         </a>
                         <a href="/admin/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>&q=Iklan" 
-                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($searchQuery === 'Iklan') ? 'bg-blue-50 text-blue-600 border border-blue-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' ?>">
+                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($searchQuery === 'Iklan') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Pesanan Dari Iklan
                         </a>
                         <a href="/admin/orders?status=NEED_PROCESS" 
-                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($statusFilter === 'NEED_PROCESS') ? 'bg-blue-50 text-blue-600 border border-blue-200' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' ?>">
+                           class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($statusFilter === 'NEED_PROCESS') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Pesanan Butuh Cepat
                         </a>
                     </div>
@@ -159,22 +184,22 @@
                 <!-- Empty State Illustration Matching Screenshot -->
                 <div class="py-20 text-center px-4">
                     <div class="w-36 h-36 mx-auto mb-4 relative flex items-center justify-center">
-                        <div class="w-28 h-28 bg-amber-50 rounded-full flex items-center justify-center text-5xl text-amber-400">
+                        <div class="w-28 h-28 bg-amber-50 dark:bg-amber-950/60 rounded-full flex items-center justify-center text-5xl text-amber-400">
                             <i class="fa-solid fa-basket-shopping"></i>
                         </div>
-                        <div class="absolute top-1 right-2 w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 text-lg shadow-xs">
+                        <div class="absolute top-1 right-2 w-10 h-10 bg-sky-50 dark:bg-sky-950/60 rounded-full flex items-center justify-center text-sky-500 text-lg shadow-xs">
                             <i class="fa-solid fa-question"></i>
                         </div>
                     </div>
-                    <h3 class="font-bold text-slate-800 text-sm sm:text-base">Kamu belum memiliki pesanan</h3>
-                    <p class="text-xs text-slate-400 mt-1">Pesanan yang masuk akan tampil otomatis di sini.</p>
+                    <h3 class="font-bold text-slate-800 dark:text-slate-200 text-sm sm:text-base">Kamu belum memiliki pesanan</h3>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Pesanan yang masuk akan tampil otomatis di sini.</p>
                 </div>
                 <?php else: ?>
                 <!-- Clean Orders Table -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-slate-200 bg-slate-50/80 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+                            <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                 <th class="py-3.5 px-4 sm:px-6">Info Invoice</th>
                                 <th class="py-3.5 px-4">Pembeli (Roblox)</th>
                                 <th class="py-3.5 px-4">Dagangan</th>
@@ -184,17 +209,17 @@
                                 <th class="py-3.5 px-4 sm:px-6 text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 text-xs font-medium text-slate-700">
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-xs font-medium text-slate-700 dark:text-slate-300">
                             <?php foreach ($orders as $o): ?>
-                            <tr class="hover:bg-slate-50/80 transition">
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-900/50 transition">
                                 
                                 <!-- Invoice & Date -->
                                 <td class="py-4 px-4 sm:px-6">
-                                    <a href="/order/<?= htmlspecialchars($o['invoice_number']) ?>" target="_blank" class="font-mono font-bold text-blue-600 hover:underline flex items-center gap-1.5">
+                                    <a href="/order/<?= htmlspecialchars($o['invoice_number']) ?>" target="_blank" class="font-mono font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1.5">
                                         <span><?= htmlspecialchars($o['invoice_number']) ?></span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-blue-400"></i>
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-sky-400"></i>
                                     </a>
-                                    <span class="block text-[11px] text-slate-400 mt-0.5">
+                                    <span class="block text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
                                         <?= date('d M Y, H:i', strtotime($o['created_at'])) ?>
                                     </span>
                                 </td>
@@ -204,13 +229,13 @@
                                     <div class="flex items-center gap-2.5">
                                         <img src="<?= htmlspecialchars($o['roblox_avatar_url']) ?>" 
                                              alt="" 
-                                             class="w-9 h-9 rounded-full border border-slate-200 bg-slate-100 object-cover shadow-2xs flex-shrink-0"
-                                             onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($o['roblox_username']) ?>&background=2563eb&color=fff'">
+                                             class="w-9 h-9 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 object-cover shadow-2xs flex-shrink-0"
+                                             onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($o['roblox_username']) ?>&background=0284c7&color=fff'">
                                         <div>
-                                            <span class="font-extrabold text-slate-900 block"><?= htmlspecialchars($o['roblox_username']) ?></span>
+                                            <span class="font-extrabold text-slate-900 dark:text-white block"><?= htmlspecialchars($o['roblox_username']) ?></span>
                                             <button type="button" 
                                                     onclick="navigator.clipboard.writeText('<?= addslashes($o['roblox_username']) ?>'); alert('Username disalin: <?= addslashes($o['roblox_username']) ?>')" 
-                                                    class="text-[10px] font-bold text-blue-600 hover:underline flex items-center gap-1 mt-0.5">
+                                                    class="text-[10px] font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 mt-0.5">
                                                 <i class="fa-regular fa-copy"></i> Salin
                                             </button>
                                         </div>
@@ -219,17 +244,17 @@
 
                                 <!-- Produk & Kategori -->
                                 <td class="py-4 px-4 max-w-[220px]">
-                                    <span class="inline-block text-[10px] font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md mb-0.5 uppercase tracking-wider">
+                                    <span class="inline-block text-[10px] font-extrabold text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/80 px-2 py-0.5 rounded-md mb-0.5 uppercase tracking-wider border border-sky-100 dark:border-sky-800/60">
                                         <?= htmlspecialchars($o['category_name'] ?? 'Roblox') ?>
                                     </span>
-                                    <span class="font-bold text-slate-800 block truncate" title="<?= htmlspecialchars($o['product_name']) ?>">
+                                    <span class="font-bold text-slate-800 dark:text-slate-200 block truncate" title="<?= htmlspecialchars($o['product_name']) ?>">
                                         <?= htmlspecialchars($o['product_name']) ?>
                                     </span>
                                 </td>
 
                                 <!-- Total Harga -->
                                 <td class="py-4 px-4">
-                                    <span class="font-black text-slate-900 text-sm">
+                                    <span class="font-black text-slate-900 dark:text-white text-sm">
                                         Rp <?= number_format($o['price'], 0, ',', '.') ?>
                                     </span>
                                 </td>
@@ -238,7 +263,7 @@
                                 <td class="py-4 px-4">
                                     <button type="button" 
                                             onclick="openChatDockForInvoice('<?= htmlspecialchars($o['invoice_number']) ?>')" 
-                                            class="py-1.5 px-3 bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs active:scale-95">
+                                            class="py-1.5 px-3 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800/80 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs active:scale-95">
                                         <i class="fa-solid fa-comments text-xs"></i>
                                         <span>Chat</span>
                                         <?php if (!empty($o['unread_chat_count']) && $o['unread_chat_count'] > 0): ?>
@@ -252,23 +277,23 @@
                                 <!-- Status Badge -->
                                 <td class="py-4 px-4">
                                     <?php if ($o['status'] === 'PENDING'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">
                                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Menunggu Bayar
                                         </span>
                                     <?php elseif ($o['status'] === 'PAID'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> Sudah Dibayar
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span> Sudah Dibayar
                                         </span>
                                     <?php elseif ($o['status'] === 'PROCESSING'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60">
                                             <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-spin"></span> Sedang Dikirim
                                         </span>
                                     <?php elseif ($o['status'] === 'SUCCESS'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Selesai
                                         </span>
                                     <?php else: ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
                                             <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Dibatalkan
                                         </span>
                                     <?php endif; ?>
@@ -278,8 +303,8 @@
                                 <td class="py-4 px-4 sm:px-6 text-right">
                                     <button type="button" 
                                             onclick="openEditOrderModal(<?= htmlspecialchars(json_encode($o)) ?>)" 
-                                            class="py-1.5 px-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold transition shadow-2xs active:scale-95">
-                                        <i class="fa-solid fa-pen-to-square text-blue-500 mr-1"></i> Update
+                                            class="py-1.5 px-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold transition shadow-2xs active:scale-95">
+                                        <i class="fa-solid fa-pen-to-square text-sky-500 mr-1"></i> Update
                                     </button>
                                 </td>
                             </tr>
@@ -296,15 +321,15 @@
 
     <!-- Modal Update Status Pesanan -->
     <div id="orderModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs hidden animate-in fade-in duration-150">
-        <div class="bg-white border border-slate-200 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
-            <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/60">
+        <div class="bg-white dark:bg-[#0c1e33] border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/60 dark:bg-slate-900/60">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
+                    <div class="w-8 h-8 rounded-xl bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-sm border border-sky-100 dark:border-sky-800/60">
                         <i class="fa-solid fa-clipboard-check"></i>
                     </div>
-                    <h3 class="font-extrabold text-slate-900 text-base">Update Status Transaksi</h3>
+                    <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Update Status Transaksi</h3>
                 </div>
-                <button type="button" onclick="closeOrderModal()" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition">
+                <button type="button" onclick="closeOrderModal()" class="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -312,15 +337,15 @@
             <form action="/admin/orders/update" method="POST" class="p-5 space-y-4">
                 <input type="hidden" name="order_id" id="editOrderId">
 
-                <div class="p-3.5 bg-slate-50 rounded-2xl text-xs space-y-1.5 border border-slate-200/80">
-                    <div class="text-slate-500">Invoice: <strong id="editOrderInvoice" class="text-blue-600 font-mono font-bold"></strong></div>
-                    <div class="text-slate-500">Pembeli: <strong id="editOrderBuyer" class="text-slate-900 font-bold"></strong></div>
-                    <div class="text-slate-500">Produk: <strong id="editOrderProduct" class="text-slate-900 font-bold"></strong></div>
+                <div class="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-2xl text-xs space-y-1.5 border border-slate-200/80 dark:border-slate-800">
+                    <div class="text-slate-500 dark:text-slate-400">Invoice: <strong id="editOrderInvoice" class="text-sky-600 dark:text-sky-400 font-mono font-bold"></strong></div>
+                    <div class="text-slate-500 dark:text-slate-400">Pembeli: <strong id="editOrderBuyer" class="text-slate-900 dark:text-white font-bold"></strong></div>
+                    <div class="text-slate-500 dark:text-slate-400">Produk: <strong id="editOrderProduct" class="text-slate-900 dark:text-white font-bold"></strong></div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Ubah Status Pengiriman</label>
-                    <select name="status" id="editOrderStatus" class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Ubah Status Pengiriman</label>
+                    <select name="status" id="editOrderStatus" class="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 dark:text-white focus:outline-none focus:border-sky-500">
                         <option value="PENDING">Menunggu Pembayaran (PENDING)</option>
                         <option value="PAID">Sudah Dibayar (PAID)</option>
                         <option value="PROCESSING">Sedang Diproses Pengiriman (PROCESSING)</option>
@@ -330,22 +355,22 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">
                         Data Akun Roblox (Khusus Akun Game)
                     </label>
-                    <p class="text-[11px] text-slate-400 mb-2">Jika produk ini berupa Akun, masukkan Username & Password akun di sini. Pembeli dapat melihatnya otomatis di invoice setelah status 'SUCCESS'.</p>
+                    <p class="text-[11px] text-slate-400 dark:text-slate-500 mb-2">Jika produk ini berupa Akun, masukkan Username & Password akun di sini. Pembeli dapat melihatnya otomatis di invoice setelah status 'SUCCESS'.</p>
                     <textarea name="account_data" 
                               id="editOrderAccountData" 
                               rows="3" 
                               placeholder="Username: roblox_account&#10;Password: password123&#10;Catatan: Langsung ganti password & verifikasi email ya kak!"
-                              class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white resize-none"></textarea>
+                              class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-800 dark:text-white focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-900 resize-none"></textarea>
                 </div>
 
-                <div class="pt-2 flex justify-end gap-2.5 border-t border-slate-100">
-                    <button type="button" onclick="closeOrderModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+                <div class="pt-2 flex justify-end gap-2.5 border-t border-slate-100 dark:border-slate-800">
+                    <button type="button" onclick="closeOrderModal()" class="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition">
                         Batal
                     </button>
-                    <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold rounded-xl transition shadow-xs">
+                    <button type="submit" class="px-5 py-2.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-extrabold rounded-xl transition shadow-xs">
                         Simpan Perubahan
                     </button>
                 </div>

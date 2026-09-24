@@ -99,106 +99,106 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
 
     <!-- Tombol Kembali & ID Transaksi -->
     <div class="mb-5 flex items-center justify-between">
-        <a href="/" class="text-xs font-bold text-slate-500 hover:text-sky-600 transition flex items-center gap-2">
+        <a href="/" class="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Kembali ke Katalog</span>
         </a>
-        <span class="text-xs text-slate-400">ID Transaksi: <strong class="text-sky-600 font-mono"><?= htmlspecialchars($order['invoice_number']) ?></strong></span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">ID Transaksi: <strong class="text-sky-600 dark:text-sky-400 font-mono"><?= htmlspecialchars($order['invoice_number']) ?></strong></span>
     </div>
 
     <!-- Alert Notifikasi Simulasi -->
     <?php if (isset($_GET['paid']) && $_GET['paid'] === 'success'): ?>
-    <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-4 shadow-sm animate-in fade-in">
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl flex-shrink-0">
+    <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300 text-sm flex items-center gap-4 shadow-sm animate-in fade-in">
+        <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl flex-shrink-0">
             <i class="fa-solid fa-circle-check"></i>
         </div>
         <div>
-            <strong class="font-bold text-slate-900 text-sm sm:text-base">Pembayaran Berhasil Dikonfirmasi!</strong>
-            <p class="text-xs text-emerald-700 mt-0.5">Pesananmu kini berstatus <strong>Lunas</strong>. Silakan koordinasikan serah terima item dengan penjual di Live Chat di bawah.</p>
+            <strong class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Pembayaran Berhasil Dikonfirmasi!</strong>
+            <p class="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">Pesananmu kini berstatus <strong>Lunas</strong>. Silakan koordinasikan serah terima item dengan penjual di Live Chat di bawah.</p>
         </div>
     </div>
     <?php endif; ?>
 
     <!-- Alert Ulasan Berhasil -->
     <?php if (isset($_GET['review']) && $_GET['review'] === 'success'): ?>
-    <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-sm flex items-center gap-4 shadow-sm animate-in fade-in">
-        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl flex-shrink-0">
+    <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800/80 text-amber-900 dark:text-amber-300 text-sm flex items-center gap-4 shadow-sm animate-in fade-in">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl flex-shrink-0">
             <i class="fa-solid fa-star"></i>
         </div>
         <div>
-            <strong class="font-bold text-slate-900 text-sm sm:text-base">Terima Kasih Atas Ulasanmu!</strong>
-            <p class="text-xs text-amber-800 mt-0.5">Rating dan ulasan kamu telah tersimpan dan langsung tampil di katalog toko ItemPedia.</p>
+            <strong class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Terima Kasih Atas Ulasanmu!</strong>
+            <p class="text-xs text-amber-800 dark:text-amber-400 mt-0.5">Rating dan ulasan kamu telah tersimpan dan langsung tampil di katalog toko ItemPedia.</p>
         </div>
     </div>
     <?php endif; ?>
 
     <!-- Alert Pesan Error -->
     <?php if (!empty($_GET['error'])): ?>
-    <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-center gap-4 shadow-sm animate-in fade-in">
-        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl flex-shrink-0">
+    <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800/80 text-rose-800 dark:text-rose-300 text-sm flex items-center gap-4 shadow-sm animate-in fade-in">
+        <div class="w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-900/60 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl flex-shrink-0">
             <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <div>
-            <strong class="font-bold text-slate-900 text-sm sm:text-base">Perhatian</strong>
-            <p class="text-xs text-rose-700 mt-0.5"><?= htmlspecialchars($_GET['error']) ?></p>
+            <strong class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Perhatian</strong>
+            <p class="text-xs text-rose-700 dark:text-rose-400 mt-0.5"><?= htmlspecialchars($_GET['error']) ?></p>
         </div>
     </div>
     <?php endif; ?>
 
     <!-- Header Status & Stepper Card -->
-    <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-7 mb-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+    <div class="bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-7 mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-800/80">
             <div>
                 <div class="flex items-center gap-2 mb-2 flex-wrap">
                     <?php if ($isPending): ?>
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1.5">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 flex items-center gap-1.5">
                             <i class="fa-solid fa-clock animate-spin"></i> Menunggu Pembayaran
                         </span>
                     <?php elseif ($isPaid): ?>
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800 border border-sky-200 flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-check text-sky-600"></i> Pembayaran Berhasil (Lunas)
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 dark:bg-sky-950/80 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-sky-600 dark:text-sky-400"></i> Pembayaran Berhasil (Lunas)
                         </span>
                     <?php elseif ($isProcessing): ?>
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1.5">
-                            <i class="fa-solid fa-gear fa-spin text-purple-600"></i> Sedang Diproses Seller
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60 flex items-center gap-1.5">
+                            <i class="fa-solid fa-gear fa-spin text-purple-600 dark:text-purple-400"></i> Sedang Diproses Seller
                         </span>
                     <?php elseif ($isSuccess): ?>
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-check text-emerald-600"></i> Pesanan Selesai
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i> Pesanan Selesai
                         </span>
                     <?php else: ?>
-                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-200">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/60">
                             Dibatalkan
                         </span>
                     <?php endif; ?>
 
-                    <span class="text-xs text-slate-400 font-medium">
+                    <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">
                         <?= date('d M Y, H:i', strtotime($order['created_at'])) ?>
                     </span>
                 </div>
 
-                <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
                     Invoice #<?= htmlspecialchars($order['invoice_number']) ?>
                 </h1>
             </div>
 
             <div class="sm:text-right">
-                <span class="text-xs text-slate-400 block mb-0.5 uppercase tracking-wider font-bold">Total Pembayaran:</span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 block mb-0.5 uppercase tracking-wider font-bold">Total Pembayaran:</span>
                 <?php if (!empty($order['discount_amount']) && $order['discount_amount'] > 0): ?>
                     <div class="flex items-center gap-1.5 sm:justify-end mb-1">
-                        <span class="text-xs font-bold text-slate-400 line-through">
+                        <span class="text-xs font-bold text-slate-400 dark:text-slate-500 line-through">
                             Rp <?= number_format($order['price'] + $order['discount_amount'], 0, ',', '.') ?>
                         </span>
-                        <span class="px-2 py-0.5 text-[10px] font-black rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-200">
+                        <span class="px-2 py-0.5 text-[10px] font-black rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
                             Diskon: -Rp <?= number_format($order['discount_amount'], 0, ',', '.') ?>
                         </span>
                     </div>
                 <?php endif; ?>
-                <span class="text-2xl sm:text-3xl font-black text-sky-600">
+                <span class="text-2xl sm:text-3xl font-black text-sky-600 dark:text-sky-400">
                     Rp <?= number_format($order['price'], 0, ',', '.') ?>
                 </span>
                 <?php if (!empty($order['redeem_code'])): ?>
-                    <div class="text-[11px] font-bold text-amber-600 mt-0.5 flex items-center sm:justify-end gap-1">
+                    <div class="text-[11px] font-bold text-amber-600 dark:text-amber-400 mt-0.5 flex items-center sm:justify-end gap-1">
                         <i class="fa-solid fa-ticket text-amber-500"></i>
                         <span>Kode: <strong class="uppercase tracking-wider"><?= htmlspecialchars($order['redeem_code']) ?></strong></span>
                     </div>
@@ -209,26 +209,26 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
         <!-- Progress Stepper -->
         <div class="pt-5">
             <div class="grid grid-cols-4 gap-2 text-center text-[10px] sm:text-xs font-bold uppercase tracking-wider">
-                <div class="space-y-1.5 <?= $isPending || $isPaid || $isProcessing || $isSuccess ? 'text-sky-600' : 'text-slate-400' ?>">
-                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isPending || $isPaid || $isProcessing || $isSuccess ? 'bg-sky-500 text-white font-black shadow-sm' : 'bg-slate-100 text-slate-400' ?>">
+                <div class="space-y-1.5 <?= $isPending || $isPaid || $isProcessing || $isSuccess ? 'text-sky-600 dark:text-sky-400' : 'text-slate-400 dark:text-slate-600' ?>">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isPending || $isPaid || $isProcessing || $isSuccess ? 'bg-sky-500 text-white font-black shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-600' ?>">
                         <i class="fa-solid fa-receipt"></i>
                     </div>
                     <div>1. Order</div>
                 </div>
-                <div class="space-y-1.5 <?= $isPaid || $isProcessing || $isSuccess ? 'text-sky-600' : 'text-slate-400' ?>">
-                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isPaid || $isProcessing || $isSuccess ? 'bg-sky-500 text-white font-black shadow-sm' : 'bg-slate-100 text-slate-400' ?>">
+                <div class="space-y-1.5 <?= $isPaid || $isProcessing || $isSuccess ? 'text-sky-600 dark:text-sky-400' : 'text-slate-400 dark:text-slate-600' ?>">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isPaid || $isProcessing || $isSuccess ? 'bg-sky-500 text-white font-black shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-600' ?>">
                         <i class="fa-solid fa-credit-card"></i>
                     </div>
                     <div>2. Lunas</div>
                 </div>
-                <div class="space-y-1.5 <?= $isProcessing || $isSuccess ? 'text-purple-600' : ($isPaid ? 'text-sky-600' : 'text-slate-400') ?>">
-                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isProcessing || $isSuccess ? 'bg-purple-600 text-white font-black shadow-sm' : ($isPaid ? 'bg-sky-100 text-sky-600 font-bold border border-sky-300 animate-pulse' : 'bg-slate-100 text-slate-400') ?>">
+                <div class="space-y-1.5 <?= $isProcessing || $isSuccess ? 'text-purple-600 dark:text-purple-400' : ($isPaid ? 'text-sky-600 dark:text-sky-400' : 'text-slate-400 dark:text-slate-600') ?>">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isProcessing || $isSuccess ? 'bg-purple-600 text-white font-black shadow-sm' : ($isPaid ? 'bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-300 font-bold border border-sky-300 dark:border-sky-700 animate-pulse' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-600') ?>">
                         <i class="fa-solid fa-truck-fast"></i>
                     </div>
                     <div>3. Kirim Item</div>
                 </div>
-                <div class="space-y-1.5 <?= $isSuccess ? 'text-emerald-600' : 'text-slate-400' ?>">
-                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isSuccess ? 'bg-emerald-500 text-white font-black shadow-sm' : 'bg-slate-100 text-slate-400' ?>">
+                <div class="space-y-1.5 <?= $isSuccess ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-600' ?>">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl flex items-center justify-center text-xs <?= $isSuccess ? 'bg-emerald-500 text-white font-black shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-600' ?>">
                         <i class="fa-solid fa-check"></i>
                     </div>
                     <div>4. Selesai</div>
@@ -239,18 +239,18 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
 
     <!-- Box Khusus Akun Game (Jika Selesai & Ada Data Akun) -->
     <?php if ($isSuccess && !empty($order['account_data'])): ?>
-    <div class="mb-6 p-6 rounded-3xl bg-emerald-50 border-2 border-emerald-300 shadow-sm animate-in fade-in">
+    <div class="mb-6 p-6 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 border-2 border-emerald-300 dark:border-emerald-800 shadow-sm animate-in fade-in">
         <div class="flex items-center gap-3.5 mb-4">
             <div class="w-11 h-11 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-xl shadow-sm">
                 <i class="fa-solid fa-key"></i>
             </div>
             <div>
-                <h3 class="font-black text-slate-900 text-base sm:text-lg">DATA AKUN ROBLOX KAMU</h3>
-                <p class="text-xs text-emerald-700">Simpan dan segera amankan akun ini dengan menambahkan email pribadi & mengganti password!</p>
+                <h3 class="font-black text-slate-900 dark:text-white text-base sm:text-lg">DATA AKUN ROBLOX KAMU</h3>
+                <p class="text-xs text-emerald-700 dark:text-emerald-400">Simpan dan segera amankan akun ini dengan menambahkan email pribadi & mengganti password!</p>
             </div>
         </div>
 
-        <div class="relative bg-white rounded-2xl p-5 border border-emerald-200 font-mono text-sm text-slate-800 whitespace-pre-wrap leading-relaxed shadow-sm" id="accountDataText"><?= htmlspecialchars($order['account_data']) ?></div>
+        <div class="relative bg-white dark:bg-[#081220] rounded-2xl p-5 border border-emerald-200 dark:border-emerald-800/80 font-mono text-sm text-slate-800 dark:text-slate-100 whitespace-pre-wrap leading-relaxed shadow-sm" id="accountDataText"><?= htmlspecialchars($order['account_data']) ?></div>
 
         <button type="button" 
                 onclick="copyAccountData()"
@@ -267,14 +267,14 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
         
         <!-- Kolom Kiri: QRIS Code -->
-        <div class="lg:col-span-6 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 text-center shadow-sm space-y-4">
-            <div class="flex items-center justify-center gap-2 text-xs font-black text-sky-700 uppercase tracking-wider bg-sky-50 py-1.5 px-3 rounded-xl border border-sky-100 inline-flex mx-auto">
+        <div class="lg:col-span-6 bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 text-center shadow-sm space-y-4">
+            <div class="flex items-center justify-center gap-2 text-xs font-black text-sky-700 dark:text-sky-300 uppercase tracking-wider bg-sky-50 dark:bg-sky-950/80 py-1.5 px-3 rounded-xl border border-sky-100 dark:border-sky-800/60 inline-flex mx-auto">
                 <i class="fa-solid fa-qrcode"></i>
                 <span>Scan QRIS untuk Membayar</span>
             </div>
 
             <!-- QR Code Box -->
-            <div class="p-4 bg-slate-50 rounded-3xl border border-slate-200 inline-block shadow-inner">
+            <div class="p-4 bg-slate-50 dark:bg-white rounded-3xl border border-slate-200 dark:border-slate-700 inline-block shadow-inner">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=<?= urlencode('https://itempedia.local/order/' . $order['invoice_number']) ?>" 
                      alt="QRIS Code" 
                      class="w-48 h-48 mx-auto rounded-xl">
@@ -282,21 +282,21 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
 
             <!-- Total Bayar -->
             <div>
-                <span class="text-xs text-slate-400 block font-bold">Nominal yang Harus Dibayar:</span>
-                <span class="text-2xl font-black text-slate-900">Rp <?= number_format($order['price'], 0, ',', '.') ?></span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 block font-bold">Nominal yang Harus Dibayar:</span>
+                <span class="text-2xl font-black text-slate-900 dark:text-white">Rp <?= number_format($order['price'], 0, ',', '.') ?></span>
             </div>
 
-            <p class="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                 Scan kode QRIS di atas menggunakan aplikasi BCA, GoPay, OVO, DANA, ShopeePay, SeaBank, atau Mobile Banking apa saja.
             </p>
 
             <!-- Mode Sandbox Pembayaran Cepat -->
-            <div class="pt-4 border-t border-slate-100">
-                <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 text-left mb-3 flex items-start gap-2.5">
-                    <i class="fa-solid fa-flask text-amber-600 text-sm flex-shrink-0 mt-0.5"></i>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                <div class="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-300 text-left mb-3 flex items-start gap-2.5">
+                    <i class="fa-solid fa-flask text-amber-600 dark:text-amber-400 text-sm flex-shrink-0 mt-0.5"></i>
                     <div>
                         <strong class="font-bold">Mode Simulasi Uji Coba:</strong>
-                        <p class="text-[11px] text-amber-800 mt-0.5">Klik tombol di bawah untuk langsung mensimulasikan pembayaran lunas tanpa uang sungguhan.</p>
+                        <p class="text-[11px] text-amber-800 dark:text-amber-400 mt-0.5">Klik tombol di bawah untuk langsung mensimulasikan pembayaran lunas tanpa uang sungguhan.</p>
                     </div>
                 </div>
                 <a href="/order/<?= htmlspecialchars($order['invoice_number']) ?>/simulate" 
@@ -310,23 +310,23 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
         <!-- Kolom Kanan: Rincian Produk & Akun -->
         <div class="lg:col-span-6 space-y-5">
             <!-- Card Item Dipesan -->
-            <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Item Dipesan</span>
+            <div class="bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+                <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Item Dipesan</span>
                 <?php 
                 $itemsBreakdown = !empty($order['items_json']) ? json_decode($order['items_json'], true) : [];
                 ?>
                 <?php if (!empty($itemsBreakdown) && is_array($itemsBreakdown) && count($itemsBreakdown) > 1): ?>
                     <div class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                         <?php foreach ($itemsBreakdown as $ib): ?>
-                        <div class="flex items-center gap-3 p-2.5 bg-slate-50 border border-slate-100 rounded-2xl">
+                        <div class="flex items-center gap-3 p-2.5 bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 rounded-2xl">
                             <img src="<?= htmlspecialchars($ib['image_url'] ?? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500') ?>" 
                                  alt="" 
-                                 class="w-12 h-12 rounded-xl object-cover bg-white flex-shrink-0 border border-slate-200">
+                                 class="w-12 h-12 rounded-xl object-cover bg-white dark:bg-slate-800 flex-shrink-0 border border-slate-200 dark:border-slate-700">
                             <div class="min-w-0 flex-1">
-                                <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-snug truncate"><?= htmlspecialchars($ib['name']) ?></h4>
-                                <div class="text-[11px] text-slate-500 font-medium mt-0.5 flex items-center justify-between">
+                                <h4 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm leading-snug truncate"><?= htmlspecialchars($ib['name']) ?></h4>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5 flex items-center justify-between">
                                     <span><?= (int)$ib['qty'] ?>x @ Rp <?= number_format($ib['price'], 0, ',', '.') ?></span>
-                                    <span class="font-bold text-sky-600">Rp <?= number_format($ib['subtotal'] ?? ($ib['price'] * $ib['qty']), 0, ',', '.') ?></span>
+                                    <span class="font-bold text-sky-600 dark:text-sky-400">Rp <?= number_format($ib['subtotal'] ?? ($ib['price'] * $ib['qty']), 0, ',', '.') ?></span>
                                 </div>
                             </div>
                         </div>
@@ -336,30 +336,30 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                     <div class="flex items-center gap-4">
                         <img src="<?= htmlspecialchars($order['product_image'] ?? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500') ?>" 
                              alt="" 
-                             class="w-16 h-16 rounded-2xl object-cover bg-slate-50 flex-shrink-0 border border-slate-200">
+                             class="w-16 h-16 rounded-2xl object-cover bg-slate-50 dark:bg-slate-800 flex-shrink-0 border border-slate-200 dark:border-slate-700">
                         <div class="min-w-0">
-                            <span class="text-[10px] font-black text-sky-600 uppercase tracking-wider bg-sky-50 px-2 py-0.5 rounded-md border border-sky-100"><?= htmlspecialchars($order['category_name']) ?></span>
-                            <h4 class="font-bold text-slate-900 text-sm sm:text-base leading-snug mt-1 truncate"><?= htmlspecialchars($order['product_name']) ?></h4>
-                            <div class="text-sky-600 font-black text-sm mt-0.5">Rp <?= number_format($order['price'], 0, ',', '.') ?></div>
+                            <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wider bg-sky-50 dark:bg-sky-950/80 px-2 py-0.5 rounded-md border border-sky-100 dark:border-sky-800/60"><?= htmlspecialchars($order['category_name']) ?></span>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base leading-snug mt-1 truncate"><?= htmlspecialchars($order['product_name']) ?></h4>
+                            <div class="text-sky-600 dark:text-sky-400 font-black text-sm mt-0.5">Rp <?= number_format($order['price'], 0, ',', '.') ?></div>
                         </div>
                     </div>
                 <?php endif; ?>
             </div>
 
             <!-- Card Target Roblox -->
-            <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Target Akun Roblox</span>
-                <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
+            <div class="bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+                <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Target Akun Roblox</span>
+                <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800">
                     <img src="<?= htmlspecialchars($order['roblox_avatar_url']) ?>" 
                          alt="Avatar" 
                          onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($order['roblox_username']) ?>&background=38bdf8&color=fff'"
-                         class="w-12 h-12 rounded-full border-2 border-sky-400 bg-white object-cover flex-shrink-0 shadow-2xs">
+                         class="w-12 h-12 rounded-full border-2 border-sky-400 bg-white dark:bg-slate-800 object-cover flex-shrink-0 shadow-2xs">
                     <div class="min-w-0">
-                        <span class="text-[11px] text-slate-400 block font-medium">Username Roblox Penerima:</span>
-                        <span class="font-black text-slate-900 text-sm truncate block"><?= htmlspecialchars($order['roblox_username']) ?></span>
+                        <span class="text-[11px] text-slate-400 dark:text-slate-500 block font-medium">Username Roblox Penerima:</span>
+                        <span class="font-black text-slate-900 dark:text-white text-sm truncate block"><?= htmlspecialchars($order['roblox_username']) ?></span>
                     </div>
                 </div>
-                <p class="text-xs text-slate-400 flex items-center gap-1.5 pt-1">
+                <p class="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1.5 pt-1">
                     <i class="fa-solid fa-lock text-sky-500"></i>
                     <span>Ruang Live Chat dengan penjual akan otomatis aktif setelah pembayaran lunas.</span>
                 </p>
@@ -376,10 +376,10 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
         <div class="lg:col-span-5 space-y-5">
             
             <!-- Card 1: Ringkasan Item & Akun Roblox -->
-            <div class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-4">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                    <span class="text-xs font-black text-slate-400 uppercase tracking-wider">Item Dipesan</span>
-                    <span class="text-[10px] font-black text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200">
+            <div class="bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Item Dipesan</span>
+                    <span class="text-[10px] font-black text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/60">
                         LUNAS
                     </span>
                 </div>
@@ -388,15 +388,15 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                 <?php if (!empty($itemsBreakdown) && is_array($itemsBreakdown) && count($itemsBreakdown) > 1): ?>
                     <div class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                         <?php foreach ($itemsBreakdown as $ib): ?>
-                        <div class="flex items-center gap-3 p-2.5 bg-slate-50 border border-slate-100 rounded-2xl">
+                        <div class="flex items-center gap-3 p-2.5 bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 rounded-2xl">
                             <img src="<?= htmlspecialchars($ib['image_url'] ?? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500') ?>" 
                                  alt="" 
-                                 class="w-12 h-12 rounded-xl object-cover bg-white flex-shrink-0 border border-slate-200">
+                                 class="w-12 h-12 rounded-xl object-cover bg-white dark:bg-slate-800 flex-shrink-0 border border-slate-200 dark:border-slate-700">
                             <div class="min-w-0 flex-1">
-                                <h4 class="font-bold text-slate-900 text-xs leading-snug truncate"><?= htmlspecialchars($ib['name']) ?></h4>
-                                <div class="text-[11px] text-slate-500 font-medium mt-0.5 flex items-center justify-between">
+                                <h4 class="font-bold text-slate-900 dark:text-white text-xs leading-snug truncate"><?= htmlspecialchars($ib['name']) ?></h4>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5 flex items-center justify-between">
                                     <span><?= (int)$ib['qty'] ?>x @ Rp <?= number_format($ib['price'], 0, ',', '.') ?></span>
-                                    <span class="font-bold text-sky-600">Rp <?= number_format($ib['subtotal'] ?? ($ib['price'] * $ib['qty']), 0, ',', '.') ?></span>
+                                    <span class="font-bold text-sky-600 dark:text-sky-400">Rp <?= number_format($ib['subtotal'] ?? ($ib['price'] * $ib['qty']), 0, ',', '.') ?></span>
                                 </div>
                             </div>
                         </div>
@@ -406,14 +406,14 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                     <div class="flex items-center gap-3.5">
                         <img src="<?= htmlspecialchars($order['product_image'] ?? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500') ?>" 
                              alt="" 
-                             class="w-14 h-14 rounded-2xl object-cover bg-slate-50 flex-shrink-0 border border-slate-200">
+                             class="w-14 h-14 rounded-2xl object-cover bg-slate-50 dark:bg-slate-800 flex-shrink-0 border border-slate-200 dark:border-slate-700">
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold text-sky-600 uppercase tracking-wider"><?= htmlspecialchars($order['category_name']) ?></span>
-                            <h4 class="font-bold text-slate-900 text-sm leading-snug truncate"><?= htmlspecialchars($order['product_name']) ?></h4>
+                            <span class="text-[10px] font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider"><?= htmlspecialchars($order['category_name']) ?></span>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm leading-snug truncate"><?= htmlspecialchars($order['product_name']) ?></h4>
                             <div class="flex items-center gap-2 mt-0.5">
-                                <span class="text-sky-600 font-black text-sm">Rp <?= number_format($order['price'], 0, ',', '.') ?></span>
+                                <span class="text-sky-600 dark:text-sky-400 font-black text-sm">Rp <?= number_format($order['price'], 0, ',', '.') ?></span>
                                 <?php if (!empty($order['discount_amount']) && $order['discount_amount'] > 0): ?>
-                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                                    <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/80 px-1.5 py-0.2 rounded border border-emerald-200 dark:border-emerald-800/60">
                                         -Rp <?= number_format($order['discount_amount'], 0, ',', '.') ?>
                                     </span>
                                 <?php endif; ?>
@@ -423,72 +423,72 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                 <?php endif; ?>
 
                 <!-- Akun Roblox Penerima -->
-                <div class="p-3.5 rounded-2xl bg-sky-50/60 border border-sky-100 flex items-center justify-between gap-3">
+                <div class="p-3.5 rounded-2xl bg-sky-50/60 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/60 flex items-center justify-between gap-3">
                     <div class="flex items-center gap-3 min-w-0">
                         <img src="<?= htmlspecialchars($order['roblox_avatar_url']) ?>" 
                              alt="Avatar" 
                              onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($order['roblox_username']) ?>&background=38bdf8&color=fff'"
-                             class="w-10 h-10 rounded-full border-2 border-sky-400 bg-white object-cover flex-shrink-0">
+                             class="w-10 h-10 rounded-full border-2 border-sky-400 bg-white dark:bg-slate-800 object-cover flex-shrink-0">
                         <div class="min-w-0">
-                            <span class="text-[10px] text-sky-700 font-bold block uppercase tracking-wider">Penerima Roblox:</span>
-                            <span class="font-black text-slate-900 text-xs sm:text-sm truncate block"><?= htmlspecialchars($order['roblox_username']) ?></span>
+                            <span class="text-[10px] text-sky-700 dark:text-sky-300 font-bold block uppercase tracking-wider">Penerima Roblox:</span>
+                            <span class="font-black text-slate-900 dark:text-white text-xs sm:text-sm truncate block"><?= htmlspecialchars($order['roblox_username']) ?></span>
                         </div>
                     </div>
                     <button type="button" 
                             onclick="copyRobloxUsername()" 
-                            class="px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 text-[11px] font-bold rounded-xl border border-sky-200 transition flex items-center gap-1 flex-shrink-0 shadow-2xs">
+                            class="px-2.5 py-1.5 bg-white dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-sky-700 dark:text-sky-300 text-[11px] font-bold rounded-xl border border-sky-200 dark:border-slate-700 transition flex items-center gap-1 flex-shrink-0 shadow-2xs">
                         <i class="fa-regular fa-copy"></i>
                         <span id="copyUsernameBtnText">Salin</span>
                     </button>
                 </div>
 
                 <?php if (!empty($order['note'])): ?>
-                <div class="text-xs bg-slate-50 p-3 rounded-xl border border-slate-200 text-slate-600">
-                    <strong class="text-slate-800 block text-[11px] mb-0.5">Catatan Pesanan:</strong>
+                <div class="text-xs bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
+                    <strong class="text-slate-800 dark:text-slate-200 block text-[11px] mb-0.5">Catatan Pesanan:</strong>
                     "<?= htmlspecialchars($order['note']) ?>"
                 </div>
                 <?php endif; ?>
             </div>
 
             <!-- Card 2: Panduan Serah Terima Item (Langkah Jelas & Anti-Bingung) -->
-            <div class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-3.5">
+            <div class="bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-sm space-y-3.5">
                 <div class="flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center text-xs font-bold">
+                    <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xs font-bold border border-sky-200 dark:border-sky-800/60">
                         <i class="fa-solid fa-clipboard-list"></i>
                     </div>
-                    <h3 class="font-black text-slate-900 text-sm">Cara Mengambil Item Kamu:</h3>
+                    <h3 class="font-black text-slate-900 dark:text-white text-sm">Cara Mengambil Item Kamu:</h3>
                 </div>
 
-                <div class="space-y-2.5 text-xs text-slate-600">
-                    <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                <div class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                    <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
                         <span class="w-5 h-5 rounded-full bg-sky-500 text-white font-black text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
                         <div>
-                            <strong class="text-slate-800 block font-bold">Standby di Game Roblox</strong>
-                            <span>Buka game Roblox kamu atau siapkan Private Server kamu.</span>
+                            <strong class="text-slate-800 dark:text-white block font-bold">Standby di Game Roblox</strong>
+                            <span class="text-slate-500 dark:text-slate-400">Buka game Roblox kamu atau siapkan Private Server kamu.</span>
                         </div>
                     </div>
-                    <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                    <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
                         <span class="w-5 h-5 rounded-full bg-sky-500 text-white font-black text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
                         <div>
-                            <strong class="text-slate-800 block font-bold">Kirim Link / Koordinasi di Chat</strong>
-                            <span>Kirimkan link private server kamu di Live Chat sebelah kanan, atau tunggu seller join servermu.</span>
+                            <strong class="text-slate-800 dark:text-white block font-bold">Kirim Link / Koordinasi di Chat</strong>
+                            <span class="text-slate-500 dark:text-slate-400">Kirimkan link private server kamu di Live Chat sebelah kanan, atau tunggu seller join servermu.</span>
                         </div>
                     </div>
-                    <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                    <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
                         <span class="w-5 h-5 rounded-full bg-sky-500 text-white font-black text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
                         <div>
-                            <strong class="text-slate-800 block font-bold">Trade & Selesai!</strong>
-                            <span>Seller akan trade item langsung ke akun <strong><?= htmlspecialchars($order['roblox_username']) ?></strong>.</span>
+                            <strong class="text-slate-800 dark:text-white block font-bold">Trade & Selesai!</strong>
+                            <span class="text-slate-500 dark:text-slate-400">Seller akan trade item langsung ke akun <strong><?= htmlspecialchars($order['roblox_username']) ?></strong>.</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Bantuan Cepat WhatsApp Seller -->
-                <div class="pt-2 border-t border-slate-100">
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                     <a href="https://wa.me/6281234567890?text=<?= urlencode('Halo admin ItemPedia, saya ingin konfirmasi pesanan ' . $order['invoice_number'] . ' untuk username ' . $order['roblox_username']) ?>" 
                        target="_blank" 
-                       class="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 transition flex items-center gap-1.5 justify-center py-1">
-                        <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i>
+                       class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition flex items-center gap-1.5 justify-center py-1">
+                        <i class="fa-brands fa-whatsapp text-emerald-600 dark:text-emerald-400 text-sm"></i>
                         <span>Butuh bantuan admin langsung? Chat WhatsApp</span>
                     </a>
                 </div>
@@ -497,23 +497,23 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
         </div>
 
         <!-- KOLOM KANAN (7 Grid): Ruang Live Chat Berdampingan -->
-        <div class="lg:col-span-7 bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex flex-col relative" style="min-height: 520px;">
+        <div class="lg:col-span-7 bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col relative" style="min-height: 520px;">
             
             <!-- Chat Top Bar Header -->
-            <div class="p-4 bg-slate-50/90 border-b border-slate-200 flex items-center justify-between gap-3 flex-shrink-0">
+            <div class="p-4 bg-slate-50/90 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-shrink-0">
                 <div class="flex items-center gap-3">
                     <div class="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 text-white flex items-center justify-center text-base shadow-sm flex-shrink-0">
                         <i class="fa-solid fa-headset"></i>
-                        <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white animate-pulse"></span>
+                        <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 animate-pulse"></span>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <h3 class="font-black text-sm text-slate-900">Seller ItemPedia</h3>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-700 border border-emerald-300 flex items-center gap-1">
+                            <h3 class="font-black text-sm text-slate-900 dark:text-white">Seller ItemPedia</h3>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800/80 flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Online & Siap Trade
                             </span>
                         </div>
-                        <p class="text-[11px] text-slate-500">Koordinasi serah terima item langsung di sini secara realtime.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Koordinasi serah terima item langsung di sini secara realtime.</p>
                     </div>
                 </div>
 
@@ -521,26 +521,26 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                 <button type="button" 
                         id="btnEnableNotification" 
                         onclick="requestNotificationPermission()"
-                        class="px-3 py-1.5 bg-white hover:bg-sky-50 border border-slate-200 hover:border-sky-300 text-slate-600 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-2xs flex-shrink-0">
+                        class="px-3 py-1.5 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 hover:border-sky-300 dark:hover:border-sky-600 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-2xs flex-shrink-0">
                     <i class="fa-solid fa-bell text-amber-500" id="notifBellIcon"></i>
                     <span id="notifStatusText" class="hidden sm:inline">Notifikasi</span>
                 </button>
             </div>
 
             <!-- Notice Banner Ringkas -->
-            <div class="bg-sky-50/80 px-4 py-2 border-b border-sky-100 flex items-center justify-between text-[11px] text-sky-800 flex-shrink-0">
+            <div class="bg-sky-50/80 dark:bg-sky-950/40 px-4 py-2 border-b border-sky-100 dark:border-sky-900/50 flex items-center justify-between text-[11px] text-sky-800 dark:text-sky-300 flex-shrink-0">
                 <span class="flex items-center gap-1.5 font-bold">
-                    <i class="fa-solid fa-circle-info text-sky-600"></i>
+                    <i class="fa-solid fa-circle-info text-sky-600 dark:text-sky-400"></i>
                     <span>Kirim link private server kamu di sini atau standby di game ya!</span>
                 </span>
-                <span class="text-slate-400 font-mono text-[10px] hidden sm:inline">Auto-Sync 3s</span>
+                <span class="text-slate-400 dark:text-slate-500 font-mono text-[10px] hidden sm:inline">Auto-Sync 3s</span>
             </div>
 
             <!-- Wadah Pesan Chat (Scrollable) -->
-            <div id="chatMessagesContainer" class="p-4 sm:p-5 space-y-3.5 overflow-y-auto bg-slate-50/40 flex-grow scrollbar-none" style="height: 340px;">
+            <div id="chatMessagesContainer" class="p-4 sm:p-5 space-y-3.5 overflow-y-auto bg-slate-50/40 dark:bg-[#081220]/60 flex-grow scrollbar-none" style="height: 340px;">
                 <?php if (empty($chatMessages)): ?>
-                    <div id="chatEmptyState" class="text-center py-12 text-slate-400">
-                        <i class="fa-regular fa-comment-dots text-4xl mb-2 text-slate-300"></i>
+                    <div id="chatEmptyState" class="text-center py-12 text-slate-400 dark:text-slate-500">
+                        <i class="fa-regular fa-comment-dots text-4xl mb-2 text-slate-300 dark:text-slate-600"></i>
                         <p class="text-xs font-bold">Belum ada percakapan. Mulai kirim pesan ke penjual di bawah!</p>
                     </div>
                 <?php else: ?>
@@ -559,15 +559,15 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                                 </div>
                                 <div class="space-y-1">
                                     <div class="flex items-center gap-1.5">
-                                        <span class="text-[11px] font-black text-slate-900"><?= htmlspecialchars($msg['sender_name']) ?></span>
-                                        <span class="text-[8px] font-extrabold bg-sky-100 text-sky-700 px-1.5 py-0.2 rounded border border-sky-200">Official Seller</span>
+                                        <span class="text-[11px] font-black text-slate-900 dark:text-white"><?= htmlspecialchars($msg['sender_name']) ?></span>
+                                        <span class="text-[8px] font-extrabold bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 px-1.5 py-0.2 rounded border border-sky-200 dark:border-sky-800">Official Seller</span>
                                     </div>
                                     <?php if ($stickerHtml): ?>
                                         <?= $stickerHtml ?>
                                     <?php else: ?>
-                                        <div class="p-3 rounded-2xl rounded-tl-sm bg-white border border-slate-200 text-xs text-slate-800 leading-relaxed font-medium shadow-2xs"><?= formatChatMessageTextHtml($msg['message'], true) ?></div>
+                                        <div class="p-3 rounded-2xl rounded-tl-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-100 leading-relaxed font-medium shadow-2xs"><?= formatChatMessageTextHtml($msg['message'], true) ?></div>
                                     <?php endif; ?>
-                                    <span class="text-[10px] text-slate-400 font-semibold block"><?= $msg['time_formatted'] ?></span>
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold block"><?= $msg['time_formatted'] ?></span>
                                 </div>
                             </div>
                         <?php else: ?>
@@ -575,18 +575,18 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                             <div class="flex items-start justify-end gap-2.5 max-w-[90%] sm:max-w-[80%] ml-auto" data-msg-id="<?= $msg['id'] ?>">
                                 <div class="space-y-1 text-right">
                                     <div class="flex items-center justify-end gap-1.5">
-                                        <span class="text-[8px] font-extrabold bg-emerald-100 text-emerald-700 px-1.5 py-0.2 rounded border border-emerald-200">Kamu</span>
-                                        <span class="text-[11px] font-black text-slate-900"><?= htmlspecialchars($msg['sender_name']) ?></span>
+                                        <span class="text-[8px] font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.2 rounded border border-emerald-200 dark:border-emerald-800">Kamu</span>
+                                        <span class="text-[11px] font-black text-slate-900 dark:text-white"><?= htmlspecialchars($msg['sender_name']) ?></span>
                                     </div>
                                     <?php if ($stickerHtml): ?>
                                         <?= $stickerHtml ?>
                                     <?php else: ?>
                                         <div class="p-3 rounded-2xl rounded-tr-sm bg-gradient-to-r from-sky-500 to-blue-600 text-white text-xs leading-relaxed font-medium shadow-2xs text-left"><?= formatChatMessageTextHtml($msg['message'], false) ?></div>
                                     <?php endif; ?>
-                                    <span class="text-[10px] text-slate-400 font-semibold flex items-center justify-end gap-1">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold flex items-center justify-end gap-1">
                                         <span><?= $msg['time_formatted'] ?></span>
                                         <!-- Centang 2: Abu-abu jika belum dibaca, Biru jika sudah dibaca -->
-                                        <i class="fa-solid fa-check-double <?= $isRead ? 'text-sky-500' : 'text-slate-400' ?> text-[10px] buyer-check-icon" 
+                                        <i class="fa-solid fa-check-double <?= $isRead ? 'text-sky-500' : 'text-slate-400 dark:text-slate-500' ?> text-[10px] buyer-check-icon" 
                                            data-msg-id="<?= $msg['id'] ?>" 
                                            title="<?= $isRead ? 'Sudah dibaca oleh penjual' : 'Terkirim (Belum dibaca)' ?>"></i>
                                     </span>
@@ -594,7 +594,7 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                                 <img src="<?= htmlspecialchars($order['roblox_avatar_url']) ?>" 
                                      alt="Avatar" 
                                      onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($order['roblox_username']) ?>&background=38bdf8&color=fff'"
-                                     class="w-8 h-8 rounded-full border border-sky-400 bg-white object-cover flex-shrink-0 mt-0.5 shadow-2xs">
+                                     class="w-8 h-8 rounded-full border border-sky-400 bg-white dark:bg-slate-800 object-cover flex-shrink-0 mt-0.5 shadow-2xs">
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -602,35 +602,35 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
             </div>
 
             <!-- Tombol Balas Cepat (Quick Chips untuk Trade) -->
-            <div class="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-shrink-0">
-                <span class="text-[10px] font-black uppercase text-slate-400 tracking-wider flex items-center gap-1 whitespace-nowrap mr-1">
+            <div class="px-4 py-2 bg-slate-50 dark:bg-slate-900/70 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-shrink-0">
+                <span class="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider flex items-center gap-1 whitespace-nowrap mr-1">
                     <i class="fa-solid fa-bolt text-amber-500"></i> Cepat:
                 </span>
-                <button type="button" onclick="setQuickMessage('Halo kak, saya sudah standby di dalam game ya!')" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-sky-400 hover:bg-sky-50 text-[11px] font-bold text-slate-700 whitespace-nowrap transition shadow-2xs">
+                <button type="button" onclick="setQuickMessage('Halo kak, saya sudah standby di dalam game ya!')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 hover:bg-sky-50 dark:hover:bg-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap transition shadow-2xs">
                     🎮 Standby di game
                 </button>
-                <button type="button" onclick="setQuickMessage('Ini link private server saya kak: ')" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-sky-400 hover:bg-sky-50 text-[11px] font-bold text-slate-700 whitespace-nowrap transition shadow-2xs">
+                <button type="button" onclick="setQuickMessage('Ini link private server saya kak: ')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 hover:bg-sky-50 dark:hover:bg-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap transition shadow-2xs">
                     🔗 Kirim link server
                 </button>
-                <button type="button" onclick="setQuickMessage('Kapan item saya dikirimkan ya kak?')" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-sky-400 hover:bg-sky-50 text-[11px] font-bold text-slate-700 whitespace-nowrap transition shadow-2xs">
+                <button type="button" onclick="setQuickMessage('Kapan item saya dikirimkan ya kak?')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 hover:bg-sky-50 dark:hover:bg-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap transition shadow-2xs">
                     📦 Kapan dikirim?
                 </button>
-                <button type="button" onclick="setQuickMessage('Item sudah saya terima dengan lengkap kak, terima kasih banyak!')" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-sky-400 hover:bg-sky-50 text-[11px] font-bold text-slate-700 whitespace-nowrap transition shadow-2xs">
+                <button type="button" onclick="setQuickMessage('Item sudah saya terima dengan lengkap kak, terima kasih banyak!')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 hover:bg-sky-50 dark:hover:bg-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap transition shadow-2xs">
                     ✅ Item sudah diterima!
                 </button>
             </div>
 
             <!-- Form Kirim Pesan & Floating Sticker Drawer -->
-            <div class="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-200 flex-shrink-0 relative">
+            <div class="p-3.5 sm:p-4 bg-slate-50 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800 flex-shrink-0 relative">
                 
                 <!-- Floating Sticker Picker Drawer -->
-                <div id="stickerDrawer" class="hidden absolute bottom-full left-3 right-3 sm:left-4 sm:right-4 mb-2 p-3.5 bg-white/98 backdrop-blur-md rounded-2xl border-2 border-sky-200 shadow-xl z-30 animate-in fade-in zoom-in-95 duration-150">
-                    <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
-                        <span class="text-xs font-black text-slate-800 flex items-center gap-1.5">
+                <div id="stickerDrawer" class="hidden absolute bottom-full left-3 right-3 sm:left-4 sm:right-4 mb-2 p-3.5 bg-white/98 dark:bg-[#0c1e33]/98 backdrop-blur-md rounded-2xl border-2 border-sky-200 dark:border-sky-800 shadow-xl z-30 animate-in fade-in zoom-in-95 duration-150">
+                    <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800">
+                        <span class="text-xs font-black text-slate-800 dark:text-white flex items-center gap-1.5">
                             <i class="fa-solid fa-icons text-amber-500"></i>
                             <span>Sticker Game & Trade ItemPedia</span>
                         </span>
-                        <button type="button" onclick="toggleStickerDrawer(false)" class="text-slate-400 hover:text-slate-600 text-xs w-6 h-6 rounded-lg hover:bg-slate-100 flex items-center justify-center transition">
+                        <button type="button" onclick="toggleStickerDrawer(false)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs w-6 h-6 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
@@ -644,7 +644,7 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                     <button type="button" 
                             id="btnToggleSticker" 
                             onclick="toggleStickerDrawer()" 
-                            class="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:border-amber-400 hover:bg-amber-50 text-amber-500 flex items-center justify-center text-lg transition flex-shrink-0 shadow-2xs active:scale-95"
+                            class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-amber-400 dark:hover:border-amber-500 hover:bg-amber-50 dark:hover:bg-slate-700 text-amber-500 flex items-center justify-center text-lg transition flex-shrink-0 shadow-2xs active:scale-95"
                             title="Kirim Sticker Seru">
                         <i class="fa-solid fa-face-smile"></i>
                     </button>
@@ -653,7 +653,7 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                         <textarea id="chatInputMessage" 
                                   rows="1" 
                                   placeholder="Ketik pesan untuk penjual di sini... (Enter untuk kirim)"
-                                  class="w-full px-3.5 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 font-medium placeholder-slate-400 focus:outline-none focus:border-sky-500 transition resize-none"></textarea>
+                                  class="w-full px-3.5 py-2.5 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white font-medium placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-500 transition resize-none"></textarea>
                     </div>
                     <button type="submit" 
                             id="btnSendChat"
@@ -662,11 +662,11 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                         <i class="fa-solid fa-paper-plane text-xs"></i>
                     </button>
                 </form>
-                <div class="flex items-center justify-between text-[10px] text-slate-400 mt-2 px-1">
+                <div class="flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 mt-2 px-1">
                     <span class="flex items-center gap-1">
                         <i class="fa-solid fa-shield-halved text-emerald-500"></i> Ruang chat terenkripsi & realtime
                     </span>
-                    <span id="chatPollingStatus" class="flex items-center gap-1 font-semibold text-emerald-600">
+                    <span id="chatPollingStatus" class="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Terhubung
                     </span>
                 </div>
@@ -679,35 +679,35 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
 
     <!-- BAGIAN ULASAN: HANYA TAMPIL KETIKA PESANAN SUDAH SELESAI (SUCCESS) -->
     <?php if ($isSuccess): ?>
-    <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm mb-8 animate-in fade-in">
+    <div class="bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm mb-8 animate-in fade-in">
         <div class="max-w-2xl mx-auto">
             <?php if (!empty($review)): ?>
                 <!-- Ulasan Sudah Terkirim -->
-                <div class="bg-emerald-50/50 p-6 rounded-2xl border border-emerald-200 shadow-2xs space-y-4">
+                <div class="bg-emerald-50/50 dark:bg-emerald-950/40 p-6 rounded-2xl border border-emerald-200 dark:border-emerald-800/60 shadow-2xs space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-lg">
                                 <i class="fa-solid fa-star"></i>
                             </div>
                             <div>
-                                <h4 class="font-black text-sm text-slate-900">Ulasan Anda untuk Produk Ini</h4>
-                                <span class="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
+                                <h4 class="font-black text-sm text-slate-900 dark:text-white">Ulasan Anda untuk Produk Ini</h4>
+                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
                                     <i class="fa-solid fa-circle-check"></i> Terverifikasi & Tayang di Toko
                                 </span>
                             </div>
                         </div>
                         <div class="flex items-center gap-1 text-amber-400 text-sm">
                             <?php for ($s = 1; $s <= 5; $s++): ?>
-                                <i class="fa-solid fa-star <?= $s <= (int)$review['rating'] ? 'text-amber-400' : 'text-slate-200' ?>"></i>
+                                <i class="fa-solid fa-star <?= $s <= (int)$review['rating'] ? 'text-amber-400' : 'text-slate-200 dark:text-slate-700' ?>"></i>
                             <?php endfor; ?>
-                            <span class="text-xs font-black text-slate-700 ml-1">(<?= (int)$review['rating'] ?>/5)</span>
+                            <span class="text-xs font-black text-slate-700 dark:text-slate-300 ml-1">(<?= (int)$review['rating'] ?>/5)</span>
                         </div>
                     </div>
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 italic text-xs font-semibold text-slate-700 leading-relaxed shadow-2xs">
+                    <div class="bg-white dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 italic text-xs font-semibold text-slate-700 dark:text-slate-200 leading-relaxed shadow-2xs">
                         "<?= htmlspecialchars($review['comment']) ?>"
                     </div>
-                    <div class="text-[10px] text-slate-400 font-medium flex justify-between items-center">
-                        <span>Pembeli: <strong><?= htmlspecialchars($order['roblox_username']) ?></strong></span>
+                    <div class="text-[10px] text-slate-400 dark:text-slate-500 font-medium flex justify-between items-center">
+                        <span>Pembeli: <strong class="text-slate-700 dark:text-slate-300"><?= htmlspecialchars($order['roblox_username']) ?></strong></span>
                         <span><?= date('d M Y, H:i', strtotime($review['created_at'])) ?></span>
                     </div>
                 </div>
@@ -715,19 +715,19 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                 <!-- Form Tulis Ulasan Baru (Hanya Muncul Saat Pesanan Selesai) -->
                 <div class="space-y-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-lg">
+                        <div class="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold text-lg border border-amber-200 dark:border-amber-800/60">
                             <i class="fa-solid fa-star"></i>
                         </div>
                         <div>
-                            <h4 class="font-black text-base text-slate-900">Beri Ulasan & Bintang Pesanan</h4>
-                            <p class="text-xs text-slate-500">Item sudah diterima dengan baik? Bagikan kepuasan belanja kamu untuk membantu reputasi toko!</p>
+                            <h4 class="font-black text-base text-slate-900 dark:text-white">Beri Ulasan & Bintang Pesanan</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Item sudah diterima dengan baik? Bagikan kepuasan belanja kamu untuk membantu reputasi toko!</p>
                         </div>
                     </div>
 
                     <form action="/order/<?= htmlspecialchars($order['invoice_number']) ?>/review" method="POST" class="space-y-4">
                         <!-- Star Selector -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-2">Pilih Penilaian Bintang:</label>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">Pilih Penilaian Bintang:</label>
                             <div class="flex items-center gap-2" id="starRatingContainer">
                                 <input type="hidden" name="rating" id="ratingValue" value="5">
                                 <?php for ($i = 1; $i <= 5; $i++): ?>
@@ -738,18 +738,18 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
                                     <i class="fa-solid fa-star"></i>
                                 </button>
                                 <?php endfor; ?>
-                                <span id="ratingText" class="text-xs font-extrabold text-slate-700 ml-2 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">5.0 - Sangat Puas</span>
+                                <span id="ratingText" class="text-xs font-extrabold text-slate-700 dark:text-slate-200 ml-2 bg-amber-50 dark:bg-amber-950/80 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-800/60">5.0 - Sangat Puas</span>
                             </div>
                         </div>
 
                         <!-- Comment Input -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Tulis Ulasan / Pengalaman Belanja:</label>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Tulis Ulasan / Pengalaman Belanja:</label>
                             <textarea name="comment" 
                                       rows="3" 
                                       required 
                                       placeholder="Contoh: Pengiriman super kilat, barang sesuai deskripsi, penjual ramah dan fast respon..." 
-                                      class="w-full p-3.5 bg-slate-50 border-2 border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-900 font-medium placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:bg-white transition resize-none"></textarea>
+                                      class="w-full p-3.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-xs sm:text-sm text-slate-900 dark:text-white font-medium placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-800 transition resize-none"></textarea>
                         </div>
 
                         <button type="submit" 
@@ -806,12 +806,12 @@ function initStickerGrid() {
     container.innerHTML = STICKER_PACK.map(s => `
         <button type="button" 
                 onclick="sendStickerMessage('${s.id}')" 
-                class="group flex flex-col items-center justify-center p-2 rounded-2xl hover:bg-sky-50 border border-slate-100 hover:border-sky-300 transition active:scale-95" 
+                class="group flex flex-col items-center justify-center p-2 rounded-2xl hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-100 dark:border-slate-800 hover:border-sky-300 dark:hover:border-sky-700 transition active:scale-95" 
                 title="${s.title}">
             <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr ${s.bg} text-white flex flex-col items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
                 <i class="fa-solid ${s.icon} text-base drop-shadow-xs"></i>
             </div>
-            <span class="text-[9px] font-black text-slate-700 mt-1 truncate max-w-full">${s.badge}</span>
+            <span class="text-[9px] font-black text-slate-700 dark:text-slate-200 mt-1 truncate max-w-full">${s.badge}</span>
         </button>
     `).join('');
 }
@@ -1122,7 +1122,7 @@ function renderMessageBubble(msg) {
     } else {
         const formattedText = formatChatMessageHtml(msg.message, isSeller);
         if (isSeller) {
-            contentHtml = `<div class="p-3 rounded-2xl rounded-tl-sm bg-white border border-slate-200 text-xs text-slate-800 leading-relaxed font-medium shadow-2xs">${formattedText}</div>`;
+            contentHtml = `<div class="p-3 rounded-2xl rounded-tl-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-100 leading-relaxed font-medium shadow-2xs">${formattedText}</div>`;
         } else {
             contentHtml = `<div class="p-3 rounded-2xl rounded-tr-sm bg-gradient-to-r from-sky-500 to-blue-600 text-white text-xs leading-relaxed font-medium shadow-2xs text-left">${formattedText}</div>`;
         }
@@ -1136,27 +1136,27 @@ function renderMessageBubble(msg) {
                 </div>
                 <div class="space-y-1">
                     <div class="flex items-center gap-1.5">
-                        <span class="text-[11px] font-black text-slate-900">${escapeHtml(msg.sender_name)}</span>
-                        <span class="text-[8px] font-extrabold bg-sky-100 text-sky-700 px-1.5 py-0.2 rounded border border-sky-200">Official Seller</span>
+                        <span class="text-[11px] font-black text-slate-900 dark:text-white">${escapeHtml(msg.sender_name)}</span>
+                        <span class="text-[8px] font-extrabold bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 px-1.5 py-0.2 rounded border border-sky-200 dark:border-sky-800">Official Seller</span>
                     </div>
                     ${contentHtml}
-                    <span class="text-[10px] text-slate-400 font-semibold block">${msg.time_formatted || 'Baru saja'}</span>
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold block">${msg.time_formatted || 'Baru saja'}</span>
                 </div>
             </div>
         `;
     } else {
         // Centang 2: Biru jika sudah dibaca (isRead), Abu-abu jika belum
-        const checkColor = isRead ? 'text-sky-500' : 'text-slate-400';
+        const checkColor = isRead ? 'text-sky-500' : 'text-slate-400 dark:text-slate-500';
         const checkTitle = isRead ? 'Sudah dibaca oleh penjual' : 'Terkirim (Belum dibaca)';
         return `
             <div class="flex items-start justify-end gap-2.5 max-w-[90%] sm:max-w-[80%] ml-auto" data-msg-id="${msg.id}">
                 <div class="space-y-1 text-right">
                     <div class="flex items-center justify-end gap-1.5">
-                        <span class="text-[8px] font-extrabold bg-emerald-100 text-emerald-700 px-1.5 py-0.2 rounded border border-emerald-200">Kamu</span>
-                        <span class="text-[11px] font-black text-slate-900">${escapeHtml(msg.sender_name)}</span>
+                        <span class="text-[8px] font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.2 rounded border border-emerald-200 dark:border-emerald-800">Kamu</span>
+                        <span class="text-[11px] font-black text-slate-900 dark:text-white">${escapeHtml(msg.sender_name)}</span>
                     </div>
                     ${contentHtml}
-                    <span class="text-[10px] text-slate-400 font-semibold flex items-center justify-end gap-1">
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold flex items-center justify-end gap-1">
                         <span>${msg.time_formatted || 'Baru saja'}</span>
                         <i class="fa-solid fa-check-double ${checkColor} text-[10px] buyer-check-icon" data-msg-id="${msg.id}" title="${checkTitle}"></i>
                     </span>
@@ -1164,7 +1164,7 @@ function renderMessageBubble(msg) {
                 <img src="${ROBLOX_AVATAR}" 
                      alt="Avatar" 
                      onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(ROBLOX_USERNAME)}&background=38bdf8&color=fff'"
-                     class="w-8 h-8 rounded-full border border-sky-400 bg-white object-cover flex-shrink-0 mt-0.5 shadow-2xs">
+                     class="w-8 h-8 rounded-full border border-sky-400 bg-white dark:bg-slate-800 object-cover flex-shrink-0 mt-0.5 shadow-2xs">
             </div>
         `;
     }
