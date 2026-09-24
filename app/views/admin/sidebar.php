@@ -127,9 +127,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                         <div class="flex items-center">
                             <i class="fa-solid fa-comments text-xs mr-2 text-slate-400"></i> Live Chat Pembeli
                         </div>
-                        <?php if ($unreadChatCount > 0): ?>
-                            <span class="px-2 py-0.2 rounded-full text-[10px] font-black bg-emerald-500 text-white animate-pulse"><?= $unreadChatCount ?></span>
-                        <?php endif; ?>
+                        <span id="adminMobileUnreadChatBadge" class="admin-sidebar-chat-unread <?= $unreadChatCount > 0 ? '' : 'hidden' ?> px-2 py-0.2 rounded-full text-[10px] font-black bg-emerald-500 text-white animate-pulse"><?= $unreadChatCount ?></span>
                     </button>
                     <a href="/admin/reviews" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'reviews' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-star text-xs mr-2 text-slate-400"></i> Ulasan & Rating
@@ -282,9 +280,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                             <i class="fa-solid fa-comments text-xs mr-2.5 text-slate-400"></i>
                             <span>Live Chat Pembeli</span>
                         </div>
-                        <?php if ($unreadChatCount > 0): ?>
-                            <span class="px-2 py-0.2 rounded-full text-[10px] font-black bg-emerald-500 text-white animate-pulse"><?= $unreadChatCount ?></span>
-                        <?php endif; ?>
+                        <span id="adminDesktopUnreadChatBadge" class="admin-sidebar-chat-unread <?= $unreadChatCount > 0 ? '' : 'hidden' ?> px-2 py-0.2 rounded-full text-[10px] font-black bg-emerald-500 text-white animate-pulse"><?= $unreadChatCount ?></span>
                     </button>
                     <a href="/admin/reviews" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'reviews' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-star text-xs mr-2.5 text-slate-400"></i>

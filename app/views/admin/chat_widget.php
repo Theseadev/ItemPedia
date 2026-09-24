@@ -8,8 +8,9 @@
                 class="bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/90 font-extrabold py-2.5 px-4 rounded-full shadow-lg flex items-center gap-2.5 transition transform active:scale-95 cursor-pointer">
             <i class="fa-solid fa-envelope text-blue-600 text-sm"></i>
             <span class="text-xs font-bold text-slate-900">Pesan</span>
-            <span id="floatingTotalUnreadBadge" class="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-black flex items-center justify-center">
-                4
+            <?php $unreadWidgetCount = $unreadChatCount ?? 0; ?>
+            <span id="floatingTotalUnreadBadge" class="<?= $unreadWidgetCount > 0 ? '' : 'hidden' ?> w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-black flex items-center justify-center">
+                <?= $unreadWidgetCount ?>
             </span>
         </button>
     </div>
@@ -187,6 +188,31 @@ function toggleFloatingChat(open) {
     }
 }
 
+// Update Unread Badges Across UI (Dock Button & Sidebar)
+function updateUnreadBadges(totalUnread) {
+    const unreadBadge = document.getElementById('floatingTotalUnreadBadge');
+    if (unreadBadge) {
+        if (totalUnread > 0) {
+            unreadBadge.classList.remove('hidden');
+            unreadBadge.innerText = totalUnread;
+        } else {
+            unreadBadge.classList.add('hidden');
+            unreadBadge.innerText = '0';
+        }
+    }
+
+    // Update sidebar badges if present
+    document.querySelectorAll('.admin-sidebar-chat-unread').forEach(el => {
+        if (totalUnread > 0) {
+            el.classList.remove('hidden');
+            el.innerText = totalUnread;
+        } else {
+            el.classList.add('hidden');
+            el.innerText = '0';
+        }
+    });
+}
+
 // Load Inbox List from API
 async function loadChatInboxList(preserveActive = true) {
     try {
@@ -195,15 +221,20 @@ async function loadChatInboxList(preserveActive = true) {
         if (data.success && Array.isArray(data.conversations)) {
             allChatConversations = data.conversations;
 
+            // Jika ada percakapan aktif yang sedang terbuka, set unread_count-nya jadi 0
+            if (activeChatInvoice) {
+                const activeConv = allChatConversations.find(c => c.invoice_number === activeChatInvoice);
+                if (activeConv) {
+                    activeConv.unread_count = 0;
+                }
+            }
+
             // Hitung total unread
             let totalUnread = 0;
             allChatConversations.forEach(c => {
                 totalUnread += (c.unread_count || 0);
             });
-            const unreadBadge = document.getElementById('floatingTotalUnreadBadge');
-            if (unreadBadge) {
-                unreadBadge.innerText = totalUnread > 0 ? totalUnread : '4';
-            }
+            updateUnreadBadges(totalUnread);
 
             renderInboxList(allChatConversations);
 
@@ -278,13 +309,16 @@ function filterChatInbox(type) {
     }
 }
 
-// Select Active Conversation
+// Select Active Conversation & Mark as Read
 async function selectChatConversation(invoice) {
     activeChatInvoice = invoice;
     knownMessageIds.clear();
 
     const conversation = allChatConversations.find(c => c.invoice_number === invoice);
     if (conversation) {
+        // 1. Reset unread count seketika di state lokal
+        conversation.unread_count = 0;
+        
         const initial = (conversation.roblox_username || 'U').charAt(0).toUpperCase();
         document.getElementById('chatActiveAvatar').innerText = initial;
         document.getElementById('chatActiveUsername').innerText = conversation.roblox_username;
@@ -292,11 +326,20 @@ async function selectChatConversation(invoice) {
         document.getElementById('chatActiveOrderBtn').href = '/order/' + conversation.invoice_number;
     }
 
+    // 2. Hitung ulang total unread dan perbarui badge
+    let totalUnread = 0;
+    allChatConversations.forEach(c => {
+        totalUnread += (c.unread_count || 0);
+    });
+    updateUnreadBadges(totalUnread);
+
+    // 3. Render ulang list agar badge unread bulat biru (1) langsung HILANG
     renderInboxList(allChatConversations);
 
     const stream = document.getElementById('chatMessageStream');
     stream.innerHTML = '<div class="text-center py-10 text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin text-base"></i><p class="mt-2">Memuat pesan...</p></div>';
 
+    // 4. Panggil endpoint untuk ambil pesan dan otomatis update is_read = 1 di database
     await loadActiveChatMessages();
 }
 
@@ -546,5 +589,9 @@ function escapeChatHtml(str) {
 window.openChatDockForInvoice = function(invoice) {
     toggleFloatingChat(true);
     selectChatConversation(invoice);
+};
+
+window.toggleSellerDockChat = function(open) {
+    toggleFloatingChat(open);
 };
 </script>
