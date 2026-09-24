@@ -1,0 +1,14 @@
+{
+  "name": "itempedia/store",
+  "description": "ItemPedia - Roblox Item & Account Store built with Flight PHP",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "flightphp/core": "^3.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
