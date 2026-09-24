@@ -1263,7 +1263,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     </div>
 
     <!-- ================= WIDGET POPUP CHAT BOT AI ITEMPEDIA ================= -->
-    <div id="aiChatWidget" class="hidden fixed bottom-18 right-3 sm:right-6 sm:bottom-24 z-50 w-[calc(100vw-1.5rem)] sm:w-[390px] h-[480px] sm:h-[520px] max-h-[78vh] bg-white rounded-2xl sm:rounded-3xl shadow-2xl border-2 border-sky-100 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200">
+    <div id="aiChatWidget" class="hidden fixed bottom-18 right-3 sm:right-6 sm:bottom-24 z-50 w-[calc(100vw-1.5rem)] sm:w-[390px] h-[480px] sm:h-[520px] max-h-[78vh] bg-white dark:bg-[#0c1e33] rounded-2xl sm:rounded-3xl shadow-2xl border-2 border-sky-100 dark:border-slate-800 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-200">
         
         <!-- Header Bot AI -->
         <div class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 text-white p-4 flex items-center justify-between shadow-md flex-shrink-0">
@@ -1285,20 +1285,20 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 <button type="button" 
                         onclick="resetAiChat()" 
                         title="Reset Percakapan"
-                        class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+                        class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer">
                     <i class="fa-solid fa-rotate-right text-xs"></i>
                 </button>
                 <button type="button" 
                         onclick="toggleAiChatWidget()" 
                         title="Tutup Chat AI"
-                        class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+                        class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
         </div>
 
         <!-- Chat Area (Scrollable) -->
-        <div id="aiChatMessages" class="p-4 space-y-3.5 overflow-y-auto flex-grow bg-slate-50/50 text-xs scrollbar-none">
+        <div id="aiChatMessages" class="p-4 space-y-3.5 overflow-y-auto flex-grow bg-slate-50/50 dark:bg-slate-900/60 text-xs scrollbar-none">
             
             <!-- AI Welcome Bubble -->
             <div class="flex items-start gap-2.5 max-w-[90%]">
@@ -1306,33 +1306,33 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                     <i class="fa-solid fa-robot"></i>
                 </div>
                 <div class="space-y-1">
-                    <div class="p-3.5 rounded-2xl rounded-tl-sm bg-white border border-slate-200/90 text-slate-800 leading-relaxed shadow-sm font-medium">
+                    <div class="p-3.5 rounded-2xl rounded-tl-sm bg-white dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 text-slate-800 dark:text-slate-100 leading-relaxed shadow-sm font-medium">
                         Halo! 👋 Saya <strong>ItemPedia AI Assistant</strong>.<br>
                         Ada yang bisa saya bantu seputar belanja item game Roblox, jam buka toko, cara pembayaran QRIS, atau lacak pesanan?
                     </div>
-                    <span class="text-[10px] text-slate-400 font-semibold block">Baru saja</span>
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold block">Baru saja</span>
                 </div>
             </div>
 
             <!-- Quick Suggestions Chips -->
             <div id="aiQuickChips" class="space-y-1.5 pt-1">
-                <p class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                <p class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1">
                     <i class="fa-solid fa-lightbulb text-amber-500"></i> Rekomendasi Pertanyaan:
                 </p>
                 <div class="flex flex-wrap gap-1.5">
-                    <button type="button" onclick="askAiQuestion('Jam operasional toko jam berapa?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Jam operasional toko jam berapa?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         ⏰ Jam operasional toko?
                     </button>
-                    <button type="button" onclick="askAiQuestion('Bagaimana cara bayar lewat QRIS?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Bagaimana cara bayar lewat QRIS?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         💳 Cara bayar via QRIS?
                     </button>
-                    <button type="button" onclick="askAiQuestion('Bagaimana cara trade item Roblox di sini?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Bagaimana cara trade item Roblox di sini?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         🎮 Cara trade item Roblox?
                     </button>
-                    <button type="button" onclick="askAiQuestion('Apakah transaksi di ItemPedia aman & bergaransi?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Apakah transaksi di ItemPedia aman & bergaransi?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         🛡️ Apakah belanja di sini aman?
                     </button>
-                    <button type="button" onclick="askAiQuestion('Game apa saja yang tersedia di ItemPedia?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Game apa saja yang tersedia di ItemPedia?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         🛒 Game apa saja yang tersedia?
                     </button>
                 </div>
@@ -1343,7 +1343,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 <div class="w-7 h-7 rounded-xl bg-sky-500 text-white flex items-center justify-center text-xs flex-shrink-0 shadow-sm">
                     <i class="fa-solid fa-robot"></i>
                 </div>
-                <div class="p-3 bg-white border border-slate-200 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-1.5">
+                <div class="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-sky-500 animate-bounce"></span>
                     <span class="w-2 h-2 rounded-full bg-sky-500 animate-bounce [animation-delay:0.2s]"></span>
                     <span class="w-2 h-2 rounded-full bg-sky-500 animate-bounce [animation-delay:0.4s]"></span>
@@ -1353,21 +1353,21 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         </div>
 
         <!-- Input Form AI -->
-        <div class="p-3.5 bg-white border-t border-slate-200 flex-shrink-0">
+        <div class="p-3.5 bg-white dark:bg-[#0c1e33] border-t border-slate-200 dark:border-slate-800 flex-shrink-0">
             <form id="aiChatForm" onsubmit="handleSendAiMessage(event)" class="flex gap-2">
                 <input type="text" 
                        id="aiChatInput" 
-                       placeholder="Tanya seputar toko ItemPedia..."
+                       placeholder="Tanya seputar toko ItemPedia..." 
                        autocomplete="off"
-                       class="flex-grow px-3.5 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-900 font-medium placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:bg-white transition">
+                       class="flex-grow px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 rounded-2xl text-xs sm:text-sm text-slate-900 dark:text-white font-medium placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-900 transition">
                 <button type="submit" 
                         id="btnSendAi"
-                        class="px-4 py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-black text-xs rounded-2xl shadow-md shadow-sky-300 transition flex items-center justify-center gap-1 active:scale-95 flex-shrink-0">
+                        class="px-4 py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-black text-xs rounded-2xl shadow-md shadow-sky-300 transition flex items-center justify-center gap-1 active:scale-95 flex-shrink-0 cursor-pointer">
                     <span>Kirim</span>
                     <i class="fa-solid fa-paper-plane text-[10px]"></i>
                 </button>
             </form>
-            <div class="flex items-center justify-between text-[10px] text-slate-400 mt-2 px-1">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500 mt-2 px-1">
                 <span>🤖 AI Asisten Toko ItemPedia</span>
                 <span>Khusus Info Toko & Pesanan</span>
             </div>
@@ -1387,6 +1387,43 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             .replace(/'/g, '&#039;');
     }
 
+    // Helper pendeteksi jam operasional toko sesuai zona waktu lokal pembeli
+    function detectLocalStoreHours() {
+        try {
+            const userOffsetMin = -new Date().getTimezoneOffset(); // e.g. +420 (WIB UTC+7), +480 (WITA/MYT UTC+8), +540 (WIT UTC+9)
+            const userOffsetHours = userOffsetMin / 60;
+            const diffFromWib = userOffsetHours - 7; // Store base hours are WIB (UTC+7)
+
+            let openHour = 6 + diffFromWib;
+            let closeHour = 20 + diffFromWib;
+
+            const pad = (n) => String(Math.floor((n + 24) % 24)).padStart(2, '0');
+            const openStr = `${pad(openHour)}:00`;
+            const closeStr = `${pad(closeHour)}:00`;
+
+            let tzName = 'WIB';
+            if (Math.round(userOffsetHours) === 8) {
+                tzName = 'WITA/MYT';
+            } else if (Math.round(userOffsetHours) === 9) {
+                tzName = 'WIT';
+            } else if (Math.round(userOffsetHours) !== 7) {
+                tzName = `UTC${userOffsetHours >= 0 ? '+' : ''}${userOffsetHours}`;
+            }
+
+            return {
+                openTime: openStr,
+                closeTime: closeStr,
+                tzCode: (Math.round(userOffsetHours) === 7) ? 'WIB' : tzName
+            };
+        } catch(e) {
+            return {
+                openTime: '06:00',
+                closeTime: '20:00',
+                tzCode: 'WIB'
+            };
+        }
+    }
+
     let isAiChatOpen = false;
 
     function toggleAiChatWidget() {
@@ -1397,7 +1434,8 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         if (isAiChatOpen) {
             widget.classList.remove('hidden');
             if (icon) icon.className = 'fa-solid fa-xmark text-xl sm:text-2xl';
-            document.getElementById('aiChatInput').focus();
+            const input = document.getElementById('aiChatInput');
+            if (input) input.focus();
             scrollAiChatToBottom();
         } else {
             widget.classList.add('hidden');
@@ -1413,7 +1451,8 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     }
 
     function askAiQuestion(questionText) {
-        document.getElementById('aiChatInput').value = questionText;
+        const input = document.getElementById('aiChatInput');
+        if (input) input.value = questionText;
         handleSendAiMessage();
     }
 
@@ -1425,27 +1464,27 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                     <i class="fa-solid fa-robot"></i>
                 </div>
                 <div class="space-y-1">
-                    <div class="p-3.5 rounded-2xl rounded-tl-sm bg-white border border-slate-200/90 text-slate-800 leading-relaxed shadow-sm font-medium">
+                    <div class="p-3.5 rounded-2xl rounded-tl-sm bg-white dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 text-slate-800 dark:text-slate-100 leading-relaxed shadow-sm font-medium">
                         Halo! 👋 Percakapan telah direset. Silakan tanyakan hal apa pun seputar transaksi dan produk di ItemPedia!
                     </div>
-                    <span class="text-[10px] text-slate-400 font-semibold block">Baru saja</span>
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold block">Baru saja</span>
                 </div>
             </div>
             <div id="aiQuickChips" class="space-y-1.5 pt-1">
-                <p class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                <p class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center gap-1">
                     <i class="fa-solid fa-lightbulb text-amber-500"></i> Rekomendasi Pertanyaan:
                 </p>
                 <div class="flex flex-wrap gap-1.5">
-                    <button type="button" onclick="askAiQuestion('Jam operasional toko jam berapa?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Jam operasional toko jam berapa?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         ⏰ Jam operasional toko?
                     </button>
-                    <button type="button" onclick="askAiQuestion('Bagaimana cara bayar lewat QRIS?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Bagaimana cara bayar lewat QRIS?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         💳 Cara bayar via QRIS?
                     </button>
-                    <button type="button" onclick="askAiQuestion('Bagaimana cara trade item Roblox di sini?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Bagaimana cara trade item Roblox di sini?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         🎮 Cara trade item Roblox?
                     </button>
-                    <button type="button" onclick="askAiQuestion('Apakah transaksi di ItemPedia aman & bergaransi?')" class="px-2.5 py-1 bg-white hover:bg-sky-50 hover:border-sky-400 border border-slate-200 text-slate-700 text-[11px] font-bold rounded-xl transition text-left shadow-2xs">
+                    <button type="button" onclick="askAiQuestion('Apakah transaksi di ItemPedia aman & bergaransi?')" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 hover:border-sky-400 dark:hover:border-sky-500 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-[11px] font-bold rounded-xl transition text-left shadow-2xs cursor-pointer">
                         🛡️ Apakah belanja di sini aman?
                     </button>
                 </div>
@@ -1454,7 +1493,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 <div class="w-7 h-7 rounded-xl bg-sky-500 text-white flex items-center justify-center text-xs flex-shrink-0 shadow-sm">
                     <i class="fa-solid fa-robot"></i>
                 </div>
-                <div class="p-3 bg-white border border-slate-200 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-1.5">
+                <div class="p-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-sky-500 animate-bounce"></span>
                     <span class="w-2 h-2 rounded-full bg-sky-500 animate-bounce [animation-delay:0.2s]"></span>
                     <span class="w-2 h-2 rounded-full bg-sky-500 animate-bounce [animation-delay:0.4s]"></span>
@@ -1502,14 +1541,14 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
     // Knowledge Base Engine Khusus ItemPedia
     function generateItemPediaAiResponse(query) {
-        const q = query.toLowerCase();
+        const q = String(query || '').toLowerCase();
 
         // 1. Jam Buka / Operasional (Dinamis Sesuai Zona Waktu Lokal)
-        if (q.includes('jam') || q.includes('buka') || q.includes('operasional') || q.includes('tutup') || q.includes('kapan')) {
+        if (q.includes('jam') || q.includes('buka') || q.includes('operasional') || q.includes('tutup') || q.includes('kapan') || q.includes('waktu')) {
             const local = detectLocalStoreHours();
             let localExtra = '';
             if (local.tzCode && local.tzCode !== 'WIB') {
-                localExtra = `<br><span class="inline-block mt-2 px-3 py-1.5 bg-sky-50 text-sky-800 rounded-xl text-xs font-bold border border-sky-200">📍 <strong>Menyesuaikan zona waktu Anda (${local.tzCode})</strong>: Buka pukul <strong>${local.openTime} ${local.tzCode} - ${local.closeTime} ${local.tzCode}</strong></span>`;
+                localExtra = `<br><span class="inline-block mt-2 px-3 py-1.5 bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 rounded-xl text-xs font-bold border border-sky-200 dark:border-sky-800">📍 <strong>Menyesuaikan zona waktu Anda (${local.tzCode})</strong>: Buka pukul <strong>${local.openTime} ${local.tzCode} - ${local.closeTime} ${local.tzCode}</strong></span>`;
             }
             return formatAiResponse(`⏰ <strong>Jam Operasional Toko ItemPedia</strong>:<br>
             Kami buka setiap hari <strong>Senin - Minggu pukul 06:00 WIB - 20:00 WIB</strong>!${localExtra}<br><br>
@@ -1517,7 +1556,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         }
 
         // 2. Pembayaran & QRIS
-        if (q.includes('bayar') || q.includes('pembayaran') || q.includes('qris') || q.includes('transfer') || q.includes('dana') || q.includes('gopay') || q.includes('ovo') || q.includes('bca') || q.includes('bank')) {
+        if (q.includes('bayar') || q.includes('pembayaran') || q.includes('qris') || q.includes('transfer') || q.includes('dana') || q.includes('gopay') || q.includes('ovo') || q.includes('bca') || q.includes('bank') || q.includes('shopeepay')) {
             return formatAiResponse(`💳 <strong>Metode Pembayaran di ItemPedia</strong>:<br>
             ItemPedia menggunakan sistem <strong>QRIS Otomatis Real-time</strong>.<br><br>
             • Mendukung semua e-wallet: <strong>GoPay, DANA, OVO, ShopeePay, LinkAja</strong>.<br>
@@ -1553,8 +1592,8 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         // 6. Lacak Pesanan / Cek Status
         if (q.includes('lacak') || q.includes('invoice') || q.includes('status') || q.includes('pesanan saya') || q.includes('cek pesanan')) {
             return formatAiResponse(`📦 <strong>Cara Lacak Pesanan</strong>:<br>
-            • Kunjungi menu <strong><a href="/lacak" class="text-sky-600 underline font-bold">Lacak Pesanan</a></strong> di atas, lalu masukkan nomor invoice (contoh: <code>ITP-2026...</code>) atau username Roblox kamu.<br>
-            • Jika kamu sudah <strong>Masuk dengan Google</strong>, semua riwayat pesananmu langsung tercatat di halaman <strong><a href="/pesanan-saya" class="text-sky-600 underline font-bold">Pesanan Saya</a></strong>!`);
+            • Kunjungi menu <strong><a href="/lacak" class="text-sky-600 dark:text-sky-400 underline font-bold">Lacak Pesanan</a></strong> di atas, lalu masukkan nomor invoice (contoh: <code>ITP-2026...</code>) atau username Roblox kamu.<br>
+            • Jika kamu sudah <strong>Masuk dengan Google</strong>, semua riwayat pesananmu langsung tercatat di halaman <strong><a href="/pesanan-saya" class="text-sky-600 dark:text-sky-400 underline font-bold">Pesanan Saya</a></strong>!`);
         }
 
         // 7. Daftar Game & Produk
@@ -1589,8 +1628,9 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     }
 
     function handleSendAiMessage(e) {
-        if (e) e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         const input = document.getElementById('aiChatInput');
+        if (!input) return;
         const text = input.value.trim();
         if (!text) return;
 
@@ -1609,13 +1649,13 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                     <div class="p-3.5 rounded-2xl rounded-tr-sm bg-gradient-to-r from-sky-500 to-blue-600 text-white leading-relaxed shadow-sm font-medium text-left">
                         ${escapeHtml(text)}
                     </div>
-                    <span class="text-[10px] text-slate-400 font-semibold block text-right">Kamu</span>
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold block text-right">Kamu</span>
                 </div>
             </div>
         `;
         if (typing) {
             typing.insertAdjacentHTML('beforebegin', userBubble);
-        } else {
+        } else if (container) {
             container.insertAdjacentHTML('beforeend', userBubble);
         }
 
@@ -1627,36 +1667,41 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
         // 2. Simulasi AI Reasoning (450ms)
         setTimeout(() => {
-            if (typing) {
-                typing.classList.add('hidden');
-            }
+            try {
+                if (typing) {
+                    typing.classList.add('hidden');
+                }
 
-            const rawResponse = generateItemPediaAiResponse(text);
-            const aiResponseHtml = formatAiResponse(rawResponse);
+                const rawResponse = generateItemPediaAiResponse(text);
+                const aiResponseHtml = formatAiResponse(rawResponse);
 
-            const aiBubble = `
-                <div class="flex items-start gap-2.5 max-w-[90%] animate-in fade-in">
-                    <div class="w-7 h-7 rounded-xl bg-sky-500 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5 shadow-sm">
-                        <i class="fa-solid fa-robot"></i>
-                    </div>
-                    <div class="space-y-1">
-                        <div class="p-3.5 rounded-2xl rounded-tl-sm bg-white border border-slate-200/90 text-slate-800 leading-relaxed shadow-sm font-medium">
-                            ${aiResponseHtml}
+                const aiBubble = `
+                    <div class="flex items-start gap-2.5 max-w-[90%] animate-in fade-in">
+                        <div class="w-7 h-7 rounded-xl bg-sky-500 text-white flex items-center justify-center text-xs flex-shrink-0 mt-0.5 shadow-sm">
+                            <i class="fa-solid fa-robot"></i>
                         </div>
-                        <span class="text-[10px] text-slate-400 font-semibold block">ItemPedia AI</span>
+                        <div class="space-y-1">
+                            <div class="p-3.5 rounded-2xl rounded-tl-sm bg-white dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 text-slate-800 dark:text-slate-100 leading-relaxed shadow-sm font-medium">
+                                ${aiResponseHtml}
+                            </div>
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold block">ItemPedia AI</span>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
 
-            if (typing) {
-                typing.insertAdjacentHTML('beforebegin', aiBubble);
-            } else {
-                container.insertAdjacentHTML('beforeend', aiBubble);
+                if (typing) {
+                    typing.insertAdjacentHTML('beforebegin', aiBubble);
+                } else if (container) {
+                    container.insertAdjacentHTML('beforeend', aiBubble);
+                }
+
+                playAiChime();
+                scrollAiChatToBottom();
+            } catch(err) {
+                console.error("AI Error:", err);
+                if (typing) typing.classList.add('hidden');
             }
-
-            playAiChime();
-            scrollAiChatToBottom();
-        }, 500);
+        }, 450);
     }
 
     // ================= ANIMASI SCROLLDOWN NAVIGASI HALUS =================
