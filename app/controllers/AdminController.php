@@ -873,7 +873,8 @@ class AdminController
 
         $fields = [
             'hero_badge', 'hero_title', 'hero_subtitle', 'announcement',
-            'whatsapp_admin', 'whatsapp_display', 'operating_hours_open', 'operating_hours_close',
+            'whatsapp_admin', 'whatsapp_display', 'support_email', 'business_address',
+            'operating_hours_open', 'operating_hours_close',
             'step1_title', 'step1_desc', 'step2_title', 'step2_desc', 'step3_title', 'step3_desc',
             'google_client_id'
         ];

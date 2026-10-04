@@ -429,7 +429,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                             <div>
                                 <span class="block font-bold text-slate-900 dark:text-white">Alamat Usaha:</span>
                                 <p class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
-                                    <?= htmlspecialchars($settings['business_address'] ?? 'Graha ItemPedia, Jl. A. Yani Km. 5.5 No. 42, Kel. Pemurus Luar, Kec. Banjarmasin Timur, Kota Banjarmasin, Kalimantan Selatan 70248, Indonesia') ?>
+                                    <?= htmlspecialchars($settings['business_address'] ?? 'Jl. Pemajatan Komp Permata Hijau 2, Blok B No. 2 RT 08 RW 03, Kec. Gambut, Kab. Banjar, Kalimantan Selatan') ?>
                                 </p>
                             </div>
                         </div>
@@ -437,8 +437,8 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                             <i class="fa-solid fa-envelope text-sky-500 flex-shrink-0"></i>
                             <div>
                                 <span class="block font-bold text-slate-900 dark:text-white">Email Support:</span>
-                                <a href="mailto:<?= htmlspecialchars($settings['support_email'] ?? 'support@itempedia.store') ?>" class="text-[11px] hover:text-sky-500 dark:hover:text-sky-400 transition underline underline-offset-2">
-                                    <?= htmlspecialchars($settings['support_email'] ?? 'support@itempedia.store') ?>
+                                <a href="mailto:<?= htmlspecialchars($settings['support_email'] ?? 'fahrulbahri0520@gmail.com') ?>" class="text-[11px] hover:text-sky-500 dark:hover:text-sky-400 transition underline underline-offset-2">
+                                    <?= htmlspecialchars($settings['support_email'] ?? 'fahrulbahri0520@gmail.com') ?>
                                 </a>
                             </div>
                         </div>
@@ -446,8 +446,8 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                             <i class="fa-brands fa-whatsapp text-emerald-500 flex-shrink-0 text-sm"></i>
                             <div>
                                 <span class="block font-bold text-slate-900 dark:text-white">Telepon / WhatsApp:</span>
-                                <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $settings['whatsapp_admin'] ?? '6281234567890') ?>" target="_blank" rel="noopener noreferrer" class="text-[11px] hover:text-emerald-500 dark:hover:text-emerald-400 transition font-mono font-bold">
-                                    <?= htmlspecialchars($settings['whatsapp_display'] ?? '+62 812-3456-7890') ?>
+                                <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $settings['whatsapp_admin'] ?? '6289603017744') ?>" target="_blank" rel="noopener noreferrer" class="text-[11px] hover:text-emerald-500 dark:hover:text-emerald-400 transition font-mono font-bold">
+                                    <?= htmlspecialchars($settings['whatsapp_display'] ?? '+62 896-0301-7744') ?>
                                 </a>
                             </div>
                         </div>

@@ -184,6 +184,26 @@
                                            placeholder="21:00"
                                            class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-800 dark:text-white focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900">
                                 </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+                                        Email Support (Verifikasi Payment Gateway)
+                                    </label>
+                                    <input type="email" 
+                                           name="support_email" 
+                                           value="<?= htmlspecialchars($settings['support_email'] ?? 'fahrulbahri0520@gmail.com') ?>" 
+                                           placeholder="fahrulbahri0520@gmail.com"
+                                           class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-800 dark:text-white focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900">
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">
+                                        Alamat Usaha Toko (Verifikasi Duitku PG)
+                                    </label>
+                                    <textarea name="business_address" 
+                                              rows="2" 
+                                              class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900 resize-none"><?= htmlspecialchars($settings['business_address'] ?? 'Jl. Pemajatan Komp Permata Hijau 2, Blok B No. 2 RT 08 RW 03, Kec. Gambut, Kab. Banjar, Kalimantan Selatan') ?></textarea>
+                                </div>
                             </div>
                         </div>
 

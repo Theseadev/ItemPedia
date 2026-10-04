@@ -120,8 +120,8 @@ class DuitkuService
         $amount = (int)($order['price'] ?? 0);
         $merchantOrderId = $order['invoice_number'];
         $productDetails = mb_substr($order['product_name'] ?? 'Item Roblox ItemPedia', 0, 100);
-        $email = $order['buyer_email'] ?: 'support@itempedia.store';
-        $phoneNumber = preg_replace('/[^0-9]/', '', $order['whatsapp'] ?? '') ?: '081234567890';
+        $email = $order['buyer_email'] ?: 'fahrulbahri0520@gmail.com';
+        $phoneNumber = preg_replace('/[^0-9]/', '', $order['whatsapp'] ?? '') ?: '089603017744';
         $customerVaName = mb_substr($order['roblox_username'] ?? 'Pembeli ItemPedia', 0, 20);
 
         // Resolve Host Base URL
