@@ -918,9 +918,12 @@ class OrderController
             return;
         }
 
-        $input = Flight::request()->data;
-        $message = trim($input->message ?? '');
-        $sender = trim($input->sender ?? 'buyer');
+        $rawInput = file_get_contents('php://input');
+        $jsonInput = json_decode($rawInput, true) ?: [];
+        $flightData = Flight::request()->data;
+
+        $message = trim($flightData->message ?? ($jsonInput['message'] ?? ($_POST['message'] ?? '')));
+        $sender = trim($flightData->sender ?? ($jsonInput['sender'] ?? ($_POST['sender'] ?? 'buyer')));
         if (!in_array($sender, ['buyer', 'seller'])) {
             $sender = 'buyer';
         }
@@ -930,7 +933,7 @@ class OrderController
             return;
         }
 
-        $senderName = trim($input->sender_name ?? '');
+        $senderName = trim($flightData->sender_name ?? ($jsonInput['sender_name'] ?? ($_POST['sender_name'] ?? '')));
         if (empty($senderName)) {
             $senderName = ($sender === 'buyer') ? $order['roblox_username'] : 'Seller ItemPedia';
         }

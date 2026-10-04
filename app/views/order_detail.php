@@ -1072,12 +1072,20 @@ function stopTitleFlashing() {
     document.title = originalPageTitle;
 }
 
-function setQuickMessage(text) {
+function setQuickMessage(text, autoSend = true) {
     const input = document.getElementById('chatInputMessage');
-    if (input) {
+    if (!input) return;
+
+    // Jika pesan membutuhkan input lanjutan (seperti link server), cukup taruh di input & fokus
+    if (text.endsWith(':') || text.endsWith(': ') || !autoSend) {
         input.value = text;
         input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+        return;
     }
+
+    // Pesan cepat lengkap -> Langsung kirim seketika ke room chat!
+    sendBuyerMessage(null, text);
 }
 
 function scrollChatToBottom() {
@@ -1204,16 +1212,37 @@ function renderMessageBubble(msg) {
     }
 }
 
-async function sendBuyerMessage(e) {
+async function sendBuyerMessage(e, customMsg = null) {
     if (e) e.preventDefault();
     const input = document.getElementById('chatInputMessage');
-    if (!input) return;
-    const message = input.value.trim();
+    const message = (customMsg !== null && customMsg !== undefined) ? customMsg.trim() : (input ? input.value.trim() : '');
     if (!message) return;
 
-    input.value = '';
+    if (input && customMsg === null) {
+        input.value = '';
+    }
     const btn = document.getElementById('btnSendChat');
     if (btn) btn.disabled = true;
+
+    // Optimistic UI: Langsung render pesan di room chat tanpa menunggu delay server
+    const tempId = 'temp_' + Date.now();
+    const emptyState = document.getElementById('chatEmptyState');
+    if (emptyState) emptyState.remove();
+
+    const optimisticMsg = {
+        id: tempId,
+        sender: 'buyer',
+        sender_name: ROBLOX_USERNAME,
+        message: message,
+        is_read: 0,
+        time_formatted: 'Baru saja'
+    };
+
+    const container = document.getElementById('chatMessagesContainer');
+    if (container) {
+        container.insertAdjacentHTML('beforeend', renderMessageBubble(optimisticMsg));
+        scrollChatToBottom();
+    }
 
     try {
         const formData = new FormData();
@@ -1228,16 +1257,16 @@ async function sendBuyerMessage(e) {
         const data = await res.json();
 
         if (data.success && data.message) {
-            const emptyState = document.getElementById('chatEmptyState');
-            if (emptyState) emptyState.remove();
+            const realMsgId = Number(data.message.id);
+            knownMessageIds.add(realMsgId);
 
-            const msgId = Number(data.message.id);
-            if (!knownMessageIds.has(msgId)) {
-                knownMessageIds.add(msgId);
-                const container = document.getElementById('chatMessagesContainer');
-                if (container) {
-                    container.insertAdjacentHTML('beforeend', renderMessageBubble(data.message));
-                    scrollChatToBottom();
+            // Perbarui element optimistic dengan data resmi dari server
+            const tempEl = document.querySelector(`[data-msg-id="${tempId}"]`);
+            if (tempEl) {
+                tempEl.setAttribute('data-msg-id', realMsgId);
+                const checkIcon = tempEl.querySelector('.buyer-check-icon');
+                if (checkIcon) {
+                    checkIcon.setAttribute('data-msg-id', realMsgId);
                 }
             }
         }
@@ -1245,7 +1274,7 @@ async function sendBuyerMessage(e) {
         console.error("Gagal mengirim pesan chat:", err);
     } finally {
         if (btn) btn.disabled = false;
-        input.focus();
+        if (input) input.focus();
     }
 }
 
@@ -1341,7 +1370,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-check status pembayaran Duitku setiap 4 detik
     setInterval(async () => {
         try {
-            const res = await fetch('/api/chat/' + encodeURIComponent(CURRENT_INVOICE));
+            const res = await fetch('/api/chat/' + encodeURIComponent(INVOICE_NUMBER));
             if (res.ok) {
                 const data = await res.json();
                 const st = data.order_status || (data.order && data.order.status) || data.status;
