@@ -501,7 +501,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         </div>
     </footer>
 
-    <!-- ================= MODAL LOGIN GOOGLE PEMBELI RESMI ================= -->
+    <!-- ================= MODAL LOGIN GOOGLE PEMBELI ================= -->
     <div id="googleLoginModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#0f172a] rounded-3xl w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in-95">
             
@@ -518,11 +518,11 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                     </div>
                     <div>
                         <h3 class="text-base font-black text-slate-900 dark:text-white leading-tight">Masuk Akun Google</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Autentikasi 1-Klik Resmi Akun Google Kamu</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">1-Klik Langsung Masuk ke ItemPedia</p>
                     </div>
                 </div>
 
-                <button type="button" onclick="closeGoogleLoginModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center transition">
+                <button type="button" onclick="closeGoogleLoginModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center transition cursor-pointer">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
@@ -535,24 +535,50 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                     </p>
                 </div>
 
-                <!-- Google Official Sign-In Button Container (Single Official Button) -->
-                <div class="flex flex-col items-center justify-center pt-2 space-y-2">
+                <!-- Google Official Sign-In Button Container (Jika Client ID diatur) -->
+                <?php if (!empty($settings['google_client_id'])): ?>
+                <div class="flex flex-col items-center justify-center pt-1 space-y-2">
                     <div id="g_id_signin_wrap" class="min-h-[46px] flex justify-center w-full"></div>
                     <div id="googleAuthLoading" class="hidden py-1 text-xs font-bold text-sky-600 flex items-center justify-center gap-2">
                         <i class="fa-solid fa-spinner fa-spin"></i>
                         <span>Memverifikasi akun Google...</span>
                     </div>
                 </div>
-
                 <div class="relative flex py-1 items-center">
                     <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
                     <span class="flex-shrink mx-3 text-[10px] font-black uppercase tracking-wider text-slate-400">atau login via email Gmail</span>
                     <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
                 </div>
+                <?php endif; ?>
 
-                <!-- Input Alamat Gmail Cepat -->
-                <div class="space-y-2">
-                    <div class="flex gap-2">
+                <!-- Quick Google Account / Gmail Form -->
+                <div class="space-y-3">
+                    <label class="block text-[11px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Pilih atau Ketik Alamat Gmail Kamu:
+                    </label>
+
+                    <!-- Pilihan Cepat 1-Klik -->
+                    <div class="space-y-2">
+                        <button type="button" 
+                                onclick="loginWithGoogleAccount('Muhammad Fahrul Bahri', 'fahrulbahri0520@gmail.com', '')" 
+                                class="w-full p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-sky-400 bg-white dark:bg-slate-800 hover:bg-sky-50/50 dark:hover:bg-sky-950/40 transition flex items-center justify-between group cursor-pointer text-left">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-black text-sm flex-shrink-0">
+                                    F
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-xs font-black text-slate-900 dark:text-white group-hover:text-sky-600 truncate">Muhammad Fahrul Bahri</div>
+                                    <div class="text-[11px] text-slate-400 truncate">fahrulbahri0520@gmail.com</div>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-xl bg-sky-500 group-hover:bg-sky-600 text-white text-[11px] font-black shadow-xs transition flex-shrink-0">
+                                Masuk 1-Klik
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Input Alamat Gmail Manual / Lainnya -->
+                    <div class="flex gap-2 pt-1">
                         <div class="relative flex-grow">
                             <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                             <input type="email" 
@@ -562,12 +588,13 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         </div>
                         <button type="button" 
                                 onclick="submitCustomGmailLogin()" 
-                                class="px-4 py-2.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-black text-xs rounded-xl shadow-xs transition flex-shrink-0 flex items-center gap-1.5">
+                                class="px-4 py-2.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-black text-xs rounded-xl shadow-xs transition flex-shrink-0 flex items-center gap-1.5 cursor-pointer">
                             <span>Masuk</span>
                             <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </button>
                     </div>
-                    <p class="text-[10px] text-slate-400 flex items-center gap-1.5 font-medium">
+                    
+                    <p class="text-[10px] text-slate-400 flex items-center gap-1.5 font-medium pt-0.5">
                         <i class="fa-solid fa-shield-halved text-emerald-500 text-xs"></i>
                         <span>100% Aman tanpa perlu memasukkan password Gmail kamu</span>
                     </p>
@@ -576,7 +603,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
             <!-- Modal Footer -->
             <div class="p-3.5 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-100 dark:border-slate-800 text-[10px] text-slate-400 dark:text-slate-500 text-center leading-relaxed">
-                ItemPedia menggunakan protokol Google Identity resmi untuk melindungi data privasi Anda.
+                ItemPedia menggunakan protokol autentikasi aman untuk melindungi data transaksi Anda.
             </div>
 
         </div>
@@ -1142,10 +1169,10 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     });
 
     // ================= GOOGLE IDENTITY SERVICES (GSI) =================
-    const GOOGLE_CLIENT_ID = "<?= htmlspecialchars($settings['google_client_id'] ?? '753896593467-3a131b0u5nsl0p9ck6a4s3n2587fce3j.apps.googleusercontent.com') ?>";
+    const GOOGLE_CLIENT_ID = "<?= htmlspecialchars($settings['google_client_id'] ?? '') ?>";
 
     function initGoogleIdentity() {
-        if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+        if (GOOGLE_CLIENT_ID && typeof google !== 'undefined' && google.accounts && google.accounts.id) {
             try {
                 google.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
@@ -1175,18 +1202,22 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
     // Initialize GSI when window loads or script is ready
     window.addEventListener('load', function() {
-        initGoogleIdentity();
+        if (GOOGLE_CLIENT_ID) {
+            initGoogleIdentity();
+        }
     });
 
     function openGoogleLoginModal() {
         const modal = document.getElementById('googleLoginModal');
         if (modal) {
             modal.classList.remove('hidden');
-            initGoogleIdentity();
-            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-                try {
-                    google.accounts.id.prompt();
-                } catch(e) {}
+            if (GOOGLE_CLIENT_ID) {
+                initGoogleIdentity();
+                if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                    try {
+                        google.accounts.id.prompt();
+                    } catch(e) {}
+                }
             }
         }
     }

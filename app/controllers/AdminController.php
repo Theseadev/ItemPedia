@@ -874,7 +874,8 @@ class AdminController
         $fields = [
             'hero_badge', 'hero_title', 'hero_subtitle', 'announcement',
             'whatsapp_admin', 'whatsapp_display', 'operating_hours_open', 'operating_hours_close',
-            'step1_title', 'step1_desc', 'step2_title', 'step2_desc', 'step3_title', 'step3_desc'
+            'step1_title', 'step1_desc', 'step2_title', 'step2_desc', 'step3_title', 'step3_desc',
+            'google_client_id'
         ];
 
         $stmt = $db->prepare("REPLACE INTO settings (`key`, `value`) VALUES (?, ?)");
@@ -956,7 +957,7 @@ class AdminController
         self::checkAuth();
         $db = Database::getConnection();
 
-        $fields = ['store_name', 'store_tagline', 'store_status', 'whatsapp_admin', 'announcement'];
+        $fields = ['store_name', 'store_tagline', 'store_status', 'whatsapp_admin', 'announcement', 'google_client_id'];
         $stmt = $db->prepare("REPLACE INTO settings (`key`, `value`) VALUES (?, ?)");
 
         foreach ($fields as $field) {

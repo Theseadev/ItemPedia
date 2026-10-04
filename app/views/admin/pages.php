@@ -223,6 +223,42 @@
                             </div>
                         </div>
 
+                        <!-- 4. Integrasi Google OAuth 2.0 (Google Identity Services) -->
+                        <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 shadow-xs space-y-4">
+                            <div class="flex items-center gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+                                <div class="w-9 h-9 rounded-xl bg-red-50 dark:bg-red-950/50 text-red-500 flex items-center justify-center font-black text-sm">
+                                    <i class="fa-brands fa-google"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Google OAuth Client ID (Opsional)</h3>
+                                    <p class="text-xs text-slate-400 dark:text-slate-500">Hubungkan Google Cloud OAuth untuk tombol popup Google One-Tap resmi</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Google OAuth Client ID</label>
+                                    <input type="text" 
+                                           name="google_client_id" 
+                                           value="<?= htmlspecialchars($settings['google_client_id'] ?? '') ?>" 
+                                           placeholder="Contoh: 123456789-xxxxxxxx.apps.googleusercontent.com" 
+                                           class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition">
+                                </div>
+                                <div class="p-3 bg-blue-50/50 dark:bg-blue-950/30 rounded-xl border border-blue-100 dark:border-blue-900/50 text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed space-y-1">
+                                    <div class="font-bold text-blue-700 dark:text-blue-300 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                        <span>Cara Mendapatkan Google Client ID Gratis:</span>
+                                    </div>
+                                    <ol class="list-decimal list-inside space-y-0.5 pl-1">
+                                        <li>Buka <a href="https://console.cloud.google.com/apis/credentials" target="_blank" class="text-blue-600 underline font-bold">Google Cloud Console</a> & buat Project baru.</li>
+                                        <li>Masuk menu <b>Credentials &gt; Create Credentials &gt; OAuth client ID</b> (Type: Web Application).</li>
+                                        <li>Di bagian <b>Authorized JavaScript origins</b>, masukkan: <code class="bg-blue-100 dark:bg-blue-900/60 px-1 py-0.5 rounded font-bold">https://itempedia.vercel.app</code></li>
+                                        <li>Salin <b>Client ID</b> yang didapat, tempel di kolom atas, lalu klik Simpan.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Tombol Simpan Seluruh Konten Laman -->
                         <div class="sticky bottom-4 z-20">
                             <button type="submit" class="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-blue-500/25 transition flex items-center justify-center gap-2 active:scale-98">
