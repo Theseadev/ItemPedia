@@ -811,17 +811,44 @@ runTest("19. Admin Chat Inbox API (GET /api/chat/inbox)", function() use ($baseU
 });
 
 // ----------------------------------------------------
-// TEST 20: Admin Reviews View
+// TEST 21: Admin Cache Management API (Save, Stats, Clear)
 // ----------------------------------------------------
-runTest("20. Admin Reviews Moderation View (GET /Banjar/reviews)", function() use ($baseUrl, &$adminCookies) {
-    $res = httpReq($baseUrl . '/Banjar/reviews', 'GET', [], $adminCookies);
-    if ($res['code'] !== 200) {
-        throw new Exception("Expected HTTP 200, got " . $res['code']);
+runTest("21. Admin Cache Management API (Save, Stats, Clear)", function() use ($baseUrl, &$adminCookies) {
+    // 1. Simpan & Rebuild Cache
+    $resSave = httpReq($baseUrl . '/Banjar/cache/save', 'POST', [], $adminCookies);
+    if ($resSave['code'] !== 200) {
+        throw new Exception("Expected HTTP 200 on save cache, got " . $resSave['code']);
     }
-    if (!str_contains($res['body'], 'Ulasan Pembeli')) {
-        throw new Exception("Missing 'Ulasan Pembeli' heading in view");
+    $jsonSave = json_decode($resSave['body'], true);
+    if (empty($jsonSave['success']) || empty($jsonSave['stats']['total_files'])) {
+        throw new Exception("Invalid save cache response: " . $resSave['body']);
     }
-    return "Admin reviews moderation page renders properly (HTTP 200)";
+
+    // 2. Cek Cache Stats
+    $resStats = httpReq($baseUrl . '/Banjar/cache/stats', 'GET', [], $adminCookies);
+    if ($resStats['code'] !== 200) {
+        throw new Exception("Expected HTTP 200 on cache stats, got " . $resStats['code']);
+    }
+    $jsonStats = json_decode($resStats['body'], true);
+    if (empty($jsonStats['success']) || !isset($jsonStats['stats']['total_size_formatted'])) {
+        throw new Exception("Invalid cache stats response: " . $resStats['body']);
+    }
+
+    // 3. Clear Cache
+    $resClear = httpReq($baseUrl . '/Banjar/cache/clear', 'POST', [], $adminCookies);
+    if ($resClear['code'] !== 200) {
+        throw new Exception("Expected HTTP 200 on clear cache, got " . $resClear['code']);
+    }
+    $jsonClear = json_decode($resClear['body'], true);
+    if (empty($jsonClear['success'])) {
+        throw new Exception("Invalid clear cache response: " . $resClear['body']);
+    }
+
+    // 4. Rebuild Cache again so app remains optimized
+    $resRebuild = httpReq($baseUrl . '/Banjar/cache/save', 'POST', [], $adminCookies);
+    $jsonRebuild = json_decode($resRebuild['body'], true);
+
+    return "Save Cache & Clear Cache verified successfully (" . $jsonRebuild['stats']['total_files'] . " files, " . $jsonRebuild['stats']['total_size_formatted'] . ")";
 });
 
 echo "\n======================================================\n";

@@ -162,6 +162,17 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30">GitHub</span>
             </a>
 
+            <!-- 7. Quick Button: Simpan Cache Sistem -->
+            <button type="button" 
+                    onclick="executeSaveCache()" 
+                    class="w-full rounded-2xl px-3.5 py-3 flex items-center justify-between text-amber-300 hover:text-amber-200 hover:bg-amber-500/10 border border-amber-500/20 transition cursor-pointer text-left">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-bolt text-amber-400 text-base"></i>
+                    <span class="text-sm font-bold">Simpan Cache</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">Fast</span>
+            </button>
+
         </div>
     </div>
 
@@ -316,6 +327,17 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                 </div>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30 flex-shrink-0">GitHub</span>
             </a>
+
+            <!-- Item: Simpan Cache Sistem (Pre-warm Cache) -->
+            <button type="button" 
+                    onclick="executeSaveCache()" 
+                    class="w-full rounded-2xl px-4 py-3 flex items-center justify-between text-amber-300 hover:text-amber-200 hover:bg-amber-500/10 border border-amber-500/20 transition group cursor-pointer text-left">
+                <div class="flex items-center gap-3.5 whitespace-nowrap">
+                    <i class="fa-solid fa-bolt text-amber-400 group-hover:scale-110 transition-transform text-base"></i>
+                    <span class="text-sm font-bold">Simpan Cache</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 flex-shrink-0">Fast</span>
+            </button>
 
         </div>
     </div>

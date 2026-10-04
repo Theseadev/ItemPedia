@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Flight;
 use App\Config\Database;
+use App\Services\CacheService;
 use PDO;
 
 class HomeController
@@ -12,11 +13,16 @@ class HomeController
     {
         $db = Database::getConnection();
 
-        // Ambil kategori
-        $categories = $db->query("SELECT * FROM categories ORDER BY id ASC")->fetchAll();
+        // 1. Ambil kategori dari Cache
+        $categories = CacheService::remember('catalog_categories', 86400, function() use ($db) {
+            return $db->query("SELECT * FROM categories ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        });
 
-        // Daftar Game Roblox Dinamis dari Database (CMS Kategori - 3 Game Pilihan)
-        $dbGames = $db->query("SELECT * FROM games WHERE is_active = 1 ORDER BY sort_order ASC, id ASC")->fetchAll();
+        // 2. Daftar Game Roblox Dinamis dari Database (CMS Kategori - 3 Game Pilihan) dari Cache
+        $dbGames = CacheService::remember('catalog_games', 86400, function() use ($db) {
+            return $db->query("SELECT * FROM games WHERE is_active = 1 ORDER BY sort_order ASC, id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        });
+
         $games = [];
         foreach ($dbGames as $dg) {
             $games[] = [
@@ -38,30 +44,31 @@ class HomeController
         }
         $searchQuery = trim(Flight::request()->query->q ?? '');
 
-        // Ambil semua produk aktif agar switching game & kategori dapat berjalan instan tanpa delay
-        $sql = "SELECT p.*, c.name as category_name, c.slug as category_slug 
-                FROM products p 
-                JOIN categories c ON p.category_id = c.id 
-                WHERE p.is_active = 1";
-        $params = [];
+        // 3. Ambil semua produk aktif dari Cache
+        $allProducts = CacheService::remember('catalog_products_all', 86400, function() use ($db) {
+            return $db->query("SELECT p.*, c.name as category_name, c.slug as category_slug 
+                               FROM products p 
+                               JOIN categories c ON p.category_id = c.id 
+                               WHERE p.is_active = 1 
+                               ORDER BY p.id DESC")->fetchAll(PDO::FETCH_ASSOC);
+        });
 
         if (!empty($searchQuery)) {
-            $sql .= " AND (p.name LIKE ? OR p.description LIKE ? OR p.game LIKE ? OR p.sub_category LIKE ? OR c.name LIKE ?)";
-            $params[] = "%{$searchQuery}%";
-            $params[] = "%{$searchQuery}%";
-            $params[] = "%{$searchQuery}%";
-            $params[] = "%{$searchQuery}%";
-            $params[] = "%{$searchQuery}%";
+            $searchLower = mb_strtolower($searchQuery);
+            $products = array_values(array_filter($allProducts, function($p) use ($searchLower) {
+                return (
+                    (isset($p['name']) && mb_stripos($p['name'], $searchLower) !== false) ||
+                    (isset($p['description']) && mb_stripos($p['description'], $searchLower) !== false) ||
+                    (isset($p['game']) && mb_stripos($p['game'], $searchLower) !== false) ||
+                    (isset($p['sub_category']) && mb_stripos($p['sub_category'], $searchLower) !== false) ||
+                    (isset($p['category_name']) && mb_stripos($p['category_name'], $searchLower) !== false)
+                );
+            }));
+        } else {
+            $products = $allProducts;
         }
 
-        $sql .= " ORDER BY p.id DESC";
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute($params);
-        $products = $stmt->fetchAll();
-
         // Petakan kategori khusus per-game (game-specific categories)
-        // Sumber: 1) Kolom categories di tabel games (CMS Kategori), 2) sub_category dari produk aktif game tsb
         $gameCategoriesMap = [];
         $prodSubCatsByGame = [];
         $allActiveSubCats = [];
@@ -158,33 +165,37 @@ class HomeController
         $activeGameKey = strtolower($gameFilter);
         $categoryTabs = $gameCategoriesMap[$activeGameKey] ?? $gameCategoriesMap['all'];
 
-        // Hitung produk per sub-kategori khusus Build A Zoo (backwards compatibility)
-        $bazCounts = [
-            'semua' => 0,
-            'pet' => 0,
-            'egg' => 0,
-            'food' => 0,
-            'item' => 0,
-            'akun' => 0,
-        ];
-        $allBazProds = $db->query("SELECT sub_category, category_id FROM products WHERE game = 'Build A Zoo' AND is_active = 1")->fetchAll();
-        $bazCounts['semua'] = count($allBazProds);
-        foreach ($allBazProds as $bp) {
-            $sc = strtolower($bp['sub_category'] ?? '');
-            if ($sc === 'pet' || (empty($sc) && (int)$bp['category_id'] === 1)) {
-                $bazCounts['pet']++;
-            } elseif ($sc === 'akun' || (empty($sc) && (int)$bp['category_id'] === 2)) {
-                $bazCounts['akun']++;
-            } elseif (isset($bazCounts[$sc])) {
-                $bazCounts[$sc]++;
+        // 4. Hitung produk per sub-kategori khusus Build A Zoo dari Cache
+        $bazCounts = CacheService::remember('baz_subcategory_counts', 86400, function() use ($db) {
+            $allBazProds = $db->query("SELECT sub_category, category_id FROM products WHERE game = 'Build A Zoo' AND is_active = 1")->fetchAll(PDO::FETCH_ASSOC);
+            $counts = [
+                'semua' => count($allBazProds),
+                'pet' => 0,
+                'egg' => 0,
+                'food' => 0,
+                'item' => 0,
+                'akun' => 0,
+            ];
+            foreach ($allBazProds as $bp) {
+                $sc = strtolower($bp['sub_category'] ?? '');
+                if ($sc === 'pet' || (empty($sc) && (int)$bp['category_id'] === 1)) {
+                    $counts['pet']++;
+                } elseif ($sc === 'akun' || (empty($sc) && (int)$bp['category_id'] === 2)) {
+                    $counts['akun']++;
+                } elseif (isset($counts[$sc])) {
+                    $counts[$sc]++;
+                }
             }
-        }
+            return $counts;
+        });
 
-        // Ambil ulasan nyata pembeli dari database
-        $allReviews = $db->query("SELECT r.*, p.name as product_name, p.game 
+        // 5. Ambil ulasan nyata pembeli dari Cache
+        $allReviews = CacheService::remember('catalog_reviews_all', 86400, function() use ($db) {
+            return $db->query("SELECT r.*, p.name as product_name, p.game 
                                FROM reviews r 
                                JOIN products p ON r.product_id = p.id 
-                               ORDER BY r.id DESC")->fetchAll();
+                               ORDER BY r.id DESC")->fetchAll(PDO::FETCH_ASSOC);
+        });
         $reviews = array_slice($allReviews, 0, 6);
 
         // Petakan ulasan per product_id untuk pop-up detail produk
@@ -204,19 +215,24 @@ class HomeController
         }
         unset($prod);
 
-        // Ambil settings
-        $settingsRaw = $db->query("SELECT * FROM settings")->fetchAll();
-        $settings = [];
-        foreach ($settingsRaw as $s) {
-            $settings[$s['key']] = $s['value'];
-        }
+        // 6. Ambil settings dari Cache
+        $settings = CacheService::remember('site_settings', 86400, function() use ($db) {
+            $settingsRaw = $db->query("SELECT * FROM settings")->fetchAll(PDO::FETCH_ASSOC);
+            $setMap = [];
+            foreach ($settingsRaw as $s) {
+                $setMap[$s['key']] = $s['value'];
+            }
+            return $setMap;
+        });
 
-        // Ambil transaksi pembelian terbaru untuk Live Pembelian Feed
-        $rawOrders = $db->query("SELECT o.id, o.invoice_number, o.product_name, o.price, o.roblox_username, o.roblox_avatar_url, o.status, o.created_at, p.image_url as product_image, p.game 
+        // 7. Ambil transaksi pembelian terbaru untuk Live Pembelian Feed dari Cache
+        $rawOrders = CacheService::remember('live_purchases_feed', 3600, function() use ($db) {
+            return $db->query("SELECT o.id, o.invoice_number, o.product_name, o.price, o.roblox_username, o.roblox_avatar_url, o.status, o.created_at, p.image_url as product_image, p.game 
                                 FROM orders o 
                                 LEFT JOIN products p ON o.product_id = p.id 
                                 ORDER BY o.id DESC 
-                                LIMIT 15")->fetchAll();
+                                LIMIT 15")->fetchAll(PDO::FETCH_ASSOC);
+        });
 
         $recentPurchases = [];
         $sampleBuyers = [
@@ -257,8 +273,10 @@ class HomeController
             }
         }
 
-        // Ambil FAQs dari Database
-        $faqs = $db->query("SELECT * FROM faqs WHERE is_active = 1 ORDER BY sort_order ASC, id ASC")->fetchAll();
+        // 8. Ambil FAQs dari Cache
+        $faqs = CacheService::remember('site_faqs', 86400, function() use ($db) {
+            return $db->query("SELECT * FROM faqs WHERE is_active = 1 ORDER BY sort_order ASC, id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        });
 
         Flight::render('home', [
             'categories' => $categories,

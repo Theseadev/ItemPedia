@@ -18,8 +18,52 @@
         </div>
     </div>
 
-    <!-- Right: Action Buttons (Lihat Website, Mode Gelap, Keluar) -->
-    <div class="flex items-center gap-2 sm:gap-3">
+    <!-- Right: Action Buttons (Cache, Lihat Website, Mode Gelap, Keluar) -->
+    <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- 0. Cache Management Dropdown -->
+        <div class="relative">
+            <button type="button" 
+                    id="adminCacheBtn"
+                    onclick="toggleAdminCacheDropdown(event)" 
+                    class="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100/70 dark:hover:bg-amber-900/50 text-amber-700 dark:text-amber-300 hover:text-amber-900 dark:hover:text-amber-100 text-xs font-extrabold border border-amber-200/80 dark:border-amber-800/60 shadow-2xs transition flex items-center gap-1.5 active:scale-95 cursor-pointer" 
+                    title="Manajemen Simpan Cache & Kecepatan Website">
+                <i id="adminCacheIcon" class="fa-solid fa-bolt text-amber-500 text-xs"></i>
+                <span class="hidden sm:inline">Cache</span>
+                <i class="fa-solid fa-chevron-down text-[8.5px] text-amber-500/80"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="adminCacheDropdownMenu" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-[#0c1e33] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-50 p-2 text-xs space-y-1 animate-in fade-in zoom-in-95 duration-150">
+                <div class="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
+                    <div class="font-extrabold text-slate-800 dark:text-white flex items-center justify-between">
+                        <span>Status Cache</span>
+                        <span id="adminCacheStatusBadge" class="text-[10px] font-black px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Aktif</span>
+                    </div>
+                    <p id="adminCacheStatsText" class="text-[10.5px] text-slate-400 dark:text-slate-500 mt-0.5">Memuat data cache...</p>
+                </div>
+
+                <button type="button" 
+                        onclick="executeSaveCache()" 
+                        class="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/70 hover:text-sky-600 dark:hover:text-sky-400 font-bold flex items-center gap-2.5 transition cursor-pointer">
+                    <i class="fa-solid fa-floppy-disk text-sky-500 text-xs w-3.5 text-center"></i>
+                    <div>
+                        <div class="font-extrabold">Simpan & Bangun Cache</div>
+                        <div class="text-[10px] text-slate-400 font-normal">Perbarui data cache katalog & laman</div>
+                    </div>
+                </button>
+
+                <button type="button" 
+                        onclick="executeClearCache()" 
+                        class="w-full text-left px-3 py-2 rounded-xl text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 font-bold flex items-center gap-2.5 transition cursor-pointer">
+                    <i class="fa-solid fa-trash-can text-rose-500 text-xs w-3.5 text-center"></i>
+                    <div>
+                        <div class="font-extrabold">Bersihkan Semua Cache</div>
+                        <div class="text-[10px] text-slate-400 font-normal">Hapus seluruh file cache sementara</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
         <!-- 1. Lihat Website Button -->
         <a href="/" 
            target="_blank" 
@@ -49,6 +93,9 @@
     </div>
 </header>
 
+<!-- Global Toast Notification Container for Admin -->
+<div id="adminToastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
 <script>
 function toggleAdminSidebarCollapse() {
     if (window.innerWidth < 768) {
@@ -74,6 +121,114 @@ function toggleAdminSidebarCollapse() {
         mainArea.classList.add('md:pl-0');
         localStorage.setItem('admin_sidebar_collapsed', '1');
     }
+}
+
+// Toggle Cache Dropdown
+function toggleAdminCacheDropdown(e) {
+    if (e) e.stopPropagation();
+    const menu = document.getElementById('adminCacheDropdownMenu');
+    if (!menu) return;
+    const isHidden = menu.classList.contains('hidden');
+    if (isHidden) {
+        menu.classList.remove('hidden');
+        loadCacheStatus();
+    } else {
+        menu.classList.add('hidden');
+    }
+}
+
+// Close Dropdowns on Click Outside
+document.addEventListener('click', (e) => {
+    const cacheMenu = document.getElementById('adminCacheDropdownMenu');
+    const cacheBtn = document.getElementById('adminCacheBtn');
+    if (cacheMenu && !cacheMenu.classList.contains('hidden') && cacheBtn && !cacheBtn.contains(e.target) && !cacheMenu.contains(e.target)) {
+        cacheMenu.classList.add('hidden');
+    }
+});
+
+// Load Cache Status via AJAX
+async function loadCacheStatus() {
+    const textEl = document.getElementById('adminCacheStatsText');
+    if (!textEl) return;
+    try {
+        const res = await fetch('/Banjar/cache/stats');
+        const data = await res.json();
+        if (data.success && data.stats) {
+            textEl.innerText = `${data.stats.total_files} item tersimpan (${data.stats.total_size_formatted})`;
+        }
+    } catch (e) {
+        textEl.innerText = 'Gagal memuat status cache';
+    }
+}
+
+// Execute Save & Rebuild Cache
+async function executeSaveCache() {
+    const icon = document.getElementById('adminCacheIcon');
+    const menu = document.getElementById('adminCacheDropdownMenu');
+    if (menu) menu.classList.add('hidden');
+    if (icon) icon.className = 'fa-solid fa-spinner fa-spin text-amber-500 text-xs';
+
+    try {
+        const res = await fetch('/Banjar/cache/save', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+            showAdminToast(data.message, 'success');
+        } else {
+            showAdminToast(data.message || 'Gagal menyimpan cache', 'error');
+        }
+    } catch (e) {
+        showAdminToast('Terjadi kesalahan jaringan saat menyimpan cache', 'error');
+    } finally {
+        if (icon) icon.className = 'fa-solid fa-bolt text-amber-500 text-xs';
+    }
+}
+
+// Execute Clear Cache
+async function executeClearCache() {
+    const icon = document.getElementById('adminCacheIcon');
+    const menu = document.getElementById('adminCacheDropdownMenu');
+    if (menu) menu.classList.add('hidden');
+    if (icon) icon.className = 'fa-solid fa-spinner fa-spin text-rose-500 text-xs';
+
+    try {
+        const res = await fetch('/Banjar/cache/clear', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+            showAdminToast(data.message, 'success');
+        } else {
+            showAdminToast(data.message || 'Gagal membersihkan cache', 'error');
+        }
+    } catch (e) {
+        showAdminToast('Terjadi kesalahan jaringan saat membersihkan cache', 'error');
+    } finally {
+        if (icon) icon.className = 'fa-solid fa-bolt text-amber-500 text-xs';
+    }
+}
+
+// Floating Toast Notification
+function showAdminToast(message, type = 'success') {
+    const container = document.getElementById('adminToastContainer');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    const isSuccess = (type === 'success');
+    const bgClass = isSuccess ? 'bg-emerald-600 text-white shadow-emerald-500/20' : 'bg-rose-600 text-white shadow-rose-500/20';
+    const iconClass = isSuccess ? 'fa-circle-check' : 'fa-triangle-exclamation';
+
+    toast.className = `pointer-events-auto px-4 py-3 rounded-2xl ${bgClass} shadow-xl flex items-center gap-2.5 text-xs font-bold animate-in fade-in slide-in-from-top-3 duration-200 transition-all`;
+    toast.innerHTML = `
+        <i class="fa-solid ${iconClass} text-sm"></i>
+        <span>${message}</span>
+        <button type="button" onclick="this.parentElement.remove()" class="ml-2 text-white/80 hover:text-white p-0.5">
+            <i class="fa-solid fa-xmark text-xs"></i>
+        </button>
+    `;
+
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => toast.remove(), 200);
+    }, 4000);
 }
 
 // Restore sidebar collapse state on load

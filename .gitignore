@@ -4,3 +4,5 @@
 *.log
 .DS_Store
 Thumbs.db
+/storage/cache/*.cache.json
+!/storage/cache/.gitkeep

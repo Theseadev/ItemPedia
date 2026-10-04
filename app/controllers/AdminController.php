@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Flight;
 use App\Config\Database;
 use App\Services\UpgradeService;
+use App\Services\CacheService;
 use PDO;
 
 class AdminController
@@ -1132,5 +1133,46 @@ class AdminController
         $mode = Flight::request()->data->mode ?? 'auto';
         $result = UpgradeService::executeUpgrade($mode);
         Flight::json($result);
+    }
+
+    /**
+     * Simpan / Bangun Ulang Seluruh Cache Aplikasi (Pre-warm Cache)
+     */
+    public static function saveCache(): void
+    {
+        self::checkAuth();
+        $result = CacheService::rebuildAll();
+        Flight::json([
+            'success' => true,
+            'message' => 'Cache berhasil disimpan dan dioptimalkan! (' . $result['stats']['total_files'] . ' item, ' . $result['stats']['total_size_formatted'] . ')',
+            'stats' => $result['stats'],
+            'time_ms' => $result['time_ms']
+        ]);
+    }
+
+    /**
+     * Bersihkan Seluruh Cache Aplikasi
+     */
+    public static function clearCache(): void
+    {
+        self::checkAuth();
+        CacheService::clear();
+        Flight::json([
+            'success' => true,
+            'message' => 'Semua file cache berhasil dibersihkan!',
+            'stats' => CacheService::getStats()
+        ]);
+    }
+
+    /**
+     * Cek Statistik & Status Cache Aplikasi
+     */
+    public static function getCacheStats(): void
+    {
+        self::checkAuth();
+        Flight::json([
+            'success' => true,
+            'stats' => CacheService::getStats()
+        ]);
     }
 }

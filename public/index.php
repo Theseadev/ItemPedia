@@ -49,6 +49,7 @@ spl_autoload_register(function ($class) use ($rootDir) {
 require_once $rootDir . '/app/config/database.php';
 require_once $rootDir . '/app/services/UpgradeService.php';
 require_once $rootDir . '/app/services/DuitkuService.php';
+require_once $rootDir . '/app/services/CacheService.php';
 require_once $rootDir . '/app/controllers/HomeController.php';
 require_once $rootDir . '/app/controllers/OrderController.php';
 require_once $rootDir . '/app/controllers/AdminController.php';
@@ -59,6 +60,7 @@ use App\Controllers\OrderController;
 use App\Controllers\AdminController;
 use App\Controllers\AuthController;
 use App\Services\DuitkuService;
+use App\Services\CacheService;
 
 Flight::set('flight.base_url', '/');
 Flight::path($rootDir . '/app');
@@ -176,6 +178,14 @@ Flight::route('POST /Banjar/redeem-codes/toggle', [AdminController::class, 'togg
 Flight::route('POST /banjar/redeem-codes/toggle', [AdminController::class, 'toggleRedeemCode']);
 Flight::route('POST /Banjar/settings', [AdminController::class, 'updateSettings']);
 Flight::route('POST /banjar/settings', [AdminController::class, 'updateSettings']);
+
+// Routing Manajemen Cache Aplikasi (Save & Clear Cache)
+Flight::route('POST /Banjar/cache/save', [AdminController::class, 'saveCache']);
+Flight::route('POST /banjar/cache/save', [AdminController::class, 'saveCache']);
+Flight::route('POST /Banjar/cache/clear', [AdminController::class, 'clearCache']);
+Flight::route('POST /banjar/cache/clear', [AdminController::class, 'clearCache']);
+Flight::route('GET /Banjar/cache/stats', [AdminController::class, 'getCacheStats']);
+Flight::route('GET /banjar/cache/stats', [AdminController::class, 'getCacheStats']);
 
 // Routing Modul Pembaruan Sistem (Upgrade via GitHub)
 Flight::route('GET /Banjar/upgrade', [AdminController::class, 'upgradeView']);
