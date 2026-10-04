@@ -105,11 +105,11 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             -moz-osx-font-smoothing: grayscale;
         }
         html.dark body {
-            background: #081220;
+            background: #090d16;
             color: #f1f5f9;
         }
         html.dark ::-webkit-scrollbar-track {
-            background: #0c182c;
+            background: #090d16;
         }
         html.dark ::-webkit-scrollbar-thumb {
             background: #334155;
@@ -241,12 +241,12 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         }
     </style>
 </head>
-<body class="bg-[#eef6fc] text-slate-800 min-h-screen flex flex-col selection:bg-sky-200 selection:text-sky-950">
+<body class="bg-[#eef6fc] dark:bg-[#090d16] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col selection:bg-sky-200 selection:text-sky-950">
 
-    <!-- Static Ambient Background Gradients (Optimized for smooth 60fps scrolling) -->
-    <div class="fixed -top-20 -left-20 w-96 h-96 bg-sky-200/40 rounded-full blur-3xl pointer-events-none -z-10 transform-gpu"></div>
-    <div class="fixed top-1/3 -right-20 w-96 h-96 bg-blue-200/35 rounded-full blur-3xl pointer-events-none -z-10 transform-gpu"></div>
-    <div class="fixed -bottom-20 left-1/3 w-96 h-96 bg-indigo-100/35 rounded-full blur-3xl pointer-events-none -z-10 transform-gpu"></div>
+    <!-- Static Ambient Background Gradients (Hanya Light Mode, disembunyikan total di Dark Mode agar Hitam Doff murni) -->
+    <div class="fixed -top-20 -left-20 w-96 h-96 bg-sky-200/40 rounded-full blur-3xl pointer-events-none -z-10 transform-gpu dark:hidden"></div>
+    <div class="fixed top-1/3 -right-20 w-96 h-96 bg-blue-200/35 rounded-full blur-3xl pointer-events-none -z-10 transform-gpu dark:hidden"></div>
+    <div class="fixed -bottom-20 left-1/3 w-96 h-96 bg-indigo-100/35 rounded-full blur-3xl pointer-events-none -z-10 transform-gpu dark:hidden"></div>
 
     <!-- Master Header / Navbar: Lightweight Glass -->
     <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0c1e33]/95 backdrop-blur-md border-b-2 border-sky-100 dark:border-slate-800 shadow-xs transition-colors">

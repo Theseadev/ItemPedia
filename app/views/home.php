@@ -4,16 +4,16 @@ ob_start();
 
 <!-- Hero Section: Premium Gaming Marketplace Banner Slider & Fast Search -->
 <section class="relative pt-3 pb-4 sm:pt-6 sm:pb-8 overflow-hidden">
-    <!-- Ambient Pastel & Cyan Glow Orbs -->
-    <div class="absolute top-4 left-1/4 w-96 h-96 bg-sky-200/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
-    <div class="absolute bottom-4 right-1/4 w-80 h-80 bg-indigo-100/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <!-- Ambient Pastel & Cyan Glow Orbs (Hanya Light Mode, Hilang Total di Dark Mode) -->
+    <div class="absolute top-4 left-1/4 w-96 h-96 bg-sky-200/40 rounded-full blur-3xl pointer-events-none -z-10 dark:hidden"></div>
+    <div class="absolute bottom-4 right-1/4 w-80 h-80 bg-indigo-100/40 rounded-full blur-3xl pointer-events-none -z-10 dark:hidden"></div>
 
     <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 relative z-10">
         
         <!-- Wide Gaming Hero Promo Slider (Itemku / Lapakgaming Style) -->
         <div class="relative">
-            <!-- Glowing Aura Backdrop -->
-            <div class="absolute -inset-1.5 bg-gradient-to-r from-sky-400/30 via-indigo-500/25 to-blue-500/30 rounded-3xl blur-xl opacity-70 pointer-events-none"></div>
+            <!-- Glowing Aura Backdrop (Hanya Light Mode) -->
+            <div class="absolute -inset-1.5 bg-gradient-to-r from-sky-400/30 via-indigo-500/25 to-blue-500/30 rounded-3xl blur-xl opacity-70 pointer-events-none dark:hidden"></div>
 
             <div id="heroPromoCarousel" class="relative bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-sky-200/80 shadow-soft-lg group select-none">
                 
