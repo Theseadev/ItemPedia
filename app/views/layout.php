@@ -324,12 +324,14 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         <!-- Profil Pembeli Terverifikasi Google -->
                         <div class="relative hidden sm:block" id="buyerProfileDropdownWrap">
                             <button type="button" 
-                                    onclick="toggleBuyerDropdown()" 
-                                    class="flex items-center gap-1.5 p-1 sm:px-2.5 sm:py-1.5 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 border-2 border-sky-300 dark:border-sky-600 rounded-xl sm:rounded-2xl transition shadow-2xs active:scale-95">
+                                    id="buyerDropdownBtn"
+                                    onclick="toggleBuyerDropdown(event)" 
+                                    class="flex items-center gap-1.5 p-1 sm:px-2.5 sm:py-1.5 bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 border-2 border-sky-300 dark:border-sky-600 rounded-xl sm:rounded-2xl transition shadow-2xs active:scale-95 cursor-pointer">
                                 <div class="relative flex-shrink-0">
                                     <img src="<?= htmlspecialchars($currentBuyer['avatar_url']) ?>" 
                                          alt="Google User" 
-                                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-sky-400 object-cover bg-white">
+                                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-sky-400 object-cover bg-white"
+                                         onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($currentBuyer['name'] ?? 'U') ?>&background=38bdf8&color=fff'">
                                     <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-white border border-slate-200 flex items-center justify-center p-0.5 shadow-2xs">
                                         <svg class="w-full h-full" viewBox="0 0 24 24">
                                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -346,20 +348,24 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                             </button>
 
                             <!-- Dropdown Menu -->
-                            <div id="buyerDropdownMenu" class="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-[#0f172a] rounded-2xl shadow-xl border-2 border-sky-100 dark:border-slate-800 py-2 z-50 animate-in fade-in zoom-in-95">
-                                <div class="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-wider">Akun Google</p>
-                                    <p class="text-xs font-bold text-slate-900 dark:text-white truncate"><?= htmlspecialchars($currentBuyer['name']) ?></p>
+                            <div id="buyerDropdownMenu" class="hidden absolute right-0 mt-2 w-60 bg-white dark:bg-[#0c1e33] rounded-2xl shadow-xl border-2 border-sky-100 dark:border-slate-800 py-2 z-50 animate-in fade-in zoom-in-95">
+                                <div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-800">
+                                    <p class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wider">Akun Google</p>
+                                    <p class="text-xs font-bold text-slate-900 dark:text-white truncate mt-0.5"><?= htmlspecialchars($currentBuyer['name']) ?></p>
                                     <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate"><?= htmlspecialchars($currentBuyer['email']) ?></p>
                                 </div>
-                                <a href="/pesanan-saya" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                                    <i class="fa-solid fa-receipt text-amber-500 text-sm"></i>
-                                    <span>Pesanan Saya</span>
-                                </a>
-                                <a href="/auth/logout" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition border-t border-slate-100 dark:border-slate-800">
-                                    <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
-                                    <span>Keluar Akun</span>
-                                </a>
+                                <div class="py-1">
+                                    <a href="/pesanan-saya" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">
+                                        <i class="fa-solid fa-receipt text-amber-500 text-sm"></i>
+                                        <span>Pesanan Saya</span>
+                                    </a>
+                                </div>
+                                <div class="pt-1 border-t border-slate-100 dark:border-slate-800">
+                                    <a href="/auth/logout" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition">
+                                        <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+                                        <span>Keluar Akun</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -1453,6 +1459,15 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 document.getElementById('googleAuthLoading')?.classList.add('hidden');
             });
         }
+    }
+
+    function toggleBuyerDropdown(e) {
+        if (e && e.stopPropagation) {
+            e.stopPropagation();
+        }
+        const menu = document.getElementById('buyerDropdownMenu');
+        if (!menu) return;
+        menu.classList.toggle('hidden');
     }
 
     window.addEventListener('click', (e) => {
