@@ -280,7 +280,8 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         <span class="hidden sm:inline">Katalog</span>
                     </a>
 
-                    <!-- Tombol Keranjang Belanja -->
+                    <!-- Tombol Keranjang Belanja (Hanya Muncul Jika Sudah Login) -->
+                    <?php if (!empty($currentBuyer)): ?>
                     <button type="button" 
                             onclick="openCartDrawer()" 
                             class="relative p-2 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-black text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 rounded-xl sm:rounded-2xl hover:bg-sky-50 dark:hover:bg-slate-800/80 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer group"
@@ -291,6 +292,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         </div>
                         <span class="hidden sm:inline">Keranjang</span>
                     </button>
+                    <?php endif; ?>
 
                     <!-- Tombol Ganti Tema Gelap / Terang (Dark Mode Toggle) -->
                     <button type="button" 
@@ -706,6 +708,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
     <script>
     // ================= GLOBAL SHOPPING CART LOGIC =================
+    const IS_BUYER_LOGGED_IN = <?= !empty($currentBuyer) ? 'true' : 'false' ?>;
     const CART_STORAGE_KEY = 'itempedia_shopping_cart';
 
     function getCart() {
@@ -731,7 +734,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         const headerCount = document.getElementById('cartDrawerHeaderCount');
 
         if (badge) {
-            if (count > 0) {
+            if (count > 0 && IS_BUYER_LOGGED_IN) {
                 badge.innerText = count > 99 ? '99+' : count;
                 badge.classList.remove('hidden');
             } else {
@@ -778,6 +781,10 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     }
 
     function addToCart(product, qty = 1, openDrawer = false) {
+        if (!IS_BUYER_LOGGED_IN) {
+            openGoogleLoginModal();
+            return;
+        }
         if (!product || !product.id) return;
         const cart = getCart();
         const existingIdx = cart.findIndex(item => item.id == product.id);
@@ -842,6 +849,10 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     }
 
     function openCartDrawer() {
+        if (!IS_BUYER_LOGGED_IN) {
+            openGoogleLoginModal();
+            return;
+        }
         const backdrop = document.getElementById('cartDrawerBackdrop');
         const drawer = document.getElementById('cartDrawer');
         const fab = document.getElementById('floatingActionButtons');
@@ -1140,6 +1151,12 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     }
 
     function submitCartCheckout() {
+        if (!IS_BUYER_LOGGED_IN) {
+            closeCartDrawer();
+            openGoogleLoginModal();
+            return;
+        }
+
         const cart = getCart();
         if (cart.length === 0) {
             alert('Keranjang belanja kamu masih kosong!');
@@ -1185,6 +1202,13 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 // Bersihkan keranjang belanja
                 saveCart([]);
                 window.location.href = data.redirect_url;
+            } else if (data.require_login) {
+                closeCartDrawer();
+                openGoogleLoginModal();
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-bolt text-sky-200"></i><span>Checkout &amp; Bayar QRIS</span>';
+                }
             } else {
                 alert(data.message || 'Gagal memproses pesanan keranjang. Silakan coba lagi.');
                 if (btn) {

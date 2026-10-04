@@ -253,9 +253,26 @@ class OrderController
     {
         $db = Database::getConnection();
 
+        if (session_status() === PHP_SESSION_NONE) {
+            @session_start();
+        }
+
         $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') || 
                   (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) ||
                   (!empty(Flight::request()->data->is_ajax));
+
+        if (empty($_SESSION['buyer_user'])) {
+            if ($isAjax) {
+                Flight::json([
+                    'success' => false, 
+                    'message' => 'Silakan login dengan akun Google kamu terlebih dahulu untuk melanjutkan pembelian.', 
+                    'require_login' => true
+                ], 401);
+                return;
+            }
+            Flight::redirect('/?error=' . urlencode('Silakan login dengan akun Google terlebih dahulu untuk membeli.'));
+            return;
+        }
 
         $productId = (int)(Flight::request()->data->product_id ?? 0);
         $robloxUsername = trim(Flight::request()->data->roblox_username ?? '');

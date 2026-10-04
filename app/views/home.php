@@ -1103,6 +1103,11 @@ ob_start();
     let currentStock = 1;
 
     function addCurrentProductToCart() {
+        if (typeof IS_BUYER_LOGGED_IN !== 'undefined' && !IS_BUYER_LOGGED_IN) {
+            closeCheckoutModal();
+            openGoogleLoginModal();
+            return;
+        }
         if (!currentProduct) return;
         const qty = parseInt(document.getElementById('modalQtyInput')?.value) || 1;
         addToCart(currentProduct, qty, true);
@@ -1110,6 +1115,10 @@ ob_start();
     }
 
     function openCheckoutModal(product) {
+        if (typeof IS_BUYER_LOGGED_IN !== 'undefined' && !IS_BUYER_LOGGED_IN) {
+            openGoogleLoginModal();
+            return;
+        }
         currentProduct = product;
         currentUnitPrice = Number(product.price) || 0;
         currentStock = Number(product.stock) || 0;
@@ -1416,6 +1425,15 @@ ob_start();
 
     document.getElementById('checkoutModal').addEventListener('click', function(e) {
         if (e.target === this) closeCheckoutModal();
+    });
+
+    document.getElementById('checkoutForm')?.addEventListener('submit', function(e) {
+        if (typeof IS_BUYER_LOGGED_IN !== 'undefined' && !IS_BUYER_LOGGED_IN) {
+            e.preventDefault();
+            closeCheckoutModal();
+            openGoogleLoginModal();
+            return false;
+        }
     });
 
     async function checkRobloxUser() {
