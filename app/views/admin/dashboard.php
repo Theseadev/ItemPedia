@@ -73,7 +73,7 @@
                     <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Pantau aktifitas harian, pendapatan, dan performa tokomu di ItemPedia.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="/admin/products/create" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 active:scale-95">
+                    <a href="/Banjar/products/create" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-2 active:scale-95">
                         <i class="fa-solid fa-plus text-xs"></i>
                         <span>Buat Dagangan Baru</span>
                     </a>
@@ -95,7 +95,7 @@
                     <!-- 6 Cards Grid -->
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
                             <!-- Card 1: Perlu Diproses -->
-                            <a href="/admin/orders?status=NEED_PROCESS" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-blue-50/50 dark:hover:bg-sky-950/40 hover:border-blue-200 dark:hover:border-sky-800/80 transition">
+                            <a href="/Banjar/orders?status=NEED_PROCESS" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-blue-50/50 dark:hover:bg-sky-950/40 hover:border-blue-200 dark:hover:border-sky-800/80 transition">
                                 <div class="text-slate-500 dark:text-slate-400 text-xs font-semibold group-hover:text-blue-700 dark:group-hover:text-sky-400">Perlu Diproses</div>
                                 <div class="text-2xl font-black text-slate-900 dark:text-white mt-1 flex items-center gap-2">
                                     <span><?= $needProcess ?></span>
@@ -106,7 +106,7 @@
                             </a>
 
                             <!-- Card 2: Menunggu Konfirmasi -->
-                            <a href="/admin/orders?status=PENDING" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-blue-50/50 dark:hover:bg-sky-950/40 hover:border-blue-200 dark:hover:border-sky-800/80 transition">
+                            <a href="/Banjar/orders?status=PENDING" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-blue-50/50 dark:hover:bg-sky-950/40 hover:border-blue-200 dark:hover:border-sky-800/80 transition">
                                 <div class="text-slate-500 dark:text-slate-400 text-xs font-semibold group-hover:text-blue-700 dark:group-hover:text-sky-400">Menunggu Konfirmasi</div>
                                 <div class="text-2xl font-black text-slate-900 dark:text-white mt-1"><?= $pendingCount ?></div>
                             </a>
@@ -118,13 +118,13 @@
                             </div>
 
                             <!-- Card 4: Sedang Dibatalkan -->
-                            <a href="/admin/orders?status=PROCESSING" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-blue-50/50 dark:hover:bg-sky-950/40 hover:border-blue-200 dark:hover:border-sky-800/80 transition">
+                            <a href="/Banjar/orders?status=PROCESSING" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-blue-50/50 dark:hover:bg-sky-950/40 hover:border-blue-200 dark:hover:border-sky-800/80 transition">
                                 <div class="text-slate-500 dark:text-slate-400 text-xs font-semibold group-hover:text-blue-700 dark:group-hover:text-sky-400">Sedang Dibatalkan</div>
                                 <div class="text-2xl font-black text-slate-900 dark:text-white mt-1">0</div>
                             </a>
 
                             <!-- Card 5: Stok Habis -->
-                            <a href="/admin/products?tab=OUT_OF_STOCK" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-rose-50/50 dark:hover:bg-rose-950/40 hover:border-rose-200 dark:hover:border-rose-800/80 transition">
+                            <a href="/Banjar/products?tab=OUT_OF_STOCK" class="group p-4 rounded-xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 hover:bg-rose-50/50 dark:hover:bg-rose-950/40 hover:border-rose-200 dark:hover:border-rose-800/80 transition">
                                 <div class="text-slate-500 dark:text-slate-400 text-xs font-semibold group-hover:text-rose-600 dark:group-hover:text-rose-400">Stok Habis</div>
                                 <div class="text-2xl font-black text-slate-900 dark:text-white mt-1 <?= $outOfStockCount > 0 ? 'text-rose-600 dark:text-rose-400' : '' ?>">
                                     <?= $outOfStockCount ?>

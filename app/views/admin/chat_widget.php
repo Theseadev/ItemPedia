@@ -54,7 +54,7 @@
 
                     <div class="flex items-center gap-1.5 text-[11px] text-slate-400 dark:text-slate-500 px-1 font-medium">
                         <i class="fa-regular fa-clock text-[10px]"></i>
-                        <span>Lihat riwayat pesan <a href="/admin/orders" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">di sini</a></span>
+                        <span>Lihat riwayat pesan <a href="/Banjar/orders" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">di sini</a></span>
                     </div>
                 </div>
 

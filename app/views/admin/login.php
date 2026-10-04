@@ -55,14 +55,14 @@
             </div>
             <?php endif; ?>
 
-            <form action="/admin/login" method="POST" class="space-y-4">
+            <form action="/Banjar/login" method="POST" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Username</label>
                     <input type="text" 
                            name="username" 
                            required 
-                           value="admin"
-                           placeholder="admin"
+                           autocomplete="username"
+                           placeholder="Masukkan Username"
                            class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-800 dark:text-white focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-900 transition">
                 </div>
                 <div>
@@ -70,17 +70,9 @@
                     <input type="password" 
                            name="password" 
                            required 
-                           value="admin123"
-                           placeholder="••••••••"
+                           autocomplete="current-password"
+                           placeholder="••••••••••••"
                            class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-800 dark:text-white focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-900 transition">
-                </div>
-
-                <div class="p-3.5 bg-slate-50 dark:bg-slate-900/70 rounded-2xl text-[11px] text-slate-600 dark:text-slate-400 border border-slate-200/80 dark:border-slate-800">
-                    <div class="flex items-center gap-1.5 font-bold text-slate-800 dark:text-slate-200 mb-0.5">
-                        <i class="fa-solid fa-key text-amber-500"></i>
-                        <span>Akun Default:</span>
-                    </div>
-                    Username: <code class="text-sky-600 dark:text-sky-400 font-bold">admin</code> &bull; Password: <code class="text-sky-600 dark:text-sky-400 font-bold">admin123</code>
                 </div>
 
                 <button type="submit" class="w-full py-3 px-4 bg-sky-500 hover:bg-sky-600 text-white font-extrabold text-sm rounded-xl shadow-xs transition flex items-center justify-center gap-2 active:scale-95">

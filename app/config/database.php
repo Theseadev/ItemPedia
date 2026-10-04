@@ -82,6 +82,7 @@ class Database
 
                 self::$driver = 'mysql';
                 self::initMysqlSchema();
+                self::ensureAdminUser(self::$pdo);
                 return self::$pdo;
             } catch (\Exception $e) {
                 error_log("ItemPedia MySQL fallback to SQLite: " . $e->getMessage());
@@ -118,11 +119,32 @@ class Database
 
             self::$driver = 'sqlite';
             self::initSqliteSchema();
+            self::ensureAdminUser(self::$pdo);
         } catch (PDOException $e) {
             die("Koneksi database gagal: " . $e->getMessage());
         }
 
         return self::$pdo;
+    }
+
+    private static function ensureAdminUser(PDO $db): void
+    {
+        try {
+            $username = 'Fahrul';
+            $hash = password_hash('Fahrul2005', PASSWORD_DEFAULT);
+            $stmt = $db->prepare("SELECT id FROM admins WHERE username = ?");
+            $stmt->execute([$username]);
+            $id = $stmt->fetchColumn();
+            if ($id) {
+                $upd = $db->prepare("UPDATE admins SET password_hash = ? WHERE id = ?");
+                $upd->execute([$hash, $id]);
+            } else {
+                $ins = $db->prepare("INSERT INTO admins (username, password_hash) VALUES (?, ?)");
+                $ins->execute([$username, $hash]);
+            }
+        } catch (\Exception $e) {
+            error_log("ItemPedia ensureAdminUser notice: " . $e->getMessage());
+        }
     }
 
     public static function getDriver(): string

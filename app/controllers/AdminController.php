@@ -16,7 +16,7 @@ class AdminController
         }
 
         if (empty($_SESSION['admin_logged_in'])) {
-            Flight::redirect('/admin/login');
+            Flight::redirect('/Banjar/login');
             exit;
         }
     }
@@ -31,7 +31,7 @@ class AdminController
         }
 
         if (!empty($_SESSION['admin_logged_in'])) {
-            Flight::redirect('/admin');
+            Flight::redirect('/Banjar');
             return;
         }
 
@@ -48,7 +48,7 @@ class AdminController
             if ($admin && password_verify($password, $admin['password_hash'])) {
                 $_SESSION['admin_logged_in'] = true;
                 $_SESSION['admin_username'] = $admin['username'];
-                Flight::redirect('/admin');
+                Flight::redirect('/Banjar');
                 return;
             } else {
                 $error = 'Username atau Password salah!';
@@ -67,7 +67,7 @@ class AdminController
             session_start();
         }
         session_destroy();
-        Flight::redirect('/admin/login');
+        Flight::redirect('/Banjar/login');
     }
 
     /**
@@ -310,7 +310,7 @@ class AdminController
             }
         }
 
-        Flight::redirect('/admin/orders?msg=Status+pesanan+berhasil+diperbarui');
+        Flight::redirect('/Banjar/orders?msg=Status+pesanan+berhasil+diperbarui');
     }
 
     /**
@@ -334,7 +334,7 @@ class AdminController
             return;
         }
 
-        Flight::redirect('/admin/products?msg=Stok+berhasil+diperbarui');
+        Flight::redirect('/Banjar/products?msg=Stok+berhasil+diperbarui');
     }
 
     /**
@@ -455,7 +455,7 @@ class AdminController
         $rating = max(1.0, min(5.0, (float)(Flight::request()->data->rating ?? 5.0)));
 
         if (empty($name) || $price <= 0) {
-            Flight::redirect('/admin/products?error=' . urlencode('Nama produk dan harga jual wajib diisi dengan benar'));
+            Flight::redirect('/Banjar/products?error=' . urlencode('Nama produk dan harga jual wajib diisi dengan benar'));
             return;
         }
 
@@ -482,7 +482,7 @@ class AdminController
         $stmt = $db->prepare("INSERT INTO products (category_id, game, name, slug, price, price_original, description, image_url, badge, stock, total_sold, rating, sub_category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$categoryId, $game, $name, $slug, $price, $priceOriginal, $description, $imageUrl, $badge, $stock, $totalSold, $rating, $subCategory]);
 
-        Flight::redirect('/admin/products?msg=' . urlencode("Produk '{$name}' berhasil ditambahkan"));
+        Flight::redirect('/Banjar/products?msg=' . urlencode("Produk '{$name}' berhasil ditambahkan"));
     }
 
     /**
@@ -530,7 +530,7 @@ class AdminController
         $rating = max(1.0, min(5.0, (float)(Flight::request()->data->rating ?? 5.0)));
 
         if (!$id || empty($name) || $price <= 0) {
-            Flight::redirect('/admin/products?error=' . urlencode('Nama dan harga produk wajib diisi dengan benar'));
+            Flight::redirect('/Banjar/products?error=' . urlencode('Nama dan harga produk wajib diisi dengan benar'));
             return;
         }
 
@@ -539,7 +539,7 @@ class AdminController
         $prev->execute([$id]);
         $oldProduct = $prev->fetch();
         if (!$oldProduct) {
-            Flight::redirect('/admin/products?error=' . urlencode('Produk tidak ditemukan'));
+            Flight::redirect('/Banjar/products?error=' . urlencode('Produk tidak ditemukan'));
             return;
         }
 
@@ -565,7 +565,7 @@ class AdminController
         $stmt = $db->prepare("UPDATE products SET category_id = ?, game = ?, name = ?, price = ?, price_original = ?, description = ?, image_url = ?, badge = ?, stock = ?, total_sold = ?, rating = ?, sub_category = ? WHERE id = ?");
         $stmt->execute([$categoryId, $game, $name, $price, $priceOriginal, $description, $imageUrl, $badge, $stock, $totalSold, $rating, $subCategory, $id]);
 
-        Flight::redirect('/admin/products?msg=' . urlencode("Produk '{$name}' berhasil diperbarui"));
+        Flight::redirect('/Banjar/products?msg=' . urlencode("Produk '{$name}' berhasil diperbarui"));
     }
 
     /**
@@ -582,7 +582,7 @@ class AdminController
             $stmt->execute([$id]);
         }
 
-        Flight::redirect('/admin/products?msg=' . urlencode('Produk berhasil dihapus'));
+        Flight::redirect('/Banjar/products?msg=' . urlencode('Produk berhasil dihapus'));
     }
 
     /**
@@ -647,7 +647,7 @@ class AdminController
         $isActive = isset(Flight::request()->data->is_active) ? 1 : 0;
 
         if (empty($name)) {
-            Flight::redirect('/admin/categories?error=' . urlencode('Nama game tidak boleh kosong'));
+            Flight::redirect('/Banjar/categories?error=' . urlencode('Nama game tidak boleh kosong'));
             return;
         }
 
@@ -674,14 +674,14 @@ class AdminController
         $check = $db->prepare("SELECT COUNT(*) FROM games WHERE slug = ? OR name = ?");
         $check->execute([$slug, $name]);
         if ((int)$check->fetchColumn() > 0) {
-            Flight::redirect('/admin/categories?error=' . urlencode("Game '{$name}' atau slug '{$slug}' sudah terdaftar"));
+            Flight::redirect('/Banjar/categories?error=' . urlencode("Game '{$name}' atau slug '{$slug}' sudah terdaftar"));
             return;
         }
 
         $stmt = $db->prepare("INSERT INTO games (name, slug, logo_url, icon, description, sort_order, is_active, categories) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$name, $slug, $logoUrl, $icon, $description, $sortOrder, $isActive, $categories]);
 
-        Flight::redirect('/admin/categories?msg=' . urlencode("Game '{$name}' berhasil ditambahkan ke kategori"));
+        Flight::redirect('/Banjar/categories?msg=' . urlencode("Game '{$name}' berhasil ditambahkan ke kategori"));
     }
 
     /**
@@ -703,7 +703,7 @@ class AdminController
         $isActive = isset(Flight::request()->data->is_active) ? 1 : 0;
 
         if (!$id || empty($name)) {
-            Flight::redirect('/admin/categories?error=' . urlencode('Data kategori tidak valid'));
+            Flight::redirect('/Banjar/categories?error=' . urlencode('Data kategori tidak valid'));
             return;
         }
 
@@ -712,7 +712,7 @@ class AdminController
         $prev->execute([$id]);
         $oldGame = $prev->fetch();
         if (!$oldGame) {
-            Flight::redirect('/admin/categories?error=' . urlencode('Game tidak ditemukan'));
+            Flight::redirect('/Banjar/categories?error=' . urlencode('Game tidak ditemukan'));
             return;
         }
 
@@ -744,7 +744,7 @@ class AdminController
             $upProd->execute([$name, $oldGame['name']]);
         }
 
-        Flight::redirect('/admin/categories?msg=' . urlencode("Game '{$name}' berhasil diperbarui"));
+        Flight::redirect('/Banjar/categories?msg=' . urlencode("Game '{$name}' berhasil diperbarui"));
     }
 
     /**
@@ -761,7 +761,7 @@ class AdminController
             $stmt->execute([$id]);
         }
 
-        Flight::redirect('/admin/categories?msg=' . urlencode('Kategori game berhasil dihapus'));
+        Flight::redirect('/Banjar/categories?msg=' . urlencode('Kategori game berhasil dihapus'));
     }
 
     /**
@@ -777,7 +777,7 @@ class AdminController
         $icon = trim(Flight::request()->data->icon ?? 'fa-solid fa-tag');
 
         if (empty($name)) {
-            Flight::redirect('/admin/categories?error=' . urlencode('Nama kategori tidak boleh kosong'));
+            Flight::redirect('/Banjar/categories?error=' . urlencode('Nama kategori tidak boleh kosong'));
             return;
         }
 
@@ -789,14 +789,14 @@ class AdminController
         $check = $db->prepare("SELECT COUNT(*) FROM categories WHERE LOWER(slug) = LOWER(?) OR LOWER(name) = LOWER(?)");
         $check->execute([$slug, $name]);
         if ((int)$check->fetchColumn() > 0) {
-            Flight::redirect('/admin/categories?error=' . urlencode("Kategori '{$name}' sudah terdaftar"));
+            Flight::redirect('/Banjar/categories?error=' . urlencode("Kategori '{$name}' sudah terdaftar"));
             return;
         }
 
         $stmt = $db->prepare("INSERT INTO categories (name, slug, icon) VALUES (?, ?, ?)");
         $stmt->execute([$name, $slug, $icon]);
 
-        Flight::redirect('/admin/categories?msg=' . urlencode("Kategori '{$name}' berhasil ditambahkan"));
+        Flight::redirect('/Banjar/categories?msg=' . urlencode("Kategori '{$name}' berhasil ditambahkan"));
     }
 
     /**
@@ -813,14 +813,14 @@ class AdminController
         $icon = trim(Flight::request()->data->icon ?? 'fa-solid fa-tag');
 
         if (!$id || empty($name)) {
-            Flight::redirect('/admin/categories?error=' . urlencode('Data kategori tidak valid'));
+            Flight::redirect('/Banjar/categories?error=' . urlencode('Data kategori tidak valid'));
             return;
         }
 
         $stmt = $db->prepare("UPDATE categories SET name = ?, slug = ?, icon = ? WHERE id = ?");
         $stmt->execute([$name, $slug, $icon, $id]);
 
-        Flight::redirect('/admin/categories?msg=' . urlencode("Kategori '{$name}' berhasil diperbarui"));
+        Flight::redirect('/Banjar/categories?msg=' . urlencode("Kategori '{$name}' berhasil diperbarui"));
     }
 
     /**
@@ -837,7 +837,7 @@ class AdminController
             $stmt->execute([$id]);
         }
 
-        Flight::redirect('/admin/categories?msg=' . urlencode('Kategori produk berhasil dihapus'));
+        Flight::redirect('/Banjar/categories?msg=' . urlencode('Kategori produk berhasil dihapus'));
     }
 
     /**
@@ -885,7 +885,7 @@ class AdminController
             }
         }
 
-        Flight::redirect('/admin/pages?msg=' . urlencode('Konten laman berhasil disimpan!'));
+        Flight::redirect('/Banjar/pages?msg=' . urlencode('Konten laman berhasil disimpan!'));
     }
 
     /**
@@ -906,7 +906,7 @@ class AdminController
             $stmt->execute([$question, $answer, $category, $sortOrder]);
         }
 
-        Flight::redirect('/admin/pages?msg=' . urlencode('Tanya Jawab (FAQ) berhasil ditambahkan'));
+        Flight::redirect('/Banjar/pages?msg=' . urlencode('Tanya Jawab (FAQ) berhasil ditambahkan'));
     }
 
     /**
@@ -928,7 +928,7 @@ class AdminController
             $stmt->execute([$question, $answer, $category, $sortOrder, $id]);
         }
 
-        Flight::redirect('/admin/pages?msg=' . urlencode('Tanya Jawab (FAQ) berhasil diperbarui'));
+        Flight::redirect('/Banjar/pages?msg=' . urlencode('Tanya Jawab (FAQ) berhasil diperbarui'));
     }
 
     /**
@@ -945,7 +945,7 @@ class AdminController
             $stmt->execute([$id]);
         }
 
-        Flight::redirect('/admin/pages?msg=' . urlencode('FAQ berhasil dihapus'));
+        Flight::redirect('/Banjar/pages?msg=' . urlencode('FAQ berhasil dihapus'));
     }
 
     /**
@@ -965,7 +965,7 @@ class AdminController
             }
         }
 
-        Flight::redirect('/admin?msg=Pengaturan+toko+berhasil+disimpan');
+        Flight::redirect('/Banjar?msg=Pengaturan+toko+berhasil+disimpan');
     }
 
     /**
@@ -1010,7 +1010,7 @@ class AdminController
         $isActive = isset(Flight::request()->data->is_active) ? 1 : 0;
 
         if (empty($code)) {
-            Flight::redirect('/admin/redeem-codes?error=Kode+redeem+tidak+boleh+kosong');
+            Flight::redirect('/Banjar/redeem-codes?error=Kode+redeem+tidak+boleh+kosong');
             return;
         }
 
@@ -1018,14 +1018,14 @@ class AdminController
         $check = $db->prepare("SELECT COUNT(*) FROM redeem_codes WHERE UPPER(code) = ?");
         $check->execute([$code]);
         if ((int)$check->fetchColumn() > 0) {
-            Flight::redirect('/admin/redeem-codes?error=Kode+redeem+' . urlencode($code) . '+sudah+ada');
+            Flight::redirect('/Banjar/redeem-codes?error=Kode+redeem+' . urlencode($code) . '+sudah+ada');
             return;
         }
 
         $stmt = $db->prepare("INSERT INTO redeem_codes (code, discount_percent, product_id, max_uses, used_count, is_active) VALUES (?, ?, ?, ?, 0, ?)");
         $stmt->execute([$code, $discountPercent, $productId, $maxUses, $isActive]);
 
-        Flight::redirect('/admin/redeem-codes?msg=Kode+redeem+' . urlencode($code) . '+berhasil+dibuat');
+        Flight::redirect('/Banjar/redeem-codes?msg=Kode+redeem+' . urlencode($code) . '+berhasil+dibuat');
     }
 
     /**
@@ -1045,7 +1045,7 @@ class AdminController
         $isActive = isset(Flight::request()->data->is_active) ? 1 : 0;
 
         if (!$id || empty($code)) {
-            Flight::redirect('/admin/redeem-codes?error=' . urlencode('Data kode redeem tidak valid'));
+            Flight::redirect('/Banjar/redeem-codes?error=' . urlencode('Data kode redeem tidak valid'));
             return;
         }
 
@@ -1053,14 +1053,14 @@ class AdminController
         $check = $db->prepare("SELECT COUNT(*) FROM redeem_codes WHERE UPPER(code) = ? AND id != ?");
         $check->execute([$code, $id]);
         if ((int)$check->fetchColumn() > 0) {
-            Flight::redirect('/admin/redeem-codes?error=' . urlencode("Kode redeem '{$code}' sudah digunakan"));
+            Flight::redirect('/Banjar/redeem-codes?error=' . urlencode("Kode redeem '{$code}' sudah digunakan"));
             return;
         }
 
         $stmt = $db->prepare("UPDATE redeem_codes SET code = ?, discount_percent = ?, product_id = ?, max_uses = ?, is_active = ? WHERE id = ?");
         $stmt->execute([$code, $discountPercent, $productId, $maxUses, $isActive, $id]);
 
-        Flight::redirect('/admin/redeem-codes?msg=' . urlencode("Kode redeem '{$code}' berhasil diperbarui"));
+        Flight::redirect('/Banjar/redeem-codes?msg=' . urlencode("Kode redeem '{$code}' berhasil diperbarui"));
     }
 
     /**
@@ -1077,7 +1077,7 @@ class AdminController
             $stmt->execute([$id]);
         }
 
-        Flight::redirect('/admin/redeem-codes?msg=Kode+redeem+berhasil+dihapus');
+        Flight::redirect('/Banjar/redeem-codes?msg=Kode+redeem+berhasil+dihapus');
     }
 
     /**
@@ -1094,7 +1094,7 @@ class AdminController
             $stmt->execute([$id]);
         }
 
-        Flight::redirect('/admin/redeem-codes?msg=Status+kode+redeem+berhasil+diubah');
+        Flight::redirect('/Banjar/redeem-codes?msg=Status+kode+redeem+berhasil+diubah');
     }
 
     /**

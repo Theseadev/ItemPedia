@@ -489,9 +489,7 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             <!-- Bottom Disclaimer -->
             <div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-4">
                 <p>&copy; <?= date('Y') ?> <strong>ItemPedia</strong>. Toko Roblox Mandiri. Ditenagai oleh Flight PHP. 
-                    <a href="/admin/login" class="text-slate-300 dark:text-slate-600 hover:text-slate-500 dark:hover:text-slate-400 transition ml-2 inline-block opacity-25 hover:opacity-100" title="Admin Portal">
-                        <i class="fa-solid fa-lock text-[10px]"></i>
-                    </a>
+                    
                 </p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 text-center sm:text-right">
                     Roblox adalah merek dagang terdaftar milik Roblox Corporation. ItemPedia beroperasi sebagai platform transaksi mandiri.

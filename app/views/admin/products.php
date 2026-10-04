@@ -89,7 +89,7 @@
                         <span>Upload</span>
                     </button>
 
-                    <a href="/admin/products/create" 
+                    <a href="/Banjar/products/create" 
                        class="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-extrabold text-xs transition flex items-center gap-2 shadow-xs active:scale-95">
                         <i class="fa-solid fa-plus"></i>
                         <span>Tambah Dagangan</span>
@@ -102,7 +102,7 @@
                 
                 <!-- 1. Multi-Filter Bar: SEBARIS (Single Inline Row) -->
                 <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0c1e33] space-y-3.5">
-                    <form method="GET" action="/admin/products" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center w-full">
+                    <form method="GET" action="/Banjar/products" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center w-full">
                         <input type="hidden" name="tab" value="<?= htmlspecialchars($tabFilter ?? 'ALL') ?>">
 
                         <!-- Search Input (5 cols) -->
@@ -168,24 +168,24 @@
 
                     <!-- Filter Pills Cepat (Matching Image 5) -->
                     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
-                        <a href="/admin/products" 
+                        <a href="/Banjar/products" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($tabFilter === 'ALL' && empty($searchQuery) && empty($categoryFilter)) ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Semua
                         </a>
-                        <a href="/admin/products?tab=OUT_OF_STOCK" 
+                        <a href="/Banjar/products?tab=OUT_OF_STOCK" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($tabFilter === 'OUT_OF_STOCK') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Stok Habis
                         </a>
-                        <a href="/admin/products?tab=UNSOLD" 
+                        <a href="/Banjar/products?tab=UNSOLD" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($tabFilter === 'UNSOLD') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Belum Terjual
                         </a>
-                        <a href="/admin/products?tab=WHOLESALE" 
+                        <a href="/Banjar/products?tab=WHOLESALE" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($tabFilter === 'WHOLESALE') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Grosir
                         </a>
                         <div class="relative inline-block">
-                            <select onchange="if(this.value) window.location.href='/admin/products?badge=' + this.value" class="px-3 py-1.5 rounded-full font-bold bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs focus:outline-none cursor-pointer">
+                            <select onchange="if(this.value) window.location.href='/Banjar/products?badge=' + this.value" class="px-3 py-1.5 rounded-full font-bold bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs focus:outline-none cursor-pointer">
                                 <option value="">Delivery ▾</option>
                                 <option value="10 Menit">⚡ 10 Menit</option>
                                 <option value="Instan">🚀 Instan</option>
@@ -321,7 +321,7 @@
                                                 title="Edit Dagangan">
                                             <i class="fa-solid fa-pen-to-square text-xs"></i>
                                         </button>
-                                        <form action="/admin/products/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Dagangan Produk?', itemName: '<?= addslashes($p['name']) ?>', itemIcon: 'fa-solid fa-box text-rose-500', message: 'Dagangan ini akan dihapus permanen dari katalog dan tidak akan tampil lagi di toko.' });" class="inline-block">
+                                        <form action="/Banjar/products/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Dagangan Produk?', itemName: '<?= addslashes($p['name']) ?>', itemIcon: 'fa-solid fa-box text-rose-500', message: 'Dagangan ini akan dihapus permanen dari katalog dan tidak akan tampil lagi di toko.' });" class="inline-block">
                                             <input type="hidden" name="id" value="<?= $p['id'] ?>">
                                             <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/60 rounded-xl transition inline-flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-2xs ml-1" title="Hapus Dagangan">
                                                 <i class="fa-regular fa-trash-can text-xs"></i>
@@ -355,7 +355,7 @@
                 </button>
             </div>
 
-            <form action="/admin/products/update" method="POST" enctype="multipart/form-data" class="p-6 overflow-y-auto space-y-4 text-xs">
+            <form action="/Banjar/products/update" method="POST" enctype="multipart/form-data" class="p-6 overflow-y-auto space-y-4 text-xs">
                 <input type="hidden" name="id" id="edit_product_id">
 
                 <div class="grid grid-cols-2 gap-3">
@@ -476,7 +476,7 @@
             formData.append('product_id', productId);
             formData.append('stock', newStock);
 
-            const res = await fetch('/admin/products/quick-stock', {
+            const res = await fetch('/Banjar/products/quick-stock', {
                 method: 'POST',
                 headers: { 'X-Requested-With': 'XMLHttpRequest' },
                 body: formData

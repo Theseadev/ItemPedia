@@ -115,7 +115,7 @@
                     <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-4 sm:p-5 space-y-3.5">
                         
                         <!-- Top Dropdown Filters Row -->
-                        <form method="GET" action="/admin/reviews" class="flex flex-col sm:flex-row items-center gap-3">
+                        <form method="GET" action="/Banjar/reviews" class="flex flex-col sm:flex-row items-center gap-3">
                             <input type="hidden" name="star" value="<?= $filterStar ?>">
 
                             <!-- Date Range Dropdown -->
@@ -144,12 +144,12 @@
 
                         <!-- Star Filter Pills (Persis Screenshot Image 3) -->
                         <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs pt-1 border-t border-slate-100 dark:border-slate-800">
-                            <a href="/admin/reviews?category=<?= urlencode($filterCategory) ?>" 
+                            <a href="/Banjar/reviews?category=<?= urlencode($filterCategory) ?>" 
                                class="px-4 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($filterStar === 0) ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700' ?>">
                                 Semua
                             </a>
                             <?php for ($s = 5; $s >= 1; $s--): ?>
-                            <a href="/admin/reviews?star=<?= $s ?>&category=<?= urlencode($filterCategory) ?>" 
+                            <a href="/Banjar/reviews?star=<?= $s ?>&category=<?= urlencode($filterCategory) ?>" 
                                class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap flex items-center gap-1.5 <?= ($filterStar === $s) ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700' ?>">
                                 <i class="fa-solid fa-star text-[10px] text-amber-400"></i>
                                 <span><?= $s ?></span>

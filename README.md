@@ -105,17 +105,17 @@ php -S localhost:8000 -t public
 Buka browser Anda dan akses:
 - 🌐 **Halaman Utama Toko:** [http://localhost:8000](http://localhost:8000)
 - 🔍 **Pelacakan Pesanan:** [http://localhost:8000/lacak](http://localhost:8000/lacak)
-- 🔐 **Panel Admin:** [http://localhost:8000/admin](http://localhost:8000/admin)
+- 🔐 **Portal Rahasia Admin:** [http://localhost:8000/Banjar](http://localhost:8000/Banjar)
 
 ---
 
 ## 🔐 Kredensial Default Admin
 
-| Parameter | Kredensial Default |
+| Parameter | Kredensial |
 |---|---|
-| **URL Login** | `http://localhost:8000/admin/login` |
-| **Username** | `admin` |
-| **Password** | `admin123` |
+| **URL Portal Rahasia** | `/Banjar/login` |
+| **Username** | `Fahrul` |
+| **Password** | `Fahrul2005` |
 
 ---
 

@@ -120,12 +120,12 @@ function confirmLogoutAdmin() {
             icon: 'fa-arrow-right-from-bracket',
             variant: 'danger',
             onConfirm: () => {
-                window.location.href = '/admin/logout';
+                window.location.href = '/Banjar/logout';
             }
         });
     } else {
         if (confirm('Apakah Anda yakin ingin keluar dari panel admin?')) {
-            window.location.href = '/admin/logout';
+            window.location.href = '/Banjar/logout';
         }
     }
 }

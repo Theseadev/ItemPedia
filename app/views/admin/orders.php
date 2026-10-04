@@ -101,7 +101,7 @@
                         <?php foreach ($tabs as $t): 
                             $isActive = ($curTab === $t['key']);
                         ?>
-                            <a href="/admin/orders?status=<?= $t['key'] ?><?= !empty($searchQuery) ? '&q=' . urlencode($searchQuery) : '' ?><?= !empty($gameFilter) ? '&game=' . urlencode($gameFilter) : '' ?>" 
+                            <a href="/Banjar/orders?status=<?= $t['key'] ?><?= !empty($searchQuery) ? '&q=' . urlencode($searchQuery) : '' ?><?= !empty($gameFilter) ? '&game=' . urlencode($gameFilter) : '' ?>" 
                                class="py-3.5 px-2 border-b-2 font-bold flex items-center gap-2 transition relative <?= $isActive ? 'border-sky-500 text-sky-500 dark:text-sky-400' : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700' ?>">
                                 <span><?= $t['label'] ?></span>
                                 <?php if ($t['count'] > 0): ?>
@@ -116,7 +116,7 @@
 
                 <!-- 2. Search & Multi-Filter Bar: SEBARIS (1 Single Inline Row) -->
                 <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0c1e33] space-y-3.5">
-                    <form method="GET" action="/admin/orders" class="flex flex-col sm:flex-row items-center gap-3 w-full">
+                    <form method="GET" action="/Banjar/orders" class="flex flex-col sm:flex-row items-center gap-3 w-full">
                         <input type="hidden" name="status" value="<?= htmlspecialchars($statusFilter ?? 'ALL') ?>">
 
                         <!-- Search Input with "Nomor Pesanan" Prefix -->
@@ -160,19 +160,19 @@
 
                     <!-- Filter Pills Cepat (Sebaris persis Screenshot) -->
                     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
-                        <a href="/admin/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>" 
+                        <a href="/Banjar/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= empty($searchQuery) && empty($gameFilter) ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Semua Pesanan
                         </a>
-                        <a href="/admin/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>&q=Joki" 
+                        <a href="/Banjar/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>&q=Joki" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($searchQuery === 'Joki') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Joki
                         </a>
-                        <a href="/admin/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>&q=Iklan" 
+                        <a href="/Banjar/orders?status=<?= htmlspecialchars($statusFilter ?? 'ALL') ?>&q=Iklan" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($searchQuery === 'Iklan') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Pesanan Dari Iklan
                         </a>
-                        <a href="/admin/orders?status=NEED_PROCESS" 
+                        <a href="/Banjar/orders?status=NEED_PROCESS" 
                            class="px-3.5 py-1.5 rounded-full font-bold transition whitespace-nowrap <?= ($statusFilter === 'NEED_PROCESS') ? 'bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800' ?>">
                             Pesanan Butuh Cepat
                         </a>
@@ -334,7 +334,7 @@
                 </button>
             </div>
 
-            <form action="/admin/orders/update" method="POST" class="p-5 space-y-4">
+            <form action="/Banjar/orders/update" method="POST" class="p-5 space-y-4">
                 <input type="hidden" name="order_id" id="editOrderId">
 
                 <div class="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-2xl text-xs space-y-1.5 border border-slate-200/80 dark:border-slate-800">

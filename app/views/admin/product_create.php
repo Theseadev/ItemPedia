@@ -42,7 +42,7 @@
 
             <!-- Breadcrumbs -->
             <div class="flex items-center gap-2 text-xs font-bold text-slate-400 dark:text-slate-500">
-                <a href="/admin/products" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Daganganku</a>
+                <a href="/Banjar/products" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Daganganku</a>
                 <i class="fa-solid fa-chevron-right text-[9px]"></i>
                 <span class="text-slate-700 dark:text-slate-300">Buat Dagangan</span>
             </div>
@@ -56,7 +56,7 @@
             </div>
 
             <!-- Create Product Form (Matching Image 4) -->
-            <form action="/admin/products/add" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <form action="/Banjar/products/add" method="POST" enctype="multipart/form-data" class="space-y-6">
                 
                 <!-- SECTION 1: Tipe Dagangan -->
                 <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs p-5 sm:p-6 space-y-4">
@@ -301,7 +301,7 @@
 
                 <!-- Bottom Action Bar (Matching Image 4) -->
                 <div class="flex items-center justify-end gap-3 pt-2">
-                    <a href="/admin/products" class="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs sm:text-sm transition">
+                    <a href="/Banjar/products" class="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs sm:text-sm transition">
                         Batal
                     </a>
                     <button type="submit" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs sm:text-sm transition shadow-xs flex items-center gap-2 active:scale-95">

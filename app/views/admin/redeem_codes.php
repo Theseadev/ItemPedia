@@ -134,7 +134,7 @@
                                     <?= (int)$c['used_count'] ?> / <?= (int)$c['max_uses'] > 0 ? (int)$c['max_uses'] . 'x' : '∞' ?>
                                 </td>
                                 <td class="py-3.5 px-4">
-                                    <form action="/admin/redeem-codes/toggle" method="POST" class="inline">
+                                    <form action="/Banjar/redeem-codes/toggle" method="POST" class="inline">
                                         <input type="hidden" name="id" value="<?= $c['id'] ?>">
                                         <?php if ($c['is_active']): ?>
                                             <button type="submit" title="Klik untuk menonaktifkan" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition">
@@ -154,7 +154,7 @@
                                             title="Edit Kode">
                                         <i class="fa-solid fa-pen-to-square text-xs"></i>
                                     </button>
-                                    <form action="/admin/redeem-codes/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Kode Promo?', itemName: '<?= addslashes($c['code']) ?>', itemIcon: 'fa-solid fa-ticket text-rose-500', message: 'Kupon diskon ini akan dihapus permanen dan tidak bisa digunakan pembeli lagi saat checkout.' });" class="inline">
+                                    <form action="/Banjar/redeem-codes/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Kode Promo?', itemName: '<?= addslashes($c['code']) ?>', itemIcon: 'fa-solid fa-ticket text-rose-500', message: 'Kupon diskon ini akan dihapus permanen dan tidak bisa digunakan pembeli lagi saat checkout.' });" class="inline">
                                         <input type="hidden" name="id" value="<?= $c['id'] ?>">
                                         <button type="submit" class="p-2 rounded-xl text-rose-500 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition shadow-2xs" title="Hapus Kode">
                                             <i class="fa-regular fa-trash-can text-xs"></i>
@@ -186,7 +186,7 @@
                 </button>
             </div>
 
-            <form action="/admin/redeem-codes/add" method="POST" class="p-6 space-y-4 text-xs">
+            <form action="/Banjar/redeem-codes/add" method="POST" class="p-6 space-y-4 text-xs">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Kode Promo <span class="text-rose-500">*</span></label>
                     <input type="text" name="code" required placeholder="Contoh: HEMAT20" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9_-]/g, '')" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-800 dark:text-white font-black tracking-wider uppercase placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-600 focus:bg-white dark:focus:bg-slate-900">
@@ -244,7 +244,7 @@
                 </button>
             </div>
 
-            <form action="/admin/redeem-codes/update" method="POST" class="p-6 space-y-4 text-xs">
+            <form action="/Banjar/redeem-codes/update" method="POST" class="p-6 space-y-4 text-xs">
                 <input type="hidden" name="id" id="edit_redeem_id">
 
                 <div>

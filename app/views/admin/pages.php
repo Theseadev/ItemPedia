@@ -55,7 +55,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 font-semibold mb-1">
-                        <a href="/admin" class="hover:text-blue-600 dark:hover:text-blue-400">Tokoku</a>
+                        <a href="/Banjar" class="hover:text-blue-600 dark:hover:text-blue-400">Tokoku</a>
                         <i class="fa-solid fa-chevron-right text-[9px] text-slate-300 dark:text-slate-600"></i>
                         <span class="text-slate-600 dark:text-slate-300 font-bold">Laman & Konten Toko</span>
                     </div>
@@ -91,7 +91,7 @@
                 <!-- Kolom Kiri: Pengaturan Konten Utama Laman -->
                 <div class="lg:col-span-8 space-y-6">
                     
-                    <form action="/admin/pages/update" method="POST" class="space-y-6">
+                    <form action="/Banjar/pages/update" method="POST" class="space-y-6">
                         
                         <!-- 1. Hero Banner -->
                         <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 sm:p-6 shadow-xs space-y-4">
@@ -250,7 +250,7 @@
                             </div>
                         </div>
 
-                        <form action="/admin/faqs/add" method="POST" class="space-y-3.5">
+                        <form action="/Banjar/faqs/add" method="POST" class="space-y-3.5">
                             <div>
                                 <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1">Pertanyaan (Question)</label>
                                 <input type="text" name="question" required placeholder="Contoh: Apakah item ini permanen?" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:bg-white dark:focus:bg-slate-900">
@@ -306,7 +306,7 @@
                                                     title="Edit FAQ">
                                                 <i class="fa-solid fa-pen-to-square text-xs"></i>
                                             </button>
-                                            <form action="/admin/faqs/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Tanya Jawab (FAQ)?', itemName: '<?= addslashes(mb_substr($faq['question'], 0, 45)) ?>...', itemIcon: 'fa-solid fa-circle-question text-rose-500', message: 'Pertanyaan FAQ ini akan dihapus dari daftar pusat bantuan website.' });" class="inline">
+                                            <form action="/Banjar/faqs/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Tanya Jawab (FAQ)?', itemName: '<?= addslashes(mb_substr($faq['question'], 0, 45)) ?>...', itemIcon: 'fa-solid fa-circle-question text-rose-500', message: 'Pertanyaan FAQ ini akan dihapus dari daftar pusat bantuan website.' });" class="inline">
                                                 <input type="hidden" name="id" value="<?= $faq['id'] ?>">
                                                 <button type="submit" class="text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 p-1 transition" title="Hapus FAQ">
                                                     <i class="fa-regular fa-trash-can text-xs"></i>
@@ -348,7 +348,7 @@
                 </button>
             </div>
 
-            <form action="/admin/faqs/update" method="POST" class="p-6 space-y-4 text-xs">
+            <form action="/Banjar/faqs/update" method="POST" class="p-6 space-y-4 text-xs">
                 <input type="hidden" name="id" id="edit_faq_id">
 
                 <div>

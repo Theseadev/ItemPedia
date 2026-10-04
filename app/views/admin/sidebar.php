@@ -1,5 +1,5 @@
 <?php
-$currentPath = $_SERVER['REQUEST_URI'] ?? '/admin';
+$currentPath = $_SERVER['REQUEST_URI'] ?? '/Banjar';
 $active = $activeMenu ?? 'dashboard';
 
 // Hitung pending orders untuk badge
@@ -48,7 +48,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
         <div class="p-3.5 space-y-2 text-xs font-semibold">
             
             <!-- 1. Single Item: Dashboard -->
-            <a href="/admin" class="w-full rounded-2xl px-3.5 py-3 flex items-center justify-between transition <?= $active === 'dashboard' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+            <a href="/Banjar" class="w-full rounded-2xl px-3.5 py-3 flex items-center justify-between transition <?= $active === 'dashboard' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-shapes text-base <?= $active === 'dashboard' ? 'text-white' : 'text-slate-400' ?>"></i>
                     <span class="text-sm">Dashboard</span>
@@ -70,10 +70,10 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="mobile_chev_konten" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isKontenActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="mobile_group_konten" class="border-l-2 border-sky-500/30 ml-6 pl-3.5 space-y-1 my-1.5 <?= $isKontenActive ? '' : 'hidden' ?>">
-                    <a href="/admin/pages" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'pages' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/pages" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'pages' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-regular fa-file-lines text-xs mr-2 text-slate-400"></i> Edit Laman & Teks
                     </a>
-                    <a href="/admin/pages#faqs" class="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
+                    <a href="/Banjar/pages#faqs" class="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
                         <i class="fa-regular fa-circle-question text-xs mr-2 text-slate-400"></i> Tanya Jawab (FAQ)
                     </a>
                 </div>
@@ -91,13 +91,13 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="mobile_chev_dagangan" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isDaganganActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="mobile_group_dagangan" class="border-l-2 border-sky-500/30 ml-6 pl-3.5 space-y-1 my-1.5 <?= $isDaganganActive ? '' : 'hidden' ?>">
-                    <a href="/admin/products" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'products' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/products" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'products' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-boxes-stacked text-xs mr-2 text-slate-400"></i> Semua Dagangan
                     </a>
-                    <a href="/admin/products/create" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'product_create' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/products/create" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'product_create' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-circle-plus text-xs mr-2 text-slate-400"></i> Tambah Dagangan Baru
                     </a>
-                    <a href="/admin/categories" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'categories' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/categories" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'categories' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-gamepad text-xs mr-2 text-slate-400"></i> Kategori & Game
                     </a>
                 </div>
@@ -115,7 +115,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="mobile_chev_transaksi" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isTransaksiActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="mobile_group_transaksi" class="border-l-2 border-sky-500/30 ml-6 pl-3.5 space-y-1 my-1.5 <?= $isTransaksiActive ? '' : 'hidden' ?>">
-                    <a href="/admin/orders" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'orders' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/orders" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'orders' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <div class="flex items-center">
                             <i class="fa-solid fa-receipt text-xs mr-2 text-slate-400"></i> Riwayat Pesanan
                         </div>
@@ -129,7 +129,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                         </div>
                         <span id="adminMobileUnreadChatBadge" class="admin-sidebar-chat-unread <?= $unreadChatCount > 0 ? '' : 'hidden' ?> px-2 py-0.2 rounded-full text-[10px] font-black bg-emerald-500 text-white animate-pulse"><?= $unreadChatCount ?></span>
                     </button>
-                    <a href="/admin/reviews" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'reviews' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/reviews" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'reviews' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-star text-xs mr-2 text-slate-400"></i> Ulasan & Rating
                     </a>
                 </div>
@@ -147,14 +147,14 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="mobile_chev_promo" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isPromosiActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="mobile_group_promo" class="border-l-2 border-sky-500/30 ml-6 pl-3.5 space-y-1 my-1.5 <?= $isPromosiActive ? '' : 'hidden' ?>">
-                    <a href="/admin/redeem-codes" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'redeem_codes' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/redeem-codes" class="block px-3 py-2 rounded-xl text-xs font-semibold transition <?= $active === 'redeem_codes' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-ticket text-xs mr-2 text-slate-400"></i> Kode Promo Voucher
                     </a>
                 </div>
             </div>
 
             <!-- 6. Single Item: Pembaruan Sistem (Upgrade GitHub) -->
-            <a href="/admin/upgrade" class="w-full rounded-2xl px-3.5 py-3 flex items-center justify-between transition <?= $active === 'upgrade' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+            <a href="/Banjar/upgrade" class="w-full rounded-2xl px-3.5 py-3 flex items-center justify-between transition <?= $active === 'upgrade' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-cloud-arrow-down text-base <?= $active === 'upgrade' ? 'text-white' : 'text-sky-400' ?>"></i>
                     <span class="text-sm">Pembaruan Sistem</span>
@@ -194,7 +194,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
         <div class="px-3.5 pb-4 space-y-2.5 text-xs font-semibold">
 
             <!-- Item: Dashboard (Active Pill with Blue Gradient & Indicator Dot) -->
-            <a href="/admin" class="w-full rounded-2xl px-4 py-3 flex items-center justify-between transition group <?= $active === 'dashboard' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+            <a href="/Banjar" class="w-full rounded-2xl px-4 py-3 flex items-center justify-between transition group <?= $active === 'dashboard' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                 <div class="flex items-center gap-3.5 whitespace-nowrap">
                     <i class="fa-solid fa-shapes text-base <?= $active === 'dashboard' ? 'text-white' : 'text-slate-400 group-hover:text-white' ?>"></i>
                     <span class="text-sm">Dashboard</span>
@@ -216,11 +216,11 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="desktop_chev_konten" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isKontenActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="desktop_group_konten" class="border-l-2 border-sky-500/30 ml-6 pl-4 space-y-1.5 my-1.5 <?= $isKontenActive ? '' : 'hidden' ?>">
-                    <a href="/admin/pages" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'pages' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/pages" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'pages' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-regular fa-file-lines text-xs mr-2.5 text-slate-400"></i>
                         <span>Edit Laman & Teks</span>
                     </a>
-                    <a href="/admin/pages#faqs" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
+                    <a href="/Banjar/pages#faqs" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap text-slate-300 hover:text-white hover:bg-white/[0.06] transition">
                         <i class="fa-regular fa-circle-question text-xs mr-2.5 text-slate-400"></i>
                         <span>Tanya Jawab (FAQ)</span>
                     </a>
@@ -239,15 +239,15 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="desktop_chev_dagangan" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isDaganganActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="desktop_group_dagangan" class="border-l-2 border-sky-500/30 ml-6 pl-4 space-y-1.5 my-1.5 <?= $isDaganganActive ? '' : 'hidden' ?>">
-                    <a href="/admin/products" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'products' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/products" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'products' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-boxes-stacked text-xs mr-2.5 text-slate-400"></i>
                         <span>Semua Dagangan</span>
                     </a>
-                    <a href="/admin/products/create" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'product_create' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/products/create" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'product_create' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-circle-plus text-xs mr-2.5 text-slate-400"></i>
                         <span>Tambah Dagangan</span>
                     </a>
-                    <a href="/admin/categories" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'categories' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/categories" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'categories' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-gamepad text-xs mr-2.5 text-slate-400"></i>
                         <span>Kategori & Game</span>
                     </a>
@@ -266,7 +266,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="desktop_chev_transaksi" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isTransaksiActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="desktop_group_transaksi" class="border-l-2 border-sky-500/30 ml-6 pl-4 space-y-1.5 my-1.5 <?= $isTransaksiActive ? '' : 'hidden' ?>">
-                    <a href="/admin/orders" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'orders' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/orders" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'orders' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <div class="flex items-center">
                             <i class="fa-solid fa-receipt text-xs mr-2.5 text-slate-400"></i>
                             <span>Riwayat Pesanan</span>
@@ -282,7 +282,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                         </div>
                         <span id="adminDesktopUnreadChatBadge" class="admin-sidebar-chat-unread <?= $unreadChatCount > 0 ? '' : 'hidden' ?> px-2 py-0.2 rounded-full text-[10px] font-black bg-emerald-500 text-white animate-pulse"><?= $unreadChatCount ?></span>
                     </button>
-                    <a href="/admin/reviews" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'reviews' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/reviews" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'reviews' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-star text-xs mr-2.5 text-slate-400"></i>
                         <span>Ulasan & Rating</span>
                     </a>
@@ -301,7 +301,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
                     <i id="desktop_chev_promo" class="fa-solid fa-chevron-up text-xs text-slate-400 transition-transform duration-200 <?= $isPromosiActive ? '' : 'rotate-180' ?>"></i>
                 </button>
                 <div id="desktop_group_promo" class="border-l-2 border-sky-500/30 ml-6 pl-4 space-y-1.5 my-1.5 <?= $isPromosiActive ? '' : 'hidden' ?>">
-                    <a href="/admin/redeem-codes" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'redeem_codes' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+                    <a href="/Banjar/redeem-codes" class="flex items-center px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition <?= $active === 'redeem_codes' ? 'text-sky-400 font-extrabold bg-sky-500/10' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                         <i class="fa-solid fa-ticket text-xs mr-2.5 text-slate-400"></i>
                         <span>Kode Promo Voucher</span>
                     </a>
@@ -309,7 +309,7 @@ $isPromosiActive = in_array($active, ['redeem_codes']);
             </div>
 
             <!-- Item: Pembaruan Sistem (Upgrade GitHub) -->
-            <a href="/admin/upgrade" class="w-full rounded-2xl px-4 py-3 flex items-center justify-between transition group <?= $active === 'upgrade' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
+            <a href="/Banjar/upgrade" class="w-full rounded-2xl px-4 py-3 flex items-center justify-between transition group <?= $active === 'upgrade' ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white font-extrabold shadow-md shadow-sky-500/25' : 'text-slate-300 hover:text-white hover:bg-white/[0.06]' ?>">
                 <div class="flex items-center gap-3.5 whitespace-nowrap">
                     <i class="fa-solid fa-cloud-arrow-down text-base <?= $active === 'upgrade' ? 'text-white' : 'text-sky-400 group-hover:text-white' ?>"></i>
                     <span class="text-sm">Pembaruan Sistem</span>

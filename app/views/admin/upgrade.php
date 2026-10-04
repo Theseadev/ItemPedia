@@ -334,7 +334,7 @@
         }
 
         try {
-            const res = await fetch('/api/admin/upgrade/check', {
+            const res = await fetch('/api/Banjar/upgrade/check', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -443,7 +443,7 @@
 
         appendTerminalLog('Menghubungkan ke endpoint updater...');
 
-        fetch('/api/admin/upgrade/execute', {
+        fetch('/api/Banjar/upgrade/execute', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ mode: 'auto', force: isForce })

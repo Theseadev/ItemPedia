@@ -160,7 +160,7 @@
 
                                 <!-- Produk Terkait -->
                                 <td class="py-3.5 px-4">
-                                    <a href="/admin/products?q=<?= urlencode($g['name']) ?>" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 font-extrabold hover:bg-purple-100 dark:hover:bg-purple-900/60 transition">
+                                    <a href="/Banjar/products?q=<?= urlencode($g['name']) ?>" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 font-extrabold hover:bg-purple-100 dark:hover:bg-purple-900/60 transition">
                                         <i class="fa-solid fa-box-open text-[10px]"></i>
                                         <span><?= (int)($g['product_count'] ?? 0) ?> Dagangan</span>
                                     </a>
@@ -193,7 +193,7 @@
                                                 title="Edit Game & Kategori">
                                             <i class="fa-solid fa-pen-to-square text-xs"></i>
                                         </button>
-                                        <form action="/admin/categories/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Game Kategori?', itemName: '<?= addslashes($g['name']) ?>', itemIcon: 'fa-solid fa-gamepad text-rose-500', message: 'Game kategori ini akan dihapus dari pilihan katalog game di website.' });" class="inline">
+                                        <form action="/Banjar/categories/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Game Kategori?', itemName: '<?= addslashes($g['name']) ?>', itemIcon: 'fa-solid fa-gamepad text-rose-500', message: 'Game kategori ini akan dihapus dari pilihan katalog game di website.' });" class="inline">
                                             <input type="hidden" name="id" value="<?= $g['id'] ?>">
                                             <button type="submit" 
                                                     class="p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-900/30 text-rose-500 dark:text-rose-400 border border-slate-200 dark:border-slate-700 transition shadow-2xs" 
@@ -228,7 +228,7 @@
                 </button>
             </div>
 
-            <form action="/admin/categories/add" method="POST" enctype="multipart/form-data" class="p-6 space-y-4 text-xs">
+            <form action="/Banjar/categories/add" method="POST" enctype="multipart/form-data" class="p-6 space-y-4 text-xs">
                 <!-- NAMA GAME ROBLOX -->
                 <div>
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Nama Game Roblox <span class="text-rose-500">*</span></label>
@@ -307,7 +307,7 @@
                 </button>
             </div>
 
-            <form action="/admin/categories/update" method="POST" enctype="multipart/form-data" class="p-6 space-y-4 text-xs">
+            <form action="/Banjar/categories/update" method="POST" enctype="multipart/form-data" class="p-6 space-y-4 text-xs">
                 <input type="hidden" name="id" id="editCatId">
 
                 <!-- NAMA GAME -->
