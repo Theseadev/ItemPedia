@@ -2,6 +2,14 @@
 
 $rootDir = dirname(__DIR__);
 
+// Ensure base path resolves to root '/' in serverless / proxy environments
+if (isset($_SERVER['SCRIPT_NAME'])) {
+    $_SERVER['SCRIPT_NAME'] = '/index.php';
+}
+if (isset($_SERVER['PHP_SELF'])) {
+    $_SERVER['PHP_SELF'] = '/index.php';
+}
+
 if (file_exists($rootDir . '/vendor/autoload.php')) {
     require_once $rootDir . '/vendor/autoload.php';
 }
@@ -37,11 +45,20 @@ spl_autoload_register(function ($class) use ($rootDir) {
     }
 }, true, true);
 
+// Explicitly require core classes for 100% fail-proof execution on Serverless / Linux
+require_once $rootDir . '/app/config/database.php';
+require_once $rootDir . '/app/services/UpgradeService.php';
+require_once $rootDir . '/app/controllers/HomeController.php';
+require_once $rootDir . '/app/controllers/OrderController.php';
+require_once $rootDir . '/app/controllers/AdminController.php';
+require_once $rootDir . '/app/controllers/AuthController.php';
+
 use App\Controllers\HomeController;
 use App\Controllers\OrderController;
 use App\Controllers\AdminController;
 use App\Controllers\AuthController;
 
+Flight::set('flight.base_url', '/');
 Flight::path($rootDir . '/app');
 Flight::path($rootDir . '/app/controllers');
 Flight::path($rootDir . '/app/config');
@@ -130,7 +147,14 @@ Flight::route('POST /api/admin/upgrade/execute', [AdminController::class, 'execu
 
 // 404 Handler
 Flight::map('notFound', function () {
-    Flight::redirect('/?error=Halaman+tidak+ditemukan');
+    http_response_code(404);
+    echo '<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>404 - Halaman Tidak Ditemukan | ItemPedia</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-slate-900 text-white flex items-center justify-center min-h-screen p-4">';
+    echo '<div class="max-w-md w-full bg-slate-800 border border-slate-700 rounded-3xl p-6 shadow-2xl text-center space-y-4">';
+    echo '<div class="w-14 h-14 mx-auto rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-2xl font-bold">🔍</div>';
+    echo '<h1 class="text-xl font-black text-white">404 - Halaman Tidak Ditemukan</h1>';
+    echo '<p class="text-xs text-slate-400">Halaman yang Anda cari tidak tersedia atau URL yang diminta tidak ditemukan.</p>';
+    echo '<a href="/" class="inline-block px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs shadow-lg transition">Kembali ke Beranda</a>';
+    echo '</div></body></html>';
 });
 
 // Jalankan Flight PHP
