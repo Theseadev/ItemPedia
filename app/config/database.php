@@ -313,6 +313,18 @@ class Database
         try {
             $db->exec("ALTER TABLE orders ADD COLUMN items_json LONGTEXT NULL");
         } catch (\Exception $e) {}
+        try {
+            $db->exec("ALTER TABLE orders ADD COLUMN payment_reference VARCHAR(255) NULL");
+        } catch (\Exception $e) {}
+        try {
+            $db->exec("ALTER TABLE orders ADD COLUMN payment_url TEXT NULL");
+        } catch (\Exception $e) {}
+        try {
+            $db->exec("ALTER TABLE orders ADD COLUMN qr_string TEXT NULL");
+        } catch (\Exception $e) {}
+        try {
+            $db->exec("ALTER TABLE orders ADD COLUMN va_number VARCHAR(100) NULL");
+        } catch (\Exception $e) {}
 
         try {
             $db->exec("ALTER TABLE products ADD COLUMN rating DECIMAL(3,1) DEFAULT 4.9");
@@ -356,15 +368,34 @@ class Database
             }
         } catch (\Exception $e) {}
 
-        // Pastikan kolom items_json ada di tabel orders
+        // Pastikan kolom Duitku & items_json ada di tabel orders
         try {
             $orderCols = $db->query("PRAGMA table_info(orders)")->fetchAll(PDO::FETCH_ASSOC);
-            $hasItems = false;
-            foreach ($orderCols as $c) {
-                if ($c['name'] === 'items_json') { $hasItems = true; break; }
-            }
-            if (!$hasItems && !empty($orderCols)) {
+            $existingCols = array_column($orderCols, 'name');
+            
+            if (!in_array('items_json', $existingCols)) {
                 $db->exec("ALTER TABLE orders ADD COLUMN items_json TEXT DEFAULT NULL");
+            }
+            if (!in_array('payment_reference', $existingCols)) {
+                $db->exec("ALTER TABLE orders ADD COLUMN payment_reference TEXT DEFAULT NULL");
+            }
+            if (!in_array('payment_url', $existingCols)) {
+                $db->exec("ALTER TABLE orders ADD COLUMN payment_url TEXT DEFAULT NULL");
+            }
+            if (!in_array('qr_string', $existingCols)) {
+                $db->exec("ALTER TABLE orders ADD COLUMN qr_string TEXT DEFAULT NULL");
+            }
+            if (!in_array('va_number', $existingCols)) {
+                $db->exec("ALTER TABLE orders ADD COLUMN va_number TEXT DEFAULT NULL");
+            }
+            if (!in_array('buyer_email', $existingCols)) {
+                $db->exec("ALTER TABLE orders ADD COLUMN buyer_email TEXT DEFAULT NULL");
+            }
+            if (!in_array('redeem_code', $existingCols)) {
+                $db->exec("ALTER TABLE orders ADD COLUMN redeem_code TEXT DEFAULT NULL");
+            }
+            if (!in_array('discount_amount', $existingCols)) {
+                $db->exec("ALTER TABLE orders ADD COLUMN discount_amount INTEGER DEFAULT 0");
             }
         } catch (\Exception $e) {}
 

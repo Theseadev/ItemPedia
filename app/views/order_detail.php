@@ -263,46 +263,78 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
 
     <!-- TAMPILAN UTAMA -->
     <?php if ($isPending): ?>
-    <!-- 1. JIKA PESANAN PENDING (Scan QRIS Pembayaran) -->
+    <!-- 1. JIKA PESANAN PENDING (Scan QRIS / Duitku Payment Gateway) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
         
-        <!-- Kolom Kiri: QRIS Code -->
+        <!-- Kolom Kiri: QRIS & Duitku Payment Box -->
         <div class="lg:col-span-6 bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 text-center shadow-sm space-y-4">
-            <div class="flex items-center justify-center gap-2 text-xs font-black text-sky-700 dark:text-sky-300 uppercase tracking-wider bg-sky-50 dark:bg-sky-950/80 py-1.5 px-3 rounded-xl border border-sky-100 dark:border-sky-800/60 inline-flex mx-auto">
-                <i class="fa-solid fa-qrcode"></i>
-                <span>Scan QRIS untuk Membayar</span>
+            
+            <!-- Badge Header Duitku -->
+            <div class="flex items-center justify-between gap-2 flex-wrap pb-3 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2 text-xs font-black text-sky-700 dark:text-sky-300 uppercase tracking-wider bg-sky-50 dark:bg-sky-950/80 py-1.5 px-3 rounded-xl border border-sky-100 dark:border-sky-800/60 inline-flex">
+                    <i class="fa-solid fa-qrcode"></i>
+                    <span>QRIS & Payment Gateway</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span>Duitku PG Active</span>
+                </div>
             </div>
 
             <!-- QR Code Box -->
-            <div class="p-4 bg-slate-50 dark:bg-white rounded-3xl border border-slate-200 dark:border-slate-700 inline-block shadow-inner">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=<?= urlencode('https://itempedia.local/order/' . $order['invoice_number']) ?>" 
-                     alt="QRIS Code" 
-                     class="w-48 h-48 mx-auto rounded-xl">
+            <div class="relative p-4 bg-white rounded-3xl border-2 border-slate-200 dark:border-slate-700 inline-block shadow-md">
+                <?php 
+                $qrStringVal = !empty($order['qr_string']) ? $order['qr_string'] : ('https://itempedia.store/order/' . $order['invoice_number']);
+                $qrImgUrl = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" . urlencode($qrStringVal);
+                ?>
+                <img src="<?= $qrImgUrl ?>" 
+                     alt="QRIS Code Duitku" 
+                     class="w-48 h-48 sm:w-52 sm:h-52 mx-auto rounded-xl">
+                <div class="absolute inset-x-4 top-4 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scanline pointer-events-none"></div>
             </div>
 
-            <!-- Total Bayar -->
+            <!-- Reference & Nominal -->
             <div>
-                <span class="text-xs text-slate-400 dark:text-slate-500 block font-bold">Nominal yang Harus Dibayar:</span>
-                <span class="text-2xl font-black text-slate-900 dark:text-white">Rp <?= number_format($order['price'], 0, ',', '.') ?></span>
+                <?php if (!empty($order['payment_reference'])): ?>
+                    <span class="text-[11px] text-slate-400 dark:text-slate-500 block font-mono font-bold mb-0.5">
+                        Ref Duitku: <strong class="text-sky-600 dark:text-sky-400"><?= htmlspecialchars($order['payment_reference']) ?></strong>
+                    </span>
+                <?php endif; ?>
+                <span class="text-xs text-slate-400 dark:text-slate-500 block font-bold">Total Nominal Pembayaran:</span>
+                <span class="text-3xl font-black text-slate-900 dark:text-white">Rp <?= number_format($order['price'], 0, ',', '.') ?></span>
             </div>
+
+            <?php if (!empty($order['va_number'])): ?>
+            <!-- Info Virtual Account (Jika Memilih VA) -->
+            <div class="p-3 bg-sky-50 dark:bg-sky-950/60 rounded-2xl border border-sky-200 dark:border-sky-800 text-left space-y-1">
+                <span class="text-[11px] text-sky-700 dark:text-sky-300 font-bold block">Nomor Virtual Account:</span>
+                <div class="flex items-center justify-between">
+                    <span class="font-mono font-black text-slate-900 dark:text-white text-base tracking-wider"><?= htmlspecialchars($order['va_number']) ?></span>
+                    <button type="button" onclick="navigator.clipboard.writeText('<?= htmlspecialchars($order['va_number']) ?>'); alert('Nomor VA disalin!')" class="px-2 py-1 text-xs bg-sky-500 text-white rounded-lg font-bold">Salin</button>
+                </div>
+            </div>
+            <?php endif; ?>
 
             <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
-                Scan kode QRIS di atas menggunakan aplikasi BCA, GoPay, OVO, DANA, ShopeePay, SeaBank, atau Mobile Banking apa saja.
+                Scan kode QRIS di atas dengan aplikasi BCA Mobile, GoPay, OVO, DANA, ShopeePay, LinkAja, atau m-Banking bank manapun.
             </p>
 
-            <!-- Mode Sandbox Pembayaran Cepat -->
-            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
-                <div class="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-300 text-left mb-3 flex items-start gap-2.5">
-                    <i class="fa-solid fa-flask text-amber-600 dark:text-amber-400 text-sm flex-shrink-0 mt-0.5"></i>
+            <!-- Mode Sandbox & Simulasi Verifikasi Onboarding Duitku -->
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
+                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 border border-amber-200 dark:border-amber-800/80 text-xs text-amber-900 dark:text-amber-300 text-left flex items-start gap-2.5">
+                    <i class="fa-solid fa-vial-circle-check text-amber-600 dark:text-amber-400 text-base flex-shrink-0 mt-0.5"></i>
                     <div>
-                        <strong class="font-bold">Mode Simulasi Uji Coba:</strong>
-                        <p class="text-[11px] text-amber-800 dark:text-amber-400 mt-0.5">Klik tombol di bawah untuk langsung mensimulasikan pembayaran lunas tanpa uang sungguhan.</p>
+                        <strong class="font-bold text-slate-900 dark:text-white">Duitku Sandbox Verification Tool:</strong>
+                        <p class="text-[11px] text-amber-800 dark:text-amber-300 mt-0.5 leading-relaxed">
+                            Khusus tim Onboarding & Verifikator Duitku: Klik tombol di bawah untuk memvalidasi proses checkout dan simulasi callback IPN otomatis.
+                        </p>
                     </div>
                 </div>
+
                 <a href="/order/<?= htmlspecialchars($order['invoice_number']) ?>/simulate" 
-                   class="w-full py-3 px-4 bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-sm transition flex items-center justify-center gap-2 active:scale-95">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <span>Simulasi Bayar Berhasil (Instant)</span>
+                   class="btn-shimmer w-full py-3.5 px-4 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer">
+                    <i class="fa-solid fa-circle-check text-base"></i>
+                    <span>Simulasi Bayar Lunas (Duitku Sandbox Tester)</span>
                 </a>
             </div>
         </div>
@@ -1300,8 +1332,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
-    // Polling interval 3 detik
+    // Polling interval 3 detik untuk chat
     setInterval(pollChatMessages, 3000);
+
+    <?php if ($isPending): ?>
+    // Auto-check status pembayaran Duitku setiap 4 detik
+    setInterval(async () => {
+        try {
+            const res = await fetch('/api/chat/' + encodeURIComponent(CURRENT_INVOICE));
+            if (res.ok) {
+                const data = await res.json();
+                const st = data.order_status || (data.order && data.order.status) || data.status;
+                if (st && st !== 'PENDING') {
+                    window.location.reload();
+                }
+            }
+        } catch (e) {}
+    }, 4000);
+    <?php endif; ?>
 });
 </script>
 

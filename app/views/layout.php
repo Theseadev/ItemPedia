@@ -377,10 +377,10 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     <!-- Master Footer -->
     <footer class="bg-white dark:bg-[#0c1e33] border-t-2 border-sky-100 dark:border-slate-800 mt-28 pt-16 pb-12 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-14">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-14">
                 
                 <!-- Col 1: Brand & Bio -->
-                <div class="md:col-span-2 space-y-4">
+                <div class="space-y-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 flex items-center justify-center flex-shrink-0">
                             <img src="/images/logo-icon.png" srcset="/images/logo-icon@2x.png 2x" alt="ItemPedia" class="w-full h-full object-contain filter drop-shadow-xs">
@@ -389,15 +389,15 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                             Item<span class="text-sky-600 dark:text-sky-400">Pedia</span>
                         </span>
                     </div>
-                    <p class="text-sm text-slate-600 dark:text-slate-300 max-w-md leading-relaxed font-medium">
-                        <?= htmlspecialchars($settings['store_tagline'] ?? 'Platform toko Roblox mandiri tangan pertama. Jual beli item game Chop Your Tree, Build A Zoo, Catch and Tame, dan Akun Roblox siap pakai.') ?>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        <?= htmlspecialchars($settings['store_tagline'] ?? 'Platform toko Roblox mandiri tangan pertama. Jual beli item game Build A Zoo, Chop Your Tree, Catch and Tame, dan Akun Roblox siap pakai.') ?>
                     </p>
-                    <div class="flex flex-wrap items-center gap-3 text-xs font-black text-slate-700 dark:text-slate-200 pt-2">
-                        <div class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                    <div class="flex flex-wrap items-center gap-2 text-[11px] font-black text-slate-700 dark:text-slate-200 pt-1">
+                        <div class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-xl border border-emerald-200 dark:border-emerald-800">
                             <i class="fa-solid fa-shield-halved"></i>
                             <span>Akun Polosan Asli</span>
                         </div>
-                        <div class="flex items-center gap-1.5 text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/50 px-3 py-1.5 rounded-xl border border-sky-200 dark:border-sky-800">
+                        <div class="flex items-center gap-1.5 text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/50 px-2.5 py-1 rounded-xl border border-sky-200 dark:border-sky-800">
                             <i class="fa-solid fa-bolt"></i>
                             <span>Proses Cepat 3-5 Mnt</span>
                         </div>
@@ -406,23 +406,62 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
                 <!-- Col 2: Kategori Favorit (3 Game Pilihan) -->
                 <div>
-                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4">
-                        Kategori Game
+                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad text-sky-500"></i>
+                        <span>Kategori Game</span>
                     </h4>
                     <ul class="space-y-2.5 text-xs font-bold text-slate-600 dark:text-slate-300">
-                        <li><a href="/?game=Build+A+Zoo#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Build A Zoo (Mucy, Chomp, Dino)</a></li>
-                        <li><a href="/?game=Chop+Your+Tree#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Chop Your Tree (Axe & Wood)</a></li>
-                        <li><a href="/?game=Catch+and+Tame#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Catch and Tame (Pet & Mount)</a></li>
+                        <li><a href="/?game=Build+A+Zoo#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-sky-500"></i> Build A Zoo</a></li>
+                        <li><a href="/?game=Chop+Your+Tree#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-sky-500"></i> Chop Your Tree</a></li>
+                        <li><a href="/?game=Catch+and+Tame#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-sky-500"></i> Catch and Tame</a></li>
                     </ul>
                 </div>
 
-                <!-- Col 3: Pembayaran -->
-                <div>
-                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4">
-                        Metode Pembayaran
+                <!-- Col 3: Kontak Support & Informasi Usaha Resmi (Duitku Verification Ready) -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-sky-500"></i>
+                        <span>Kontak & Layanan</span>
                     </h4>
-                    <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed font-medium">
-                        Pembayaran otomatis instan via QRIS:
+                    <div class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-location-dot text-sky-500 mt-1 flex-shrink-0"></i>
+                            <div>
+                                <span class="block font-bold text-slate-900 dark:text-white">Alamat Usaha:</span>
+                                <p class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
+                                    <?= htmlspecialchars($settings['business_address'] ?? 'Graha ItemPedia, Jl. A. Yani Km. 5.5 No. 42, Kel. Pemurus Luar, Kec. Banjarmasin Timur, Kota Banjarmasin, Kalimantan Selatan 70248, Indonesia') ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-envelope text-sky-500 flex-shrink-0"></i>
+                            <div>
+                                <span class="block font-bold text-slate-900 dark:text-white">Email Support:</span>
+                                <a href="mailto:<?= htmlspecialchars($settings['support_email'] ?? 'support@itempedia.store') ?>" class="text-[11px] hover:text-sky-500 dark:hover:text-sky-400 transition underline underline-offset-2">
+                                    <?= htmlspecialchars($settings['support_email'] ?? 'support@itempedia.store') ?>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-brands fa-whatsapp text-emerald-500 flex-shrink-0 text-sm"></i>
+                            <div>
+                                <span class="block font-bold text-slate-900 dark:text-white">Telepon / WhatsApp:</span>
+                                <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $settings['whatsapp_admin'] ?? '6281234567890') ?>" target="_blank" rel="noopener noreferrer" class="text-[11px] hover:text-emerald-500 dark:hover:text-emerald-400 transition font-mono font-bold">
+                                    <?= htmlspecialchars($settings['whatsapp_display'] ?? '+62 812-3456-7890') ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 4: Pembayaran Aman & Keamanan Duitku -->
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-check text-sky-500"></i>
+                        <span>Pembayaran Aman</span>
+                    </h4>
+                    <p class="text-[11px] text-slate-600 dark:text-slate-400 mb-3 leading-relaxed font-medium">
+                        Didukung oleh <strong>Duitku Payment Gateway</strong> dengan verifikasi otomatis 24 Jam:
                     </p>
                     <div class="grid grid-cols-3 gap-2">
                         <!-- 1. QRIS -->
@@ -487,17 +526,19 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                             </svg>
                         </div>
                     </div>
+                    <div class="mt-3 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                        <i class="fa-solid fa-lock text-sky-500 text-xs"></i>
+                        <span>PCI-DSS Level 1 & Terenkripsi Duitku PG</span>
+                    </div>
                 </div>
 
             </div>
 
             <!-- Bottom Disclaimer -->
             <div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-4">
-                <p>&copy; <?= date('Y') ?> <strong>ItemPedia</strong>. Toko Roblox Mandiri. Ditenagai oleh Flight PHP. 
-                    
-                </p>
+                <p>&copy; <?= date('Y') ?> <strong>ItemPedia</strong> (<?= htmlspecialchars($settings['site_title'] ?? 'Toko Roblox Mandiri') ?>). Seluruh Hak Cipta Dilindungi.</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 text-center sm:text-right">
-                    Roblox adalah merek dagang terdaftar milik Roblox Corporation. ItemPedia beroperasi sebagai platform transaksi mandiri.
+                    Roblox adalah merek dagang terdaftar milik Roblox Corporation. ItemPedia beroperasi secara independen.
                 </p>
             </div>
         </div>

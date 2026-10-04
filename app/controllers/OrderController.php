@@ -450,6 +450,16 @@ class OrderController
                 error_log("Failed to insert initial chat messages: " . $e->getMessage());
             }
 
+            // Inisialisasi Invoice Pembayaran Duitku Sandbox / Production Otomatis
+            try {
+                $orderData = $db->query("SELECT * FROM orders WHERE invoice_number = " . $db->quote($invoiceNumber))->fetch();
+                if ($orderData) {
+                    \App\Services\DuitkuService::createPayment($orderData, 'LQ');
+                }
+            } catch (\Throwable $e) {
+                error_log("Duitku auto init cart error: " . $e->getMessage());
+            }
+
             if ($isAjax) {
                 Flight::json([
                     'success' => true,
@@ -605,6 +615,16 @@ class OrderController
             error_log("Failed to insert initial chat messages: " . $e->getMessage());
         }
 
+        // Inisialisasi Invoice Pembayaran Duitku Sandbox / Production Otomatis
+        try {
+            $orderData = $db->query("SELECT * FROM orders WHERE invoice_number = " . $db->quote($invoiceNumber))->fetch();
+            if ($orderData) {
+                \App\Services\DuitkuService::createPayment($orderData, 'LQ');
+            }
+        } catch (\Throwable $e) {
+            error_log("Duitku auto init single error: " . $e->getMessage());
+        }
+
         if ($isAjax) {
             Flight::json([
                 'success' => true,
@@ -619,7 +639,7 @@ class OrderController
     }
 
     /**
-     * Halaman Detail Invoice & Pembayaran QRIS
+     * Halaman Detail Invoice & Pembayaran QRIS / Duitku
      */
     public static function showOrder(string $invoice): void
     {
@@ -635,6 +655,24 @@ class OrderController
         if (!$order) {
             Flight::redirect('/lacak?error=Invoice+tidak+ditemukan');
             return;
+        }
+
+        // Pastikan data pembayaran Duitku tersedia untuk pesanan pending
+        if ($order['status'] === 'PENDING' && (empty($order['payment_reference']) || empty($order['qr_string']))) {
+            try {
+                \App\Services\DuitkuService::createPayment($order, $order['payment_method'] ?: 'LQ');
+                $reStmt = $db->prepare("SELECT o.*, p.description as product_description, p.image_url as product_image 
+                                        FROM orders o 
+                                        LEFT JOIN products p ON o.product_id = p.id 
+                                        WHERE o.invoice_number = ?");
+                $reStmt->execute([$invoice]);
+                $refreshed = $reStmt->fetch();
+                if ($refreshed) {
+                    $order = $refreshed;
+                }
+            } catch (\Throwable $e) {
+                error_log("Duitku showOrder payment refresh error: " . $e->getMessage());
+            }
         }
 
         // Ambil ulasan jika pesanan ini sudah pernah direview
@@ -659,11 +697,16 @@ class OrderController
             $settings[$s['key']] = $s['value'];
         }
 
+        $duitkuConfig = \App\Services\DuitkuService::getConfig();
+        $duitkuChannels = \App\Services\DuitkuService::getPaymentChannels();
+
         Flight::render('order_detail', [
             'order' => $order,
             'review' => $review,
             'chatMessages' => $chatMessages,
-            'settings' => $settings
+            'settings' => $settings,
+            'duitkuConfig' => $duitkuConfig,
+            'duitkuChannels' => $duitkuChannels
         ]);
     }
 
@@ -1019,6 +1062,62 @@ class OrderController
             'query' => $query,
             'orders' => $orders,
             'settings' => $settings
+        ]);
+    }
+
+    /**
+     * Webhook Callback IPN dari Payment Gateway Duitku
+     */
+    public static function duitkuCallback(): void
+    {
+        $postData = Flight::request()->data->getData() ?: json_decode(Flight::request()->getBody(), true) ?: $_POST;
+        error_log("Duitku Callback Received: " . json_encode($postData));
+
+        $result = \App\Services\DuitkuService::handleCallback($postData);
+
+        if (!empty($result['success'])) {
+            Flight::json(['status' => 'SUCCESS', 'message' => $result['message']], 200);
+        } else {
+            Flight::json(['status' => 'FAILED', 'message' => $result['message'] ?? 'Error'], $result['code'] ?? 400);
+        }
+    }
+
+    /**
+     * Endpoint API untuk generate/switch channel pembayaran Duitku
+     */
+    public static function createDuitkuPayment(): void
+    {
+        $invoice = trim(Flight::request()->data->invoice ?? Flight::request()->query->invoice ?? '');
+        $channel = trim(Flight::request()->data->channel ?? Flight::request()->query->channel ?? 'LQ');
+
+        if (empty($invoice)) {
+            Flight::json(['success' => false, 'message' => 'Invoice number wajib diisi'], 400);
+            return;
+        }
+
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT * FROM orders WHERE invoice_number = ?");
+        $stmt->execute([$invoice]);
+        $order = $stmt->fetch();
+
+        if (!$order) {
+            Flight::json(['success' => false, 'message' => 'Pesanan tidak ditemukan'], 404);
+            return;
+        }
+
+        $result = \App\Services\DuitkuService::createPayment($order, $channel);
+        Flight::json($result);
+    }
+
+    /**
+     * Endpoint API untuk mendapatkan daftar channel pembayaran Duitku
+     */
+    public static function getDuitkuChannels(): void
+    {
+        $channels = \App\Services\DuitkuService::getPaymentChannels();
+        Flight::json([
+            'success' => true,
+            'channels' => array_values($channels)
         ]);
     }
 }

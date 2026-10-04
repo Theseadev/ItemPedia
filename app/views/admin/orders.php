@@ -227,12 +227,12 @@
                                 <!-- Roblox Avatar & Username -->
                                 <td class="py-4 px-4">
                                     <div class="flex items-center gap-2.5">
-                                        <img src="<?= htmlspecialchars($o['roblox_avatar_url']) ?>" 
+                                        <img src="<?= htmlspecialchars($o['roblox_avatar_url'] ?? '') ?>" 
                                              alt="" 
                                              class="w-9 h-9 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 object-cover shadow-2xs flex-shrink-0"
-                                             onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($o['roblox_username']) ?>&background=0284c7&color=fff'">
+                                             onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($o['roblox_username'] ?? 'User') ?>&background=0284c7&color=fff'">
                                         <div>
-                                            <span class="font-extrabold text-slate-900 dark:text-white block"><?= htmlspecialchars($o['roblox_username']) ?></span>
+                                            <span class="font-extrabold text-slate-900 dark:text-white block"><?= htmlspecialchars($o['roblox_username'] ?? '') ?></span>
                                             <button type="button" 
                                                     onclick="navigator.clipboard.writeText('<?= addslashes($o['roblox_username']) ?>'); alert('Username disalin: <?= addslashes($o['roblox_username']) ?>')" 
                                                     class="text-[10px] font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 mt-0.5">

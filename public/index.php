@@ -48,6 +48,7 @@ spl_autoload_register(function ($class) use ($rootDir) {
 // Explicitly require core classes for 100% fail-proof execution on Serverless / Linux
 require_once $rootDir . '/app/config/database.php';
 require_once $rootDir . '/app/services/UpgradeService.php';
+require_once $rootDir . '/app/services/DuitkuService.php';
 require_once $rootDir . '/app/controllers/HomeController.php';
 require_once $rootDir . '/app/controllers/OrderController.php';
 require_once $rootDir . '/app/controllers/AdminController.php';
@@ -57,6 +58,7 @@ use App\Controllers\HomeController;
 use App\Controllers\OrderController;
 use App\Controllers\AdminController;
 use App\Controllers\AuthController;
+use App\Services\DuitkuService;
 
 Flight::set('flight.base_url', '/');
 Flight::path($rootDir . '/app');
@@ -90,6 +92,11 @@ Flight::route('GET /pesanan-saya', [AuthController::class, 'myOrders']);
 Flight::route('GET /api/roblox-avatar', [OrderController::class, 'checkRoblox']);
 Flight::route('POST /api/redeem-code/check', [OrderController::class, 'checkRedeemCode']);
 Flight::route('POST /api/cart/check', [OrderController::class, 'checkCart']);
+
+// Routing Integrasi Payment Gateway Duitku (Sandbox & Production)
+Flight::route('POST /api/duitku/callback', [OrderController::class, 'duitkuCallback']);
+Flight::route('POST /api/duitku/create', [OrderController::class, 'createDuitkuPayment']);
+Flight::route('GET /api/duitku/channels', [OrderController::class, 'getDuitkuChannels']);
 
 // Routing Pemesanan & Invoice
 Flight::route('POST /order/create', [OrderController::class, 'createOrder']);
