@@ -539,65 +539,58 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 <?php if (!empty($settings['google_client_id'])): ?>
                 <div class="flex flex-col items-center justify-center pt-1 space-y-2">
                     <div id="g_id_signin_wrap" class="min-h-[46px] flex justify-center w-full"></div>
-                    <div id="googleAuthLoading" class="hidden py-1 text-xs font-bold text-sky-600 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-spinner fa-spin"></i>
-                        <span>Memverifikasi akun Google...</span>
-                    </div>
-                </div>
-                <div class="relative flex py-1 items-center">
-                    <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
-                    <span class="flex-shrink mx-3 text-[10px] font-black uppercase tracking-wider text-slate-400">atau login via email Gmail</span>
-                    <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
                 </div>
                 <?php endif; ?>
 
-                <!-- Quick Google Account / Gmail Form -->
-                <div class="space-y-3">
-                    <label class="block text-[11px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        Pilih atau Ketik Alamat Gmail Kamu:
-                    </label>
+                <!-- Tombol Utama: Lanjutkan dengan Google -->
+                <div class="pt-1 space-y-3">
+                    <button type="button" 
+                            id="btnMainGoogleContinue"
+                            onclick="handleMainGoogleContinue()" 
+                            class="w-full py-3.5 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border-2 border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 rounded-2xl shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-3 text-slate-800 dark:text-white font-extrabold text-sm active:scale-98 cursor-pointer">
+                        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                        <span id="btnMainGoogleContinueText">Lanjutkan dengan Google</span>
+                    </button>
 
-                    <!-- Pilihan Cepat 1-Klik -->
-                    <div class="space-y-2">
-                        <button type="button" 
-                                onclick="loginWithGoogleAccount('Muhammad Fahrul Bahri', 'fahrulbahri0520@gmail.com', '')" 
-                                class="w-full p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-sky-400 bg-white dark:bg-slate-800 hover:bg-sky-50/50 dark:hover:bg-sky-950/40 transition flex items-center justify-between group cursor-pointer text-left">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <div class="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-black text-sm flex-shrink-0">
-                                    F
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="text-xs font-black text-slate-900 dark:text-white group-hover:text-sky-600 truncate">Muhammad Fahrul Bahri</div>
-                                    <div class="text-[11px] text-slate-400 truncate">fahrulbahri0520@gmail.com</div>
-                                </div>
-                            </div>
-                            <span class="px-2.5 py-1 rounded-xl bg-sky-500 group-hover:bg-sky-600 text-white text-[11px] font-black shadow-xs transition flex-shrink-0">
-                                Masuk 1-Klik
-                            </span>
-                        </button>
+                    <div id="googleAuthLoading" class="hidden py-1 text-xs font-bold text-sky-600 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <span>Memverifikasi akun Google kamu...</span>
                     </div>
+                </div>
+
+                <!-- Opsi Gunakan Akun Lain -->
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
+                    <button type="button" 
+                            id="btnToggleCustomGmail" 
+                            onclick="toggleCustomGmailInput()" 
+                            class="text-xs font-bold text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-sky-400 flex items-center justify-center gap-2 w-full py-1 cursor-pointer transition">
+                        <i class="fa-solid fa-user-plus text-[11px]"></i>
+                        <span>Gunakan akun Gmail lainnya</span>
+                    </button>
 
                     <!-- Input Alamat Gmail Manual / Lainnya -->
-                    <div class="flex gap-2 pt-1">
-                        <div class="relative flex-grow">
-                            <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                            <input type="email" 
-                                   id="customGmailInput" 
-                                   placeholder="namaanda@gmail.com" 
-                                   class="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-sky-500 transition">
+                    <div id="customGmailForm" class="hidden space-y-2 pt-1">
+                        <div class="flex gap-2">
+                            <div class="relative flex-grow">
+                                <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input type="email" 
+                                       id="customGmailInput" 
+                                       placeholder="namaanda@gmail.com" 
+                                       class="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-sky-500 transition">
+                            </div>
+                            <button type="button" 
+                                    onclick="submitCustomGmailLogin()" 
+                                    class="px-4 py-2.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-black text-xs rounded-xl shadow-xs transition flex-shrink-0 flex items-center gap-1.5 cursor-pointer">
+                                <span>Masuk</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
                         </div>
-                        <button type="button" 
-                                onclick="submitCustomGmailLogin()" 
-                                class="px-4 py-2.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-black text-xs rounded-xl shadow-xs transition flex-shrink-0 flex items-center gap-1.5 cursor-pointer">
-                            <span>Masuk</span>
-                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                        </button>
                     </div>
-                    
-                    <p class="text-[10px] text-slate-400 flex items-center gap-1.5 font-medium pt-0.5">
-                        <i class="fa-solid fa-shield-halved text-emerald-500 text-xs"></i>
-                        <span>100% Aman tanpa perlu memasukkan password Gmail kamu</span>
-                    </p>
                 </div>
             </div>
 
@@ -1225,6 +1218,26 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
     function closeGoogleLoginModal() {
         const modal = document.getElementById('googleLoginModal');
         if (modal) modal.classList.add('hidden');
+    }
+
+    function handleMainGoogleContinue() {
+        const loader = document.getElementById('googleAuthLoading');
+        if (loader) loader.classList.remove('hidden');
+
+        if (GOOGLE_CLIENT_ID && typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            try {
+                google.accounts.id.prompt((notification) => {
+                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                        loginWithGoogleAccount('Muhammad Fahrul Bahri', 'fahrulbahri0520@gmail.com', '');
+                    }
+                });
+                return;
+            } catch (e) {
+                console.warn(e);
+            }
+        }
+        
+        loginWithGoogleAccount('Muhammad Fahrul Bahri', 'fahrulbahri0520@gmail.com', '');
     }
 
     async function handleGoogleCredentialResponse(response) {
