@@ -22,8 +22,11 @@ spl_autoload_register(function ($class) use ($rootDir) {
 
     $candidates = [
         $rootDir . '/app/' . $subDirLower . $className . '.php',
+        $rootDir . '/app/' . $subDirLower . strtolower($className) . '.php',
         $rootDir . '/app/' . $subDirExact . $className . '.php',
-        $rootDir . '/app/' . str_replace('\\', '/', $relativeClass) . '.php'
+        $rootDir . '/app/' . $subDirExact . strtolower($className) . '.php',
+        $rootDir . '/app/' . str_replace('\\', '/', $relativeClass) . '.php',
+        $rootDir . '/app/' . strtolower(str_replace('\\', '/', $relativeClass)) . '.php'
     ];
 
     foreach ($candidates as $file) {
