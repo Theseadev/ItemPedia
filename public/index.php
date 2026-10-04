@@ -6,18 +6,31 @@ if (file_exists($rootDir . '/vendor/autoload.php')) {
     require_once $rootDir . '/vendor/autoload.php';
 }
 
-// Prepend PSR-4 Autoloader for App\ namespace
+// Case-safe PSR-4 Autoloader for App\ namespace (handles Linux/Vercel case-sensitive filesystems)
 spl_autoload_register(function ($class) use ($rootDir) {
     $prefix = 'App\\';
-    $baseDir = $rootDir . '/app/';
     $len = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0) {
         return;
     }
     $relativeClass = substr($class, $len);
-    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
-    if (file_exists($file)) {
-        require_once $file;
+    $parts = explode('\\', $relativeClass);
+    $className = array_pop($parts);
+    
+    $subDirLower = !empty($parts) ? implode('/', array_map('strtolower', $parts)) . '/' : '';
+    $subDirExact = !empty($parts) ? implode('/', $parts) . '/' : '';
+
+    $candidates = [
+        $rootDir . '/app/' . $subDirLower . $className . '.php',
+        $rootDir . '/app/' . $subDirExact . $className . '.php',
+        $rootDir . '/app/' . str_replace('\\', '/', $relativeClass) . '.php'
+    ];
+
+    foreach ($candidates as $file) {
+        if (file_exists($file)) {
+            require_once $file;
+            return;
+        }
     }
 }, true, true);
 
