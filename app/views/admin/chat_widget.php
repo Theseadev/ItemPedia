@@ -219,7 +219,17 @@ async function loadChatInboxList(preserveActive = true) {
         const res = await fetch('/api/chat/inbox');
         const data = await res.json();
         if (data.success && Array.isArray(data.conversations)) {
-            allChatConversations = data.conversations;
+            const serverList = data.conversations;
+            
+            // If activeChatInvoice is not yet in serverList, keep our locally synthesized conversation
+            if (activeChatInvoice && !serverList.some(c => c.invoice_number === activeChatInvoice)) {
+                const currentActive = allChatConversations.find(c => c.invoice_number === activeChatInvoice);
+                if (currentActive) {
+                    serverList.unshift(currentActive);
+                }
+            }
+            
+            allChatConversations = serverList;
 
             // Jika ada percakapan aktif yang sedang terbuka, set unread_count-nya jadi 0
             if (activeChatInvoice) {
@@ -264,7 +274,7 @@ function renderInboxList(list) {
         const initial = (c.roblox_username || 'U').charAt(0).toUpperCase();
         
         return `
-            <div onclick="selectChatConversation('${c.invoice_number}')" 
+            <div onclick="selectChatConversation('${c.invoice_number}', '${escapeChatHtml(c.roblox_username || '')}', '${escapeChatHtml(c.roblox_avatar_url || '')}')" 
                  class="p-3 sm:p-3.5 flex items-start gap-2.5 cursor-pointer transition ${isSelected ? 'bg-blue-50/80 dark:bg-blue-900/30 border-l-4 border-l-blue-600' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}">
                 
                 <!-- Initial Avatar Circle (Cyan/Teal like screenshot) -->
@@ -275,7 +285,7 @@ function renderInboxList(list) {
                 <!-- Middle: Username & Message Snippet -->
                 <div class="min-w-0 flex-grow">
                     <div class="flex items-center justify-between gap-1">
-                        <span class="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm truncate">${escapeChatHtml(c.roblox_username)}</span>
+                        <span class="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm truncate">${escapeChatHtml(c.roblox_username || 'Pembeli')}</span>
                         <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold flex-shrink-0">${c.time_formatted || ''}</span>
                     </div>
 
@@ -310,36 +320,58 @@ function filterChatInbox(type) {
 }
 
 // Select Active Conversation & Mark as Read
-async function selectChatConversation(invoice) {
+async function selectChatConversation(invoice, fallbackUsername = null, fallbackAvatar = null) {
+    if (!invoice) return;
     activeChatInvoice = invoice;
     knownMessageIds.clear();
 
-    const conversation = allChatConversations.find(c => c.invoice_number === invoice);
+    let conversation = allChatConversations.find(c => c.invoice_number === invoice);
+    const resolvedUsername = conversation?.roblox_username || fallbackUsername || 'Pembeli';
+    const initial = resolvedUsername.charAt(0).toUpperCase();
+
+    const avatarEl = document.getElementById('chatActiveAvatar');
+    if (avatarEl) avatarEl.innerText = initial;
+
+    const userEl = document.getElementById('chatActiveUsername');
+    if (userEl) userEl.innerText = resolvedUsername;
+
+    const countryEl = document.getElementById('chatActiveCountry');
+    if (countryEl) countryEl.innerText = (invoice.includes('JJI') ? 'MY' : 'ID');
+
+    const orderBtn = document.getElementById('chatActiveOrderBtn');
+    if (orderBtn) orderBtn.href = '/order/' + encodeURIComponent(invoice);
+
     if (conversation) {
-        // 1. Reset unread count seketika di state lokal
+        // Reset unread count seketika di state lokal
         conversation.unread_count = 0;
-        
-        const initial = (conversation.roblox_username || 'U').charAt(0).toUpperCase();
-        document.getElementById('chatActiveAvatar').innerText = initial;
-        document.getElementById('chatActiveUsername').innerText = conversation.roblox_username;
-        document.getElementById('chatActiveCountry').innerText = (conversation.invoice_number.includes('JJI') ? 'MY' : 'ID');
-        document.getElementById('chatActiveOrderBtn').href = '/order/' + conversation.invoice_number;
+    } else if (fallbackUsername) {
+        // Prepend placeholder conversation to allChatConversations so it shows in the inbox list
+        allChatConversations.unshift({
+            invoice_number: invoice,
+            roblox_username: fallbackUsername,
+            roblox_avatar_url: fallbackAvatar || '',
+            last_message: 'Pesanan baru',
+            time_formatted: 'Baru saja',
+            unread_count: 0
+        });
     }
 
-    // 2. Hitung ulang total unread dan perbarui badge
+    // Hitung ulang total unread dan perbarui badge
     let totalUnread = 0;
     allChatConversations.forEach(c => {
         totalUnread += (c.unread_count || 0);
     });
     updateUnreadBadges(totalUnread);
 
-    // 3. Render ulang list agar badge unread bulat biru (1) langsung HILANG
+    // Render ulang list agar badge unread bulat biru (1) langsung HILANG dan active card ter-highlight
     renderInboxList(allChatConversations);
 
     const stream = document.getElementById('chatMessageStream');
-    stream.innerHTML = '<div class="text-center py-10 text-slate-400 dark:text-slate-500 text-xs"><i class="fa-solid fa-spinner fa-spin text-base"></i><p class="mt-2">Memuat pesan...</p></div>';
+    if (stream) {
+        stream.innerHTML = '<div class="text-center py-10 text-slate-400 dark:text-slate-500 text-xs"><i class="fa-solid fa-spinner fa-spin text-base"></i><p class="mt-2">Memuat pesan...</p></div>';
+    }
 
-    // 4. Panggil endpoint untuk ambil pesan dan otomatis update is_read = 1 di database
+    // Panggil endpoint untuk ambil pesan dan otomatis update is_read = 1 di database
     await loadActiveChatMessages();
 }
 
@@ -353,11 +385,36 @@ async function loadActiveChatMessages() {
 
         if (data.success) {
             const stream = document.getElementById('chatMessageStream');
+            if (!stream) return;
             stream.innerHTML = '';
 
-            // 1. Render Embedded Order Card (Persis Screenshot)
+            // Update Header & Inbox list with real order data
             if (data.order) {
                 const ord = data.order;
+                if (ord.roblox_username) {
+                    const avatarEl = document.getElementById('chatActiveAvatar');
+                    if (avatarEl) avatarEl.innerText = ord.roblox_username.charAt(0).toUpperCase();
+                    const userEl = document.getElementById('chatActiveUsername');
+                    if (userEl) userEl.innerText = ord.roblox_username;
+                }
+                const orderBtn = document.getElementById('chatActiveOrderBtn');
+                if (orderBtn) orderBtn.href = '/order/' + encodeURIComponent(ord.invoice_number);
+
+                // Update or insert conversation into allChatConversations
+                let conv = allChatConversations.find(c => c.invoice_number === ord.invoice_number);
+                if (!conv) {
+                    allChatConversations.unshift({
+                        invoice_number: ord.invoice_number,
+                        roblox_username: ord.roblox_username,
+                        roblox_avatar_url: ord.roblox_avatar_url,
+                        last_message: (data.messages && data.messages.length > 0) ? data.messages[data.messages.length - 1].message : 'Pesanan',
+                        time_formatted: 'Baru saja',
+                        unread_count: 0
+                    });
+                    renderInboxList(allChatConversations);
+                }
+
+                // 1. Render Embedded Order Card (Persis Screenshot)
                 const statusLabel = ord.status === 'SUCCESS' ? 'Pesanan Selesai' : (ord.status === 'PAID' ? 'Perlu Diproses' : (ord.status === 'PROCESSING' ? 'Sedang Dikirim' : 'Menunggu Konfirmasi'));
                 
                 const cardHtml = `
@@ -586,9 +643,13 @@ function escapeChatHtml(str) {
     });
 }
 
-window.openChatDockForInvoice = function(invoice) {
+window.openChatDockForInvoice = function(invoice, username, avatar) {
     toggleFloatingChat(true);
-    selectChatConversation(invoice);
+    selectChatConversation(invoice, username, avatar);
+    const input = document.getElementById('floatingChatInput');
+    if (input) {
+        setTimeout(() => input.focus(), 200);
+    }
 };
 
 window.toggleSellerDockChat = function(open) {

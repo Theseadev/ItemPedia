@@ -285,9 +285,11 @@
                                     <span class="font-bold text-slate-800 dark:text-slate-200 block truncate">
                                         <?= htmlspecialchars($o['buyer_name'] ?? $o['roblox_username'] ?? 'Pembeli') ?>
                                     </span>
-                                    <button type="button" 
-                                            onclick="openChatDockForInvoice('<?= htmlspecialchars($o['invoice_number']) ?>')" 
-                                            class="text-sky-600 dark:text-sky-400 hover:underline font-bold text-[11px] inline-flex items-center gap-1 cursor-pointer pt-0.5">
+                                    <a href="/order/<?= htmlspecialchars($o['invoice_number']) ?>#chat" 
+                                       onclick="if (!event.ctrlKey && !event.metaKey && !event.shiftKey) { event.preventDefault(); openChatDockForInvoice('<?= htmlspecialchars($o['invoice_number']) ?>', '<?= addslashes(htmlspecialchars($o['roblox_username'] ?? $o['buyer_name'] ?? 'Pembeli')) ?>', '<?= addslashes($o['roblox_avatar_url'] ?? '') ?>'); }" 
+                                       target="_blank"
+                                       class="text-sky-600 dark:text-sky-400 hover:underline font-bold text-[11px] inline-flex items-center gap-1 cursor-pointer pt-0.5"
+                                       title="Buka Live Chat Pembeli">
                                         <i class="fa-solid fa-comments text-[10px]"></i>
                                         <span>Hubungi Pembeli</span>
                                         <?php if (!empty($o['unread_chat_count']) && $o['unread_chat_count'] > 0): ?>
@@ -295,7 +297,7 @@
                                                 <?= $o['unread_chat_count'] ?>
                                             </span>
                                         <?php endif; ?>
-                                    </button>
+                                    </a>
                                 </div>
 
                                 <!-- Username Roblox -->

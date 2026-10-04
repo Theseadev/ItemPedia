@@ -531,7 +531,7 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
         </div>
 
         <!-- KOLOM KANAN (7 Grid): Ruang Live Chat Berdampingan -->
-        <div class="lg:col-span-7 bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col relative" style="min-height: 520px;">
+        <div id="chat" class="lg:col-span-7 bg-white dark:bg-[#0c1e33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col relative scroll-mt-24" style="min-height: 520px;">
             
             <!-- Chat Top Bar Header -->
             <div class="p-4 bg-slate-50/90 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 flex-shrink-0">
@@ -1381,6 +1381,19 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {}
     }, 4000);
     <?php endif; ?>
+
+    // Auto-scroll to Live Chat if #chat hash is present in URL
+    if (window.location.hash === '#chat') {
+        setTimeout(() => {
+            const chatSec = document.getElementById('chat');
+            if (chatSec) {
+                chatSec.scrollIntoView({ behavior: 'smooth' });
+            }
+            if (input) {
+                input.focus();
+            }
+        }, 300);
+    }
 });
 </script>
 
