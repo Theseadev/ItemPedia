@@ -42,7 +42,7 @@ ob_start();
                     <!-- SLIDE 1: BUILD A ZOO PETS EVENT -->
                     <div class="carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out flex flex-col justify-center p-3.5 pt-3 pb-6 sm:p-8 md:p-10 text-white opacity-100 z-10" 
                          data-index="0"
-                         style="background: linear-gradient(90deg, rgba(15, 23, 42, 0.94) 0%, rgba(15, 23, 42, 0.82) 60%, rgba(15, 23, 42, 0.5) 100%), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;">
+                         style="background: linear-gradient(90deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.78) 55%, rgba(15, 23, 42, 0.4) 100%), url('https://tr.rbxcdn.com/180DAY-7db1ab4fad926864eac7f75e5d4d7fe1/768/432/Image/Webp/noFilter') center/cover no-repeat;">
                         
                         <div class="relative z-10 max-w-3xl space-y-1.5 sm:space-y-3.5 text-left">
                             <div class="flex items-center gap-1.5 sm:gap-2 flex-nowrap sm:flex-wrap">
