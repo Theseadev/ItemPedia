@@ -284,7 +284,9 @@ function formatChatMessageTextHtml($rawMessage, $isSeller = false) {
             <!-- QR Code Box -->
             <div class="relative p-4 bg-white rounded-3xl border-2 border-slate-200 dark:border-slate-700 inline-block shadow-md">
                 <?php 
-                $qrStringVal = !empty($order['qr_string']) ? $order['qr_string'] : ('https://itempedia.store/order/' . $order['invoice_number']);
+                $currHost = $_SERVER['HTTP_HOST'] ?? 'itempedia.vercel.app';
+                $currScheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+                $qrStringVal = !empty($order['qr_string']) ? $order['qr_string'] : ($currScheme . $currHost . '/order/' . $order['invoice_number']);
                 $qrImgUrl = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" . urlencode($qrStringVal);
                 ?>
                 <img src="<?= $qrImgUrl ?>" 
