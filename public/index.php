@@ -12,7 +12,14 @@ Flight::set('flight.log_errors', true);
 
 Flight::map('error', function (\Throwable $ex) {
     error_log("ItemPedia Exception: " . $ex->getMessage() . " in " . $ex->getFile() . ":" . $ex->getLine());
-    Flight::redirect('/?error=' . urlencode('Terjadi kesalahan pada sistem. Silakan coba kembali atau hubungi admin.'));
+    http_response_code(500);
+    echo '<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>ItemPedia - System Notice</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-slate-900 text-white flex items-center justify-center min-h-screen p-4">';
+    echo '<div class="max-w-md w-full bg-slate-800 border border-slate-700 rounded-3xl p-6 shadow-2xl text-center space-y-4">';
+    echo '<div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl font-bold">⚠️</div>';
+    echo '<h1 class="text-xl font-black text-white">ItemPedia Sedang Menyiapkan Server</h1>';
+    echo '<p class="text-xs text-slate-300 leading-relaxed bg-slate-900/80 p-3.5 rounded-2xl border border-slate-700 text-left font-mono break-words">' . htmlspecialchars($ex->getMessage()) . '</p>';
+    echo '<a href="/" class="inline-block px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs shadow-lg transition">Muat Ulang Halaman</a>';
+    echo '</div></body></html>';
 });
 
 // Routing Halaman Utama & Katalog
