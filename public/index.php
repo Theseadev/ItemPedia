@@ -1,12 +1,15 @@
 <?php
-if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
-    require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+$rootDir = dirname(__DIR__);
+
+if (file_exists($rootDir . '/vendor/autoload.php')) {
+    require_once $rootDir . '/vendor/autoload.php';
 }
 
-// Fallback PSR-4 Autoloader for App\ namespace
-spl_autoload_register(function ($class) {
+// Prepend PSR-4 Autoloader for App\ namespace
+spl_autoload_register(function ($class) use ($rootDir) {
     $prefix = 'App\\';
-    $baseDir = dirname(__DIR__) . '/app/';
+    $baseDir = $rootDir . '/app/';
     $len = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0) {
         return;
@@ -16,14 +19,18 @@ spl_autoload_register(function ($class) {
     if (file_exists($file)) {
         require_once $file;
     }
-});
+}, true, true);
 
 use App\Controllers\HomeController;
 use App\Controllers\OrderController;
 use App\Controllers\AdminController;
 use App\Controllers\AuthController;
 
-Flight::set('flight.views.path', dirname(__DIR__) . '/app/views');
+Flight::path($rootDir . '/app');
+Flight::path($rootDir . '/app/controllers');
+Flight::path($rootDir . '/app/config');
+Flight::path($rootDir . '/app/services');
+Flight::set('flight.views.path', $rootDir . '/app/views');
 Flight::set('flight.log_errors', true);
 
 Flight::map('error', function (\Throwable $ex) {
