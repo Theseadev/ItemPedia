@@ -467,24 +467,24 @@ runTest("11. Submit Review for Paid Order (POST /order/{invoice}/review)", funct
 // TEST 12: Admin Authentication & Session
 // ----------------------------------------------------
 $adminCookies = [];
-runTest("12. Admin Login Flow (POST /admin/login)", function() use ($baseUrl, &$adminCookies) {
-    $res = httpReq($baseUrl . '/admin/login', 'POST', [
-        'username' => 'admin',
-        'password' => 'admin123'
+runTest("12. Admin Login Flow (POST /Banjar/login)", function() use ($baseUrl, &$adminCookies) {
+    $res = httpReq($baseUrl . '/Banjar/login', 'POST', [
+        'username' => 'Fahrul',
+        'password' => 'Fahrul2005'
     ]);
 
     if (!isRedirect($res['code']) || empty($res['location'])) {
         throw new Exception("Admin login failed. HTTP {$res['code']}, loc: " . ($res['location'] ?? 'none'));
     }
     $adminCookies = $res['cookies'];
-    return "Admin login successful with credentials admin:admin123";
+    return "Admin login successful with credentials Fahrul:Fahrul2005";
 });
 
 // ----------------------------------------------------
 // TEST 13: Admin Dashboard & Cleaned View
 // ----------------------------------------------------
-runTest("13. Admin Dashboard View (GET /admin)", function() use ($baseUrl, &$adminCookies) {
-    $res = httpReq($baseUrl . '/admin', 'GET', [], $adminCookies);
+runTest("13. Admin Dashboard View (GET /Banjar)", function() use ($baseUrl, &$adminCookies) {
+    $res = httpReq($baseUrl . '/Banjar', 'GET', [], $adminCookies);
     if ($res['code'] !== 200) {
         throw new Exception("Expected HTTP 200, got " . $res['code']);
     }
@@ -509,9 +509,9 @@ runTest("13. Admin Dashboard View (GET /admin)", function() use ($baseUrl, &$adm
 // ----------------------------------------------------
 // TEST 14: Admin Orders Management & Status Update
 // ----------------------------------------------------
-runTest("14. Admin Orders List & Status Update (GET & POST /admin/orders)", function() use ($baseUrl, &$adminCookies, &$createdInvoice) {
+runTest("14. Admin Orders List & Status Update (GET & POST /Banjar/orders)", function() use ($baseUrl, &$adminCookies, &$createdInvoice) {
     // 1. Fetch Orders List
-    $resList = httpReq($baseUrl . '/admin/orders?status=ALL', 'GET', [], $adminCookies);
+    $resList = httpReq($baseUrl . '/Banjar/orders?status=ALL', 'GET', [], $adminCookies);
     if ($resList['code'] !== 200) {
         throw new Exception("Admin orders list returned HTTP " . $resList['code']);
     }
@@ -528,7 +528,7 @@ runTest("14. Admin Orders List & Status Update (GET & POST /admin/orders)", func
         throw new Exception("No order found to update status");
     }
 
-    $resUpdate = httpReq($baseUrl . '/admin/orders/update', 'POST', [
+    $resUpdate = httpReq($baseUrl . '/Banjar/orders/update', 'POST', [
         'order_id' => $order['id'],
         'status' => 'SUCCESS',
         'account_data' => 'Roblox Trade Complete Verified QA'
@@ -547,6 +547,7 @@ runTest("14. Admin Orders List & Status Update (GET & POST /admin/orders)", func
 });
 
 // ----------------------------------------------------
+// ----------------------------------------------------
 // TEST 15: Admin Products CRUD & Quick Stock
 // ----------------------------------------------------
 $createdProductId = null;
@@ -556,7 +557,7 @@ runTest("15. Admin Products CRUD (Add, Update, Quick-Stock, Delete)", function()
 
     // 1. Add Product
     $prodName = 'QA Test Pet Super Rare ' . rand(100, 999);
-    $resAdd = httpReq($baseUrl . '/admin/products/add', 'POST', [
+    $resAdd = httpReq($baseUrl . '/Banjar/products/add', 'POST', [
         'name' => $prodName,
         'game' => 'Build A Zoo',
         'category_id' => 1,
@@ -579,7 +580,7 @@ runTest("15. Admin Products CRUD (Add, Update, Quick-Stock, Delete)", function()
     $createdProductId = (int)$prod['id'];
 
     // 2. Quick Stock Update
-    $resStock = httpReq($baseUrl . '/admin/products/quick-stock', 'POST', [
+    $resStock = httpReq($baseUrl . '/Banjar/products/quick-stock', 'POST', [
         'product_id' => $createdProductId,
         'stock' => 25
     ], $adminCookies);
@@ -592,7 +593,7 @@ runTest("15. Admin Products CRUD (Add, Update, Quick-Stock, Delete)", function()
     }
 
     // 3. Edit Product
-    $resEdit = httpReq($baseUrl . '/admin/products/update', 'POST', [
+    $resEdit = httpReq($baseUrl . '/Banjar/products/update', 'POST', [
         'id' => $createdProductId,
         'name' => $prodName . ' (UPDATED)',
         'game' => 'Build A Zoo',
@@ -609,7 +610,7 @@ runTest("15. Admin Products CRUD (Add, Update, Quick-Stock, Delete)", function()
     }
 
     // 4. Delete Product
-    $resDel = httpReq($baseUrl . '/admin/products/delete', 'POST', [
+    $resDel = httpReq($baseUrl . '/Banjar/products/delete', 'POST', [
         'id' => $createdProductId
     ], $adminCookies);
     if (!isRedirect($resDel['code'])) {
@@ -634,7 +635,7 @@ runTest("16. Admin Category & Games CMS (Add, Update, Delete)", function() use (
     $catSlug = 'qa-test-game-' . rand(100, 999);
 
     // 1. Add Category
-    $resAdd = httpReq($baseUrl . '/admin/categories/add', 'POST', [
+    $resAdd = httpReq($baseUrl . '/Banjar/categories/add', 'POST', [
         'name' => $catName,
         'slug' => $catSlug,
         'icon' => 'fa-solid fa-gamepad',
@@ -652,7 +653,7 @@ runTest("16. Admin Category & Games CMS (Add, Update, Delete)", function() use (
     }
 
     // 2. Update Category
-    $resUpd = httpReq($baseUrl . '/admin/categories/update', 'POST', [
+    $resUpd = httpReq($baseUrl . '/Banjar/categories/update', 'POST', [
         'id' => $game['id'],
         'name' => $catName . ' (Edited)',
         'slug' => $catSlug,
@@ -666,7 +667,7 @@ runTest("16. Admin Category & Games CMS (Add, Update, Delete)", function() use (
     }
 
     // 3. Delete Category
-    $resDel = httpReq($baseUrl . '/admin/categories/delete', 'POST', [
+    $resDel = httpReq($baseUrl . '/Banjar/categories/delete', 'POST', [
         'id' => $game['id']
     ], $adminCookies);
     if (!isRedirect($resDel['code'])) {
@@ -684,7 +685,7 @@ runTest("17. Admin Pages CMS & FAQ Management (Add, Update, Delete)", function()
     $db = \App\Config\Database::getConnection();
 
     // 1. Save Page Content
-    $resPage = httpReq($baseUrl . '/admin/pages/update', 'POST', [
+    $resPage = httpReq($baseUrl . '/Banjar/pages/update', 'POST', [
         'hero_title' => 'Toko Item Roblox Terpercaya',
         'hero_subtitle' => 'Beli item, pet, dan akun Roblox termurah se-Indonesia'
     ], $adminCookies);
@@ -694,7 +695,7 @@ runTest("17. Admin Pages CMS & FAQ Management (Add, Update, Delete)", function()
 
     // 2. Add FAQ
     $faqQ = 'Apakah transaksi di ItemPedia bergaransi? ' . rand(100, 999);
-    $resFaqAdd = httpReq($baseUrl . '/admin/faqs/add', 'POST', [
+    $resFaqAdd = httpReq($baseUrl . '/Banjar/faqs/add', 'POST', [
         'question' => $faqQ,
         'answer' => 'Ya, 100% bergaransi aman dan cepat.',
         'category' => 'Garansi',
@@ -710,7 +711,7 @@ runTest("17. Admin Pages CMS & FAQ Management (Add, Update, Delete)", function()
     }
 
     // 3. Update FAQ
-    $resFaqUpd = httpReq($baseUrl . '/admin/faqs/update', 'POST', [
+    $resFaqUpd = httpReq($baseUrl . '/Banjar/faqs/update', 'POST', [
         'id' => $faq['id'],
         'question' => $faqQ . ' (Updated)',
         'answer' => 'Jawaban telah diupdate.',
@@ -722,7 +723,7 @@ runTest("17. Admin Pages CMS & FAQ Management (Add, Update, Delete)", function()
     }
 
     // 4. Delete FAQ
-    $resFaqDel = httpReq($baseUrl . '/admin/faqs/delete', 'POST', [
+    $resFaqDel = httpReq($baseUrl . '/Banjar/faqs/delete', 'POST', [
         'id' => $faq['id']
     ], $adminCookies);
     if (!isRedirect($resFaqDel['code'])) {
@@ -742,7 +743,7 @@ runTest("18. Admin Redeem Codes CRUD & Toggle", function() use ($baseUrl, &$admi
     $codeName = 'QACODE' . rand(1000, 9999);
 
     // 1. Add Redeem Code
-    $resAdd = httpReq($baseUrl . '/admin/redeem-codes/add', 'POST', [
+    $resAdd = httpReq($baseUrl . '/Banjar/redeem-codes/add', 'POST', [
         'code' => $codeName,
         'discount_percent' => 15,
         'product_id' => 0,
@@ -759,7 +760,7 @@ runTest("18. Admin Redeem Codes CRUD & Toggle", function() use ($baseUrl, &$admi
     }
 
     // 2. Toggle Active State
-    $resToggle = httpReq($baseUrl . '/admin/redeem-codes/toggle', 'POST', [
+    $resToggle = httpReq($baseUrl . '/Banjar/redeem-codes/toggle', 'POST', [
         'id' => $code['id']
     ], $adminCookies);
     if (!isRedirect($resToggle['code'])) {
@@ -771,7 +772,7 @@ runTest("18. Admin Redeem Codes CRUD & Toggle", function() use ($baseUrl, &$admi
     }
 
     // 3. Edit Redeem Code
-    $resEdit = httpReq($baseUrl . '/admin/redeem-codes/update', 'POST', [
+    $resEdit = httpReq($baseUrl . '/Banjar/redeem-codes/update', 'POST', [
         'id' => $code['id'],
         'code' => $codeName,
         'discount_percent' => 25,
@@ -784,7 +785,7 @@ runTest("18. Admin Redeem Codes CRUD & Toggle", function() use ($baseUrl, &$admi
     }
 
     // 4. Delete Redeem Code
-    $resDel = httpReq($baseUrl . '/admin/redeem-codes/delete', 'POST', [
+    $resDel = httpReq($baseUrl . '/Banjar/redeem-codes/delete', 'POST', [
         'id' => $code['id']
     ], $adminCookies);
     if (!isRedirect($resDel['code'])) {
@@ -812,8 +813,8 @@ runTest("19. Admin Chat Inbox API (GET /api/chat/inbox)", function() use ($baseU
 // ----------------------------------------------------
 // TEST 20: Admin Reviews View
 // ----------------------------------------------------
-runTest("20. Admin Reviews Moderation View (GET /admin/reviews)", function() use ($baseUrl, &$adminCookies) {
-    $res = httpReq($baseUrl . '/admin/reviews', 'GET', [], $adminCookies);
+runTest("20. Admin Reviews Moderation View (GET /Banjar/reviews)", function() use ($baseUrl, &$adminCookies) {
+    $res = httpReq($baseUrl . '/Banjar/reviews', 'GET', [], $adminCookies);
     if ($res['code'] !== 200) {
         throw new Exception("Expected HTTP 200, got " . $res['code']);
     }

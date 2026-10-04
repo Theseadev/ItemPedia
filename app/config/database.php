@@ -753,7 +753,7 @@ class Database
                 }
             }
 
-            // 6. Seed Games Default (CMS Kategori Game)
+            // 6. Seed Games Default (CMS Kategori Game - Hanya 3 Game Sesuai Permintaan)
             $defaultGames = [
                 [
                     'name' => 'Build A Zoo',
@@ -778,32 +778,15 @@ class Database
                     'icon' => 'fa-solid fa-horse',
                     'description' => 'Monster langka mythical, lasso sakti, dan booster taming instan.',
                     'sort_order' => 3
-                ],
-                [
-                    'name' => 'Pet Simulator 99',
-                    'slug' => 'pet-simulator-99',
-                    'logo_url' => 'https://tr.rbxcdn.com/180DAY-e8e63b6ca1fa89b2db971c26b6fe29db/150/150/Image/Png/noFilter',
-                    'icon' => 'fa-solid fa-cat',
-                    'description' => 'Huge Pets, Titanic Pets, Gems jutaan, dan Exclusive Enchants.',
-                    'sort_order' => 4
-                ],
-                [
-                    'name' => 'Blox Fruits',
-                    'slug' => 'blox-fruits',
-                    'logo_url' => 'https://tr.rbxcdn.com/180DAY-4f4c2c56a16c7cf2547b30c4fc5fc13b/150/150/Image/Png/noFilter',
-                    'icon' => 'fa-solid fa-skull-crossbones',
-                    'description' => 'Perm Fruits (Kitsune, Dragon, Leopard), Gamepass, Beli & Fragment.',
-                    'sort_order' => 5
-                ],
-                [
-                    'name' => 'Toilet Tower Defense',
-                    'slug' => 'toilet-tower-defense',
-                    'logo_url' => 'https://tr.rbxcdn.com/180DAY-925761eb1bb5d2eebf0d486d34e892c5/150/150/Image/Png/noFilter',
-                    'icon' => 'fa-solid fa-shield-halved',
-                    'description' => 'Unit Godly, Mythic, Gems, Crates, dan Exclusive Event Units.',
-                    'sort_order' => 6
                 ]
             ];
+
+            // Hapus game selain 3 game pilihan user
+            try {
+                $db->exec("DELETE FROM games WHERE name NOT IN ('Build A Zoo', 'Chop Your Tree', 'Catch and Tame')");
+            } catch (\Exception $e) {
+                // Ignore if table not yet created
+            }
 
             foreach ($defaultGames as $dg) {
                 $checkGame = $db->prepare("SELECT COUNT(*) FROM games WHERE slug = ? OR name = ?");
@@ -820,7 +803,7 @@ class Database
                 'site_tagline' => 'Pusat Jual Beli Item & Akun Game Roblox Terpercaya',
                 'hero_badge' => '⚡ FLASH PROMO SPESIAL HARI INI',
                 'hero_title' => 'Item & Akun Roblox Impianmu, Dikirim Hitungan Menit.',
-                'hero_subtitle' => 'Pusat marketplace item game Build A Zoo, Chop Your Tree, Catch and Tame, Pet Sim 99, & Blox Fruits terlengkap dengan sistem otomatis dan garansi 100% aman anti-banned.',
+                'hero_subtitle' => 'Pusat marketplace item game Build A Zoo, Chop Your Tree, dan Catch and Tame terlengkap dengan sistem otomatis dan garansi 100% aman anti-banned.',
                 'announcement' => '🎉 Diskon Spesial Minggu Ini! Gunakan Kode Promo: ITEMHEMAT10 untuk potongan 10% setiap pembelian item Build A Zoo! ⚡ Pengiriman Kilat 3-5 Menit via Trade Server Privat.',
                 'whatsapp_admin' => '6281234567890',
                 'whatsapp_display' => '+62 812-3456-7890',

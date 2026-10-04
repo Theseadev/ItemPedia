@@ -15,16 +15,9 @@ class HomeController
         // Ambil kategori
         $categories = $db->query("SELECT * FROM categories ORDER BY id ASC")->fetchAll();
 
-        // Daftar Game Roblox Dinamis dari Database (CMS Kategori)
+        // Daftar Game Roblox Dinamis dari Database (CMS Kategori - 3 Game Pilihan)
         $dbGames = $db->query("SELECT * FROM games WHERE is_active = 1 ORDER BY sort_order ASC, id ASC")->fetchAll();
-        $games = [
-            [
-                'id' => 'all',
-                'name' => 'Semua Game',
-                'logo' => 'https://images.rbxcdn.com/13c3b0eb81ff7d05777741d7c48f88a9.png',
-                'icon' => 'fa-solid fa-cubes'
-            ]
-        ];
+        $games = [];
         foreach ($dbGames as $dg) {
             $games[] = [
                 'id' => $dg['name'],
@@ -37,7 +30,12 @@ class HomeController
 
         // Filter kategori, game & pencarian
         $catFilter = strtolower(trim(Flight::request()->query->kategori ?? 'semua'));
-        $gameFilter = Flight::request()->query->game ?? 'all';
+        $rawGame = Flight::request()->query->game ?? '';
+        if (!empty($rawGame) && $rawGame !== 'all') {
+            $gameFilter = $rawGame;
+        } else {
+            $gameFilter = !empty($games) ? $games[0]['id'] : 'Build A Zoo';
+        }
         $searchQuery = trim(Flight::request()->query->q ?? '');
 
         // Ambil semua produk aktif agar switching game & kategori dapat berjalan instan tanpa delay

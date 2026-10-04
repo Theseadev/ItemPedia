@@ -2,14 +2,14 @@
 <div id="customConfirmModal" class="hidden fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md transition-all duration-300 opacity-0 pointer-events-none" role="dialog" aria-modal="true">
     
     <!-- Modal Card Container -->
-    <div id="customConfirmCard" class="relative w-full max-w-md bg-white rounded-[2.2rem] border border-slate-200/80 shadow-2xl shadow-slate-950/40 p-6 sm:p-7 text-center transform scale-90 transition-all duration-300 ease-out overflow-hidden">
+    <div id="customConfirmCard" class="relative w-full max-w-md bg-white dark:bg-[#0c1e33] rounded-[2.2rem] border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-slate-950/40 p-6 sm:p-7 text-center transform scale-90 transition-all duration-300 ease-out overflow-hidden">
         
-        <!-- Decorative Ambient Background Glow -->
-        <div id="confirmGlowEffect" class="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-rose-400/20 blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-blue-400/15 blur-3xl pointer-events-none"></div>
+        <!-- Decorative Ambient Background Glow (Hanya Light Mode) -->
+        <div id="confirmGlowEffect" class="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-rose-400/20 blur-3xl pointer-events-none dark:hidden"></div>
+        <div class="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-blue-400/15 blur-3xl pointer-events-none dark:hidden"></div>
 
         <!-- Top Close Button (Subtle) -->
-        <button type="button" onclick="closeCustomConfirm()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition active:scale-90">
+        <button type="button" onclick="closeCustomConfirm()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center justify-center transition active:scale-90">
             <i class="fa-solid fa-xmark text-xs"></i>
         </button>
 
@@ -18,7 +18,7 @@
             <!-- Pulsing Ring -->
             <div id="confirmPulseRing" class="absolute inset-0 rounded-full bg-rose-500/20 animate-ping opacity-75"></div>
             <!-- Outer Glow Aura -->
-            <div id="confirmOuterAura" class="absolute w-18 h-18 rounded-3xl bg-rose-100 border border-rose-200/60 flex items-center justify-center shadow-inner"></div>
+            <div id="confirmOuterAura" class="absolute w-18 h-18 rounded-3xl bg-rose-100 dark:bg-rose-950/60 border border-rose-200/60 dark:border-rose-800/60 flex items-center justify-center shadow-inner"></div>
             <!-- Core Gradient Icon Box -->
             <div id="confirmIconBox" class="relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-rose-500 to-red-600 text-white flex items-center justify-center text-2xl shadow-xl shadow-rose-500/35 border-2 border-white/50 transform transition duration-300">
                 <i id="confirmIcon" class="fa-solid fa-trash-can animate-bounce"></i>
@@ -26,21 +26,21 @@
         </div>
 
         <!-- Title & Description -->
-        <h3 id="confirmTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mb-2">
+        <h3 id="confirmTitle" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
             Konfirmasi Hapus
         </h3>
-        <p id="confirmMessage" class="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-sm mx-auto mb-4">
+        <p id="confirmMessage" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mx-auto mb-4">
             Apakah Anda yakin ingin menghapus data ini dari sistem?
         </p>
 
         <!-- Highlight Item Name Card (Optional) -->
-        <div id="confirmItemBox" class="mb-4 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center gap-2 text-xs font-bold text-slate-800 shadow-2xs">
+        <div id="confirmItemBox" class="mb-4 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 flex items-center justify-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200 shadow-2xs">
             <i id="confirmItemIcon" class="fa-solid fa-tag text-rose-500"></i>
-            <span id="confirmItemName" class="truncate max-w-[280px] font-black text-rose-600">Nama Item</span>
+            <span id="confirmItemName" class="truncate max-w-[280px] font-black text-rose-600 dark:text-rose-400">Nama Item</span>
         </div>
 
         <!-- Safety Notice Pill -->
-        <div id="confirmWarningPill" class="mb-6 py-2 px-3 rounded-xl bg-rose-50 border border-rose-200 text-[11px] font-bold text-rose-700 flex items-center justify-center gap-1.5">
+        <div id="confirmWarningPill" class="mb-6 py-2 px-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-[11px] font-bold text-rose-700 dark:text-rose-300 flex items-center justify-center gap-1.5">
             <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
             <span>Tindakan ini permanen dan tidak dapat dibatalkan</span>
         </div>
@@ -50,7 +50,7 @@
             <button type="button" 
                     id="confirmCancelBtn" 
                     onclick="closeCustomConfirm()" 
-                    class="w-full py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs sm:text-sm transition-all duration-150 active:scale-95 flex items-center justify-center gap-1.5 shadow-2xs">
+                    class="w-full py-3 px-4 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-extrabold text-xs sm:text-sm transition-all duration-150 active:scale-95 flex items-center justify-center gap-1.5 shadow-2xs">
                 <i class="fa-solid fa-xmark text-xs"></i>
                 <span id="confirmCancelText">Batal</span>
             </button>
@@ -135,26 +135,26 @@ function showCustomConfirm(options = {}) {
     // Set Color Theme based on Type
     if (type === 'danger') {
         elPulseRing.className = 'absolute inset-0 rounded-full bg-rose-500/20 animate-ping opacity-75';
-        elOuterAura.className = 'absolute w-18 h-18 rounded-3xl bg-rose-100 border border-rose-200/60 flex items-center justify-center shadow-inner';
+        elOuterAura.className = 'absolute w-18 h-18 rounded-3xl bg-rose-100 dark:bg-rose-950/60 border border-rose-200/60 dark:border-rose-800/60 flex items-center justify-center shadow-inner';
         elIconBox.className = 'relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-rose-500 to-red-600 text-white flex items-center justify-center text-2xl shadow-xl shadow-rose-500/35 border-2 border-white/50';
         elIcon.className = confirmIcon + ' animate-bounce';
-        elGlow.className = 'absolute -top-24 -left-24 w-48 h-48 rounded-full bg-rose-400/20 blur-3xl pointer-events-none';
+        elGlow.className = 'absolute -top-24 -left-24 w-48 h-48 rounded-full bg-rose-400/20 blur-3xl pointer-events-none dark:hidden';
         elSubmitBtn.className = 'w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-rose-500 via-red-500 to-rose-600 hover:from-rose-600 hover:to-red-700 text-white font-black text-xs sm:text-sm shadow-lg shadow-rose-500/30 hover:shadow-rose-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2';
         elSubmitIcon.className = confirmIcon + ' text-xs';
     } else if (type === 'warning') {
         elPulseRing.className = 'absolute inset-0 rounded-full bg-amber-500/20 animate-ping opacity-75';
-        elOuterAura.className = 'absolute w-18 h-18 rounded-3xl bg-amber-100 border border-amber-200/60 flex items-center justify-center shadow-inner';
+        elOuterAura.className = 'absolute w-18 h-18 rounded-3xl bg-amber-100 dark:bg-amber-950/60 border border-amber-200/60 dark:border-amber-800/60 flex items-center justify-center shadow-inner';
         elIconBox.className = 'relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white flex items-center justify-center text-2xl shadow-xl shadow-amber-500/35 border-2 border-white/50';
         elIcon.className = (confirmIcon || 'fa-solid fa-triangle-exclamation') + ' animate-pulse';
-        elGlow.className = 'absolute -top-24 -left-24 w-48 h-48 rounded-full bg-amber-400/20 blur-3xl pointer-events-none';
+        elGlow.className = 'absolute -top-24 -left-24 w-48 h-48 rounded-full bg-amber-400/20 blur-3xl pointer-events-none dark:hidden';
         elSubmitBtn.className = 'w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs sm:text-sm shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2';
         elSubmitIcon.className = 'fa-solid fa-check text-xs';
     } else if (type === 'info') {
         elPulseRing.className = 'absolute inset-0 rounded-full bg-blue-500/20 animate-ping opacity-75';
-        elOuterAura.className = 'absolute w-18 h-18 rounded-3xl bg-blue-100 border border-blue-200/60 flex items-center justify-center shadow-inner';
+        elOuterAura.className = 'absolute w-18 h-18 rounded-3xl bg-blue-100 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 flex items-center justify-center shadow-inner';
         elIconBox.className = 'relative w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-xl shadow-blue-500/35 border-2 border-white/50';
         elIcon.className = (confirmIcon || 'fa-solid fa-circle-info') + ' animate-pulse';
-        elGlow.className = 'absolute -top-24 -left-24 w-48 h-48 rounded-full bg-blue-400/20 blur-3xl pointer-events-none';
+        elGlow.className = 'absolute -top-24 -left-24 w-48 h-48 rounded-full bg-blue-400/20 blur-3xl pointer-events-none dark:hidden';
         elSubmitBtn.className = 'w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-600 hover:from-blue-600 hover:to-indigo-600 text-white font-black text-xs sm:text-sm shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2';
         elSubmitIcon.className = 'fa-solid fa-arrow-right text-xs';
     }

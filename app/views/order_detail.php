@@ -896,7 +896,7 @@ function selectRating(stars) {
         if (idx < stars) {
             icon.className = 'fa-solid fa-star text-amber-400';
         } else {
-            icon.className = 'fa-solid fa-star text-slate-200';
+            icon.className = 'fa-solid fa-star text-slate-200 dark:text-slate-700';
         }
     });
     const labels = {

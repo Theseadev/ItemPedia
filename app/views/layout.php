@@ -404,24 +404,24 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                     </div>
                 </div>
 
-                <!-- Col 2: Kategori Favorit -->
+                <!-- Col 2: Kategori Favorit (3 Game Pilihan) -->
                 <div>
                     <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4">
                         Kategori Game
                     </h4>
                     <ul class="space-y-2.5 text-xs font-bold text-slate-600 dark:text-slate-300">
                         <li><a href="/?game=Build+A+Zoo#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Build A Zoo (Mucy, Chomp, Dino)</a></li>
-                        <li><a href="/?kategori=item-game#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Item & Pet Game Roblox</a></li>
-                        <li><a href="/?kategori=akun-game#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Akun Sultan & Polosan Siap Pakai</a></li>
+                        <li><a href="/?game=Chop+Your+Tree#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Chop Your Tree (Axe & Wood)</a></li>
+                        <li><a href="/?game=Catch+and+Tame#katalog" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-arrow-right text-[9px] text-sky-500"></i> Catch and Tame (Pet & Mount)</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 3: Pembayaran -->
                 <div>
-                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 mb-4">
+                    <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white mb-4">
                         Metode Pembayaran
                     </h4>
-                    <p class="text-xs text-slate-600 mb-3 leading-relaxed font-medium">
+                    <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed font-medium">
                         Pembayaran otomatis instan via QRIS:
                     </p>
                     <div class="grid grid-cols-3 gap-2">

@@ -386,8 +386,8 @@ ob_start();
             </div>
         </div>
 
-        <!-- Game Logo Cards Grid: Dynamic items from Database -->
-        <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+        <!-- Game Logo Cards Grid: Dynamic 3 Games from Database -->
+        <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
             <?php foreach ($games as $g): ?>
             <?php $isActiveGame = ($activeGame === $g['id']); ?>
             <a href="/?game=<?= urlencode($g['id']) ?>#katalog" 
@@ -1389,7 +1389,7 @@ ob_start();
         if (input) {
             input.value = '';
             input.readOnly = false;
-            input.className = 'w-full pl-3 pr-8 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs font-black uppercase tracking-wider text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition placeholder:normal-case placeholder:font-normal placeholder:tracking-normal placeholder:text-slate-400';
+            input.className = 'w-full pl-3 pr-8 py-2.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 focus:bg-white dark:focus:bg-slate-900 transition placeholder:normal-case placeholder:font-normal placeholder:tracking-normal placeholder:text-slate-400 dark:placeholder-slate-500';
         }
         if (btn) {
             btn.classList.remove('hidden');
@@ -1506,21 +1506,21 @@ ob_start();
             const isSelected = (gid === game) || (game === 'all' && gid === 'all');
 
             if (isSelected) {
-                card.className = 'game-selection-card interactive-card flex flex-col items-center p-4 rounded-2xl border-2 transition-all duration-300 group/card cursor-pointer bg-sky-50/90 border-sky-500 ring-4 ring-sky-200 shadow-md scale-105';
+                card.className = 'game-selection-card interactive-card flex flex-col items-center p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 group/card cursor-pointer bg-sky-50/90 dark:bg-sky-950/80 border-sky-500 ring-4 ring-sky-200 dark:ring-sky-900/50 shadow-md scale-105';
                 if (badge) badge.classList.remove('hidden');
                 if (label) {
-                    label.className = 'game-status-label text-[10px] font-black text-sky-600 mt-0.5';
+                    label.className = 'game-status-label text-[9px] sm:text-[10px] font-black text-sky-600 dark:text-sky-400 mt-0.5';
                     label.textContent = 'Dipilih';
                 }
-                if (title) title.className = 'game-name-label text-xs font-black text-center text-sky-700 leading-tight';
+                if (title) title.className = 'game-name-label text-xs font-black text-center text-sky-700 dark:text-sky-300 leading-tight';
             } else {
-                card.className = 'game-selection-card interactive-card flex flex-col items-center p-4 rounded-2xl border-2 transition-all duration-300 group/card cursor-pointer bg-white hover:bg-white border-slate-200/80 hover:border-sky-300 hover:shadow-card hover:-translate-y-0.5';
+                card.className = 'game-selection-card interactive-card flex flex-col items-center p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 group/card cursor-pointer bg-white dark:bg-[#0f172a] hover:bg-white dark:hover:bg-[#132238] border-slate-200/80 dark:border-slate-800 hover:border-sky-300 dark:hover:border-sky-500 hover:shadow-card hover:-translate-y-0.5';
                 if (badge) badge.classList.add('hidden');
                 if (label) {
-                    label.className = 'game-status-label text-[10px] font-bold text-slate-400 mt-0.5';
+                    label.className = 'game-status-label text-[9px] sm:text-[10px] font-bold text-slate-400 dark:text-slate-500 mt-0.5';
                     label.textContent = 'Pilih';
                 }
-                if (title) title.className = 'game-name-label text-xs font-black text-center text-slate-800 group-hover/card:text-sky-600 leading-tight';
+                if (title) title.className = 'game-name-label text-xs font-black text-center text-slate-800 dark:text-slate-200 group-hover/card:text-sky-600 dark:group-hover/card:text-sky-400 leading-tight';
             }
         });
 
@@ -1829,7 +1829,7 @@ ob_start();
             if (i === currentReviewSlide) {
                 dot.className = 'review-dot h-1.5 rounded-full bg-sky-500 w-5 transition-all duration-300 cursor-pointer';
             } else {
-                dot.className = 'review-dot h-1.5 rounded-full bg-slate-300 w-2 transition-all duration-300 cursor-pointer';
+                dot.className = 'review-dot h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 w-2 transition-all duration-300 cursor-pointer';
             }
         });
     }
