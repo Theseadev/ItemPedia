@@ -199,16 +199,16 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                <th class="py-3.5 px-4 sm:px-6 w-12 text-center">
+                            <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                                <th class="py-3 px-3 sm:px-5 w-12 text-center">
                                     <input type="checkbox" onclick="toggleSelectAllProducts(this)" class="rounded text-sky-600 focus:ring-sky-500">
                                 </th>
-                                <th class="py-3.5 px-4 min-w-[280px]">Informasi Dagangan</th>
-                                <th class="py-3.5 px-4 min-w-[130px]">Harga Satuan</th>
-                                <th class="py-3.5 px-4 min-w-[120px]">Stok</th>
-                                <th class="py-3.5 px-4 min-w-[140px]">Pengiriman</th>
-                                <th class="py-3.5 px-4 min-w-[90px]">Terjual</th>
-                                <th class="py-3.5 px-4 sm:px-6 text-right w-20">Aksi</th>
+                                <th class="py-3 px-3 min-w-[220px]">Informasi Dagangan</th>
+                                <th class="py-3 px-3 whitespace-nowrap">Harga Satuan</th>
+                                <th class="py-3 px-3 whitespace-nowrap">Stok</th>
+                                <th class="py-3 px-3 whitespace-nowrap">Pengiriman</th>
+                                <th class="py-3 px-3 whitespace-nowrap">Terjual</th>
+                                <th class="py-3 px-3 sm:px-5 text-right w-20 whitespace-nowrap">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-xs font-medium text-slate-700 dark:text-slate-300">
@@ -228,29 +228,29 @@
                             <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-900/50 transition group">
                                 
                                 <!-- Checkbox -->
-                                <td class="py-4 px-4 sm:px-6 text-center">
+                                <td class="py-3.5 px-3 sm:px-5 text-center whitespace-nowrap">
                                     <input type="checkbox" class="product-item-checkbox rounded text-sky-600 focus:ring-sky-500" value="<?= $p['id'] ?>">
                                 </td>
 
                                 <!-- Informasi Dagangan (Thumbnail, Title, Game, Red [Stok Habis] Tag) -->
-                                <td class="py-4 px-4">
-                                    <div class="flex items-start gap-3">
+                                <td class="py-3.5 px-3 min-w-[220px]">
+                                    <div class="flex items-start gap-2.5">
                                         <img src="<?= htmlspecialchars($p['image_url']) ?>" 
                                              alt="" 
-                                             class="w-12 h-12 rounded-xl object-cover bg-slate-100 dark:bg-slate-800 flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-2xs" 
+                                             class="w-10 h-10 rounded-xl object-cover bg-slate-100 dark:bg-slate-800 flex-shrink-0 border border-slate-200 dark:border-slate-700 shadow-2xs" 
                                              onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?w=100'">
-                                        <div class="space-y-1 min-w-0">
+                                        <div class="space-y-0.5 min-w-0">
                                             <div class="flex items-center gap-1.5 flex-wrap">
                                                 <?php if ((int)$p['stock'] <= 0): ?>
-                                                    <span class="px-2 py-0.5 rounded text-[10px] font-black bg-rose-50 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 uppercase tracking-wider">
+                                                    <span class="px-1.5 py-0.2 rounded text-[9.5px] font-black bg-rose-50 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 uppercase tracking-wider whitespace-nowrap">
                                                         Stok Habis
                                                     </span>
                                                 <?php endif; ?>
-                                                <span class="font-extrabold text-slate-900 dark:text-white block group-hover:text-sky-500 transition leading-snug truncate max-w-[280px]" title="<?= htmlspecialchars($p['name']) ?>">
+                                                <span class="font-extrabold text-slate-900 dark:text-white block group-hover:text-sky-500 transition text-xs leading-snug" title="<?= htmlspecialchars($p['name']) ?>">
                                                     <?= htmlspecialchars($p['name']) ?>
                                                 </span>
                                             </div>
-                                            <div class="flex items-center gap-2 text-[11px] text-slate-400 dark:text-slate-500">
+                                            <div class="flex items-center gap-1.5 text-[10.5px] text-slate-400 dark:text-slate-500">
                                                 <span class="font-semibold text-slate-600 dark:text-slate-400"><?= htmlspecialchars($p['game']) ?></span>
                                                 <span>•</span>
                                                 <span><?= htmlspecialchars($p['sub_category'] ?? 'Pet') ?></span>
@@ -259,29 +259,29 @@
                                     </div>
                                 </td>
 
-                                <!-- Harga Satuan -->
-                                <td class="py-4 px-4">
-                                    <span class="font-black text-slate-900 dark:text-white text-sm block">
+                                <!-- Harga Satuan (Single line) -->
+                                <td class="py-3.5 px-3 whitespace-nowrap">
+                                    <span class="font-black text-slate-900 dark:text-white text-xs sm:text-sm whitespace-nowrap block">
                                         Rp <?= number_format($p['price'], 0, ',', '.') ?>
                                     </span>
                                     <?php if (!empty($p['price_original']) && $p['price_original'] > $p['price']): ?>
-                                        <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold line-through block mt-0.5">
+                                        <span class="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold line-through block whitespace-nowrap mt-0.5">
                                             Rp <?= number_format($p['price_original'], 0, ',', '.') ?>
                                         </span>
                                     <?php endif; ?>
                                 </td>
 
-                                <!-- Stok (Inline Editable Input Box - Matching Image 5) -->
-                                <td class="py-4 px-4">
+                                <!-- Stok (Inline Editable Input Box) -->
+                                <td class="py-3.5 px-3 whitespace-nowrap">
                                     <div class="flex items-center gap-1.5">
                                         <input type="number" 
                                                id="stock_input_<?= $p['id'] ?>"
                                                value="<?= (int)$p['stock'] ?>" 
                                                min="0"
-                                               class="w-16 px-2 py-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-black text-slate-900 dark:text-white text-center focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-900 shadow-2xs">
+                                               class="w-14 px-1.5 py-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-black text-slate-900 dark:text-white text-center focus:outline-none focus:border-sky-500 focus:bg-white dark:focus:bg-slate-900 shadow-2xs">
                                         <button type="button" 
                                                 onclick="saveInlineStock(<?= $p['id'] ?>)" 
-                                                class="w-7 h-7 rounded-lg bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-600 hover:text-white text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 flex items-center justify-center text-xs transition shadow-2xs active:scale-95" 
+                                                class="w-6 h-6 rounded-lg bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-600 hover:text-white text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800 flex items-center justify-center text-[10px] transition shadow-2xs active:scale-95" 
                                                 title="Simpan Stok">
                                             <i class="fa-solid fa-check"></i>
                                         </button>
@@ -289,41 +289,41 @@
                                 </td>
 
                                 <!-- Pengiriman (Dropdown / Badge) -->
-                                <td class="py-4 px-4">
+                                <td class="py-3.5 px-3 whitespace-nowrap">
                                     <?php 
                                      $badge = $p['badge'] ?? 'Ready';
                                      if ($badge === '10 Menit'): ?>
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">
-                                            <i class="fa-solid fa-stopwatch text-[10px]"></i> 10 Menit
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 whitespace-nowrap">
+                                            <i class="fa-solid fa-stopwatch text-[9px]"></i> 10 Menit
                                         </span>
                                     <?php elseif ($badge === 'Instan'): ?>
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60">
-                                            <i class="fa-solid fa-bolt text-[10px]"></i> Instan
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60 whitespace-nowrap">
+                                            <i class="fa-solid fa-bolt text-[9px]"></i> Instan
                                         </span>
                                     <?php else: ?>
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                                            <i class="fa-solid fa-box text-[10px]"></i> Standar
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">
+                                            <i class="fa-solid fa-box text-[9px]"></i> Standar
                                         </span>
                                     <?php endif; ?>
                                 </td>
 
                                 <!-- Terjual -->
-                                <td class="py-4 px-4 font-extrabold text-slate-700 dark:text-slate-300">
+                                <td class="py-3.5 px-3 font-extrabold text-slate-700 dark:text-slate-300 whitespace-nowrap">
                                     <?= (int)($p['total_sold'] ?? 0) ?>
                                 </td>
 
                                 <!-- Aksi (3 Dots Dropdown / Edit / Hapus) -->
-                                <td class="py-4 px-4 sm:px-6 text-right whitespace-nowrap">
-                                    <div class="relative inline-block text-left">
+                                <td class="py-3.5 px-3 sm:px-5 text-right whitespace-nowrap">
+                                    <div class="relative inline-block text-left whitespace-nowrap">
                                         <button type="button" 
                                                 onclick='openEditProductModal(<?= json_encode($p, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>)' 
-                                                class="p-2 text-slate-600 dark:text-slate-300 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition inline-flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-2xs" 
+                                                class="p-1.5 text-slate-600 dark:text-slate-300 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition inline-flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-2xs" 
                                                 title="Edit Dagangan">
                                             <i class="fa-solid fa-pen-to-square text-xs"></i>
                                         </button>
                                         <form action="/Banjar/products/delete" method="POST" onsubmit="return confirmFormSubmit(event, { title: 'Hapus Dagangan Produk?', itemName: '<?= addslashes($p['name']) ?>', itemIcon: 'fa-solid fa-box text-rose-500', message: 'Dagangan ini akan dihapus permanen dari katalog dan tidak akan tampil lagi di toko.' });" class="inline-block">
                                             <input type="hidden" name="id" value="<?= $p['id'] ?>">
-                                            <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/60 rounded-xl transition inline-flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-2xs ml-1" title="Hapus Dagangan">
+                                            <button type="submit" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/60 rounded-xl transition inline-flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-2xs ml-1" title="Hapus Dagangan">
                                                 <i class="fa-regular fa-trash-can text-xs"></i>
                                             </button>
                                         </form>
