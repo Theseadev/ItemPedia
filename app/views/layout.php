@@ -508,6 +508,12 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             <!-- Modal Header -->
             <div class="p-6 pb-4 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between">
                 <div class="flex items-center gap-3">
+                    <button type="button" 
+                            id="btnGoogleBackToMain" 
+                            onclick="showGoogleMainStep()" 
+                            class="hidden w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center transition cursor-pointer">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </button>
                     <div class="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-2 shadow-xs flex-shrink-0">
                         <svg class="w-full h-full" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -517,8 +523,8 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-base font-black text-slate-900 dark:text-white leading-tight">Masuk Akun Google</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">1-Klik Langsung Masuk ke ItemPedia</p>
+                        <h3 id="googleModalTitle" class="text-base font-black text-slate-900 dark:text-white leading-tight">Masuk Akun Google</h3>
+                        <p id="googleModalSubtitle" class="text-xs text-slate-500 dark:text-slate-400">1-Klik Langsung Masuk ke ItemPedia</p>
                     </div>
                 </div>
 
@@ -529,62 +535,101 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
 
             <!-- Modal Body -->
             <div class="p-6 space-y-4">
-                <div class="text-center space-y-1">
-                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Lacak pesanan otomatis, akses invoice kilat, dan chat in-app dengan seller menggunakan akun Google Anda.
-                    </p>
-                </div>
+                
+                <!-- TAMPILAN 1: Tombol Utama Lanjutkan dengan Google -->
+                <div id="googleStepMain" class="space-y-4">
+                    <div class="text-center space-y-1">
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Lacak pesanan otomatis, akses invoice kilat, dan chat in-app dengan seller menggunakan akun Google Anda.
+                        </p>
+                    </div>
 
-                <!-- Google Official Sign-In Button Container (Jika Client ID diatur) -->
-                <?php if (!empty($settings['google_client_id'])): ?>
-                <div class="flex flex-col items-center justify-center pt-1 space-y-2">
-                    <div id="g_id_signin_wrap" class="min-h-[46px] flex justify-center w-full"></div>
-                </div>
-                <?php endif; ?>
+                    <?php if (!empty($settings['google_client_id'])): ?>
+                    <div class="flex flex-col items-center justify-center pt-1 space-y-2">
+                        <div id="g_id_signin_wrap" class="min-h-[46px] flex justify-center w-full"></div>
+                    </div>
+                    <?php endif; ?>
 
-                <!-- Tombol Utama: Lanjutkan dengan Google -->
-                <div class="pt-1 space-y-3">
-                    <button type="button" 
-                            id="btnMainGoogleContinue"
-                            onclick="handleMainGoogleContinue()" 
-                            class="w-full py-3.5 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border-2 border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 rounded-2xl shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-3 text-slate-800 dark:text-white font-extrabold text-sm active:scale-98 cursor-pointer">
-                        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
-                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                        </svg>
-                        <span id="btnMainGoogleContinueText">Lanjutkan dengan Google</span>
-                    </button>
-
-                    <div id="googleAuthLoading" class="hidden py-1 text-xs font-bold text-sky-600 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-spinner fa-spin"></i>
-                        <span>Memverifikasi akun Google kamu...</span>
+                    <div class="pt-1">
+                        <button type="button" 
+                                id="btnMainGoogleContinue"
+                                onclick="showGoogleAccountChooser()" 
+                                class="w-full py-3.5 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 border-2 border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 rounded-2xl shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-3 text-slate-800 dark:text-white font-extrabold text-sm active:scale-98 cursor-pointer">
+                            <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                            </svg>
+                            <span>Lanjutkan dengan Google</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Opsi Gunakan Akun Lain -->
-                <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
-                    <button type="button" 
-                            id="btnToggleCustomGmail" 
-                            onclick="toggleCustomGmailInput()" 
-                            class="text-xs font-bold text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-sky-400 flex items-center justify-center gap-2 w-full py-1 cursor-pointer transition">
-                        <i class="fa-solid fa-user-plus text-[11px]"></i>
-                        <span>Gunakan akun Gmail lainnya</span>
-                    </button>
+                <!-- TAMPILAN 2: Pemilih Akun Google (Google Account Chooser) -->
+                <div id="googleStepChooser" class="hidden space-y-3">
+                    <div class="text-left pb-1">
+                        <span class="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">Pilih akun untuk melanjutkan</span>
+                    </div>
 
-                    <!-- Input Alamat Gmail Manual / Lainnya -->
-                    <div id="customGmailForm" class="hidden space-y-2 pt-1">
+                    <!-- Daftar Akun Google yang Tersedia -->
+                    <div class="space-y-2">
+                        <!-- Akun 1 -->
+                        <button type="button" 
+                                onclick="selectGoogleAccount('Muhammad Fahrul Bahri', 'fahrulbahri0520@gmail.com')" 
+                                class="w-full p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-sky-500 bg-white dark:bg-slate-800 hover:bg-sky-50/50 dark:hover:bg-sky-950/40 transition flex items-center justify-between group cursor-pointer text-left">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-500 to-blue-600 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-xs">
+                                    F
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-xs font-black text-slate-900 dark:text-white group-hover:text-sky-600 truncate">Muhammad Fahrul Bahri</div>
+                                    <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">fahrulbahri0520@gmail.com</div>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-300 group-hover:text-sky-500 transition pr-1"></i>
+                        </button>
+
+                        <!-- Akun 2 -->
+                        <button type="button" 
+                                onclick="selectGoogleAccount('Fahrul 20', 'fahrulbahri830@gmail.com')" 
+                                class="w-full p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-sky-500 bg-white dark:bg-slate-800 hover:bg-sky-50/50 dark:hover:bg-sky-950/40 transition flex items-center justify-between group cursor-pointer text-left">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-xs">
+                                    F
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-xs font-black text-slate-900 dark:text-white group-hover:text-sky-600 truncate">Fahrul 20</div>
+                                    <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">fahrulbahri830@gmail.com</div>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-300 group-hover:text-sky-500 transition pr-1"></i>
+                        </button>
+
+                        <!-- Opsi Akun Lain -->
+                        <button type="button" 
+                                onclick="toggleOtherGmailInput()" 
+                                class="w-full p-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 hover:border-sky-400 bg-slate-50/70 dark:bg-slate-900/60 hover:bg-sky-50/30 transition flex items-center gap-3 group cursor-pointer text-left">
+                            <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center font-black text-sm flex-shrink-0">
+                                <i class="fa-solid fa-user-plus text-xs"></i>
+                            </div>
+                            <div class="text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-sky-600">Gunakan akun Google lainnya</div>
+                        </button>
+                    </div>
+
+                    <!-- Input Gmail Lainnya -->
+                    <div id="otherGmailForm" class="hidden space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <label class="block text-[10px] font-black uppercase tracking-wider text-slate-500">Ketik Alamat Gmail:</label>
                         <div class="flex gap-2">
                             <div class="relative flex-grow">
                                 <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                                 <input type="email" 
-                                       id="customGmailInput" 
+                                       id="otherCustomGmailInput" 
                                        placeholder="namaanda@gmail.com" 
                                        class="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-sky-500 transition">
                             </div>
                             <button type="button" 
-                                    onclick="submitCustomGmailLogin()" 
+                                    onclick="submitOtherCustomGmailLogin()" 
                                     class="px-4 py-2.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-black text-xs rounded-xl shadow-xs transition flex-shrink-0 flex items-center gap-1.5 cursor-pointer">
                                 <span>Masuk</span>
                                 <i class="fa-solid fa-arrow-right text-[10px]"></i>
@@ -592,6 +637,13 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                         </div>
                     </div>
                 </div>
+
+                <!-- Indikator Loading Autentikasi -->
+                <div id="googleAuthLoading" class="hidden py-4 text-center text-xs font-bold text-sky-600 dark:text-sky-400 flex flex-col items-center justify-center gap-2.5">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl text-sky-500"></i>
+                    <span>Memverifikasi akun Google kamu...</span>
+                </div>
+
             </div>
 
             <!-- Modal Footer -->
@@ -1204,31 +1256,39 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         const modal = document.getElementById('googleLoginModal');
         if (modal) {
             modal.classList.remove('hidden');
+            showGoogleMainStep();
             if (GOOGLE_CLIENT_ID) {
                 initGoogleIdentity();
-                if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-                    try {
-                        google.accounts.id.prompt();
-                    } catch(e) {}
-                }
             }
         }
     }
 
     function closeGoogleLoginModal() {
         const modal = document.getElementById('googleLoginModal');
-        if (modal) modal.classList.add('hidden');
+        if (modal) {
+            modal.classList.add('hidden');
+            showGoogleMainStep();
+        }
     }
 
-    function handleMainGoogleContinue() {
-        const loader = document.getElementById('googleAuthLoading');
-        if (loader) loader.classList.remove('hidden');
+    function showGoogleMainStep() {
+        document.getElementById('googleStepMain')?.classList.remove('hidden');
+        document.getElementById('googleStepChooser')?.classList.add('hidden');
+        document.getElementById('btnGoogleBackToMain')?.classList.add('hidden');
+        document.getElementById('googleAuthLoading')?.classList.add('hidden');
+        
+        const title = document.getElementById('googleModalTitle');
+        const sub = document.getElementById('googleModalSubtitle');
+        if (title) title.innerText = 'Masuk Akun Google';
+        if (sub) sub.innerText = '1-Klik Langsung Masuk ke ItemPedia';
+    }
 
+    function showGoogleAccountChooser() {
         if (GOOGLE_CLIENT_ID && typeof google !== 'undefined' && google.accounts && google.accounts.id) {
             try {
                 google.accounts.id.prompt((notification) => {
                     if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                        loginWithGoogleAccount('Muhammad Fahrul Bahri', 'fahrulbahri0520@gmail.com', '');
+                        openChooserUI();
                     }
                 });
                 return;
@@ -1236,55 +1296,53 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 console.warn(e);
             }
         }
-        
-        loginWithGoogleAccount('Muhammad Fahrul Bahri', 'fahrulbahri0520@gmail.com', '');
+        openChooserUI();
     }
 
-    async function handleGoogleCredentialResponse(response) {
-        if (!response || !response.credential) {
-            alert('Gagal memperoleh kredensial akun Google.');
+    function openChooserUI() {
+        document.getElementById('googleStepMain')?.classList.add('hidden');
+        document.getElementById('googleStepChooser')?.classList.remove('hidden');
+        document.getElementById('btnGoogleBackToMain')?.classList.remove('hidden');
+        document.getElementById('googleAuthLoading')?.classList.add('hidden');
+
+        const title = document.getElementById('googleModalTitle');
+        const sub = document.getElementById('googleModalSubtitle');
+        if (title) title.innerText = 'Pilih Akun';
+        if (sub) sub.innerText = 'untuk melanjutkan ke ItemPedia';
+    }
+
+    function selectGoogleAccount(name, email) {
+        document.getElementById('googleStepChooser')?.classList.add('hidden');
+        document.getElementById('googleAuthLoading')?.classList.remove('hidden');
+        loginWithGoogleAccount(name, email, '');
+    }
+
+    function toggleOtherGmailInput() {
+        const form = document.getElementById('otherGmailForm');
+        if (form) {
+            form.classList.toggle('hidden');
+            if (!form.classList.contains('hidden')) {
+                document.getElementById('otherCustomGmailInput')?.focus();
+            }
+        }
+    }
+
+    function submitOtherCustomGmailLogin() {
+        const input = document.getElementById('otherCustomGmailInput');
+        if (!input) return;
+        const val = input.value.trim();
+        if (!val) {
+            alert('Silakan masukkan alamat Gmail kamu');
+            input.focus();
             return;
         }
+        const email = val.includes('@') ? val : (val + '@gmail.com');
+        const parts = email.split('@')[0];
+        const name = parts.replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
-        const loader = document.getElementById('googleAuthLoading');
-        if (loader) loader.classList.remove('hidden');
-
-        try {
-            const formData = new FormData();
-            formData.append('credential', response.credential);
-
-            const res = await fetch('/auth/google', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            if (data.success) {
-                closeGoogleLoginModal();
-                window.location.reload();
-            } else {
-                alert(data.message || 'Login dengan Google gagal');
-                if (loader) loader.classList.add('hidden');
-            }
-        } catch (err) {
-            console.error('Google auth error:', err);
-            alert('Terjadi kendala saat memverifikasi akun Google.');
-            if (loader) loader.classList.add('hidden');
-        }
-    }
-
-    function toggleCustomGmailInput() {
-        const box = document.getElementById('customGmailForm');
-        if (box) {
-            box.classList.toggle('hidden');
-            if (!box.classList.contains('hidden')) {
-                document.getElementById('customGmailInput')?.focus();
-            }
-        }
-    }
-
-    function toggleBuyerDropdown() {
-        const menu = document.getElementById('buyerDropdownMenu');
-        if (menu) menu.classList.toggle('hidden');
+        document.getElementById('googleStepChooser')?.classList.add('hidden');
+        document.getElementById('googleAuthLoading')?.classList.remove('hidden');
+        loginWithGoogleAccount(name, email, '');
     }
 
     window.addEventListener('click', (e) => {
