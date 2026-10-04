@@ -67,13 +67,21 @@ class Database
             $socket = @fsockopen($host, $port, $errno, $errstr, 1.0);
             if ($socket) {
                 fclose($socket);
-                try {
-                    // Koneksi ke database target
-                    self::$pdo = new PDO("mysql:host={$host};port={$port};dbname={$database};charset=utf8mb4", $username, $password, [
+                    $pdoOptions = [
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                        PDO::ATTR_TIMEOUT => 5
-                    ]);
+                        PDO::ATTR_TIMEOUT => 5,
+                        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                    ];
+                    $caBundle = ini_get('openssl.cafile') ?: ini_get('curl.cainfo');
+                    if ($caBundle && file_exists($caBundle)) {
+                        $pdoOptions[PDO::MYSQL_ATTR_SSL_CA] = $caBundle;
+                    } else {
+                        $pdoOptions[PDO::MYSQL_ATTR_SSL_CA] = true;
+                    }
+
+                    // Koneksi ke database target
+                    self::$pdo = new PDO("mysql:host={$host};port={$port};dbname={$database};charset=utf8mb4", $username, $password, $pdoOptions);
 
                     self::$driver = 'mysql';
                     self::initMysqlSchema();
