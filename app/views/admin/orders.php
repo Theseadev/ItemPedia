@@ -80,12 +80,12 @@
                 </div>
             </div>
 
-            <!-- Main Order Card -->
+            <!-- 1. Top Navigation & Filters Container -->
             <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs overflow-hidden">
                 
-                <!-- 1. Horizontal Status Tabs Strip -->
+                <!-- Horizontal Status Tabs Strip -->
                 <div class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1e33] px-3 sm:px-5">
-                    <div class="flex items-center gap-1 sm:gap-3 overflow-x-auto no-scrollbar text-xs font-bold whitespace-nowrap">
+                    <div class="flex items-center gap-1 sm:gap-4 overflow-x-auto no-scrollbar text-xs font-bold whitespace-nowrap">
                         <?php 
                         $curTab = $statusFilter ?? 'ALL';
                         $tabs = [
@@ -102,7 +102,7 @@
                             $isActive = ($curTab === $t['key']);
                         ?>
                             <a href="/Banjar/orders?status=<?= $t['key'] ?><?= !empty($searchQuery) ? '&q=' . urlencode($searchQuery) : '' ?><?= !empty($gameFilter) ? '&game=' . urlencode($gameFilter) : '' ?>" 
-                               class="py-3 px-2 sm:px-2.5 border-b-2 text-xs font-bold flex items-center gap-1.5 transition relative whitespace-nowrap <?= $isActive ? 'border-sky-500 text-sky-500 dark:text-sky-400' : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700' ?>">
+                               class="py-3 px-2 sm:px-3 border-b-2 text-xs font-bold flex items-center gap-1.5 transition relative whitespace-nowrap <?= $isActive ? 'border-sky-500 text-sky-500 dark:text-sky-400' : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700' ?>">
                                 <span><?= $t['label'] ?></span>
                                 <?php if ($t['count'] > 0): ?>
                                     <span class="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center">
@@ -114,8 +114,8 @@
                     </div>
                 </div>
 
-                <!-- 2. Search & Multi-Filter Bar: SEBARIS (1 Single Inline Row) -->
-                <div class="p-3 sm:p-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0c1e33] space-y-3">
+                <!-- Search & Multi-Filter Bar -->
+                <div class="p-3 sm:p-4 bg-white dark:bg-[#0c1e33] space-y-3">
                     <form method="GET" action="/Banjar/orders" class="flex flex-col sm:flex-row items-center gap-2.5 w-full">
                         <input type="hidden" name="status" value="<?= htmlspecialchars($statusFilter ?? 'ALL') ?>">
 
@@ -179,143 +179,203 @@
                     </div>
                 </div>
 
-                <!-- 3. Orders Content (Tabel atau Empty State Kartun Sesuai Screenshot) -->
-                <?php if (empty($orders)): ?>
-                <!-- Empty State Illustration Matching Screenshot -->
-                <div class="py-20 text-center px-4">
-                    <div class="w-36 h-36 mx-auto mb-4 relative flex items-center justify-center">
-                        <div class="w-28 h-28 bg-amber-50 dark:bg-amber-950/60 rounded-full flex items-center justify-center text-5xl text-amber-400">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </div>
-                        <div class="absolute top-1 right-2 w-10 h-10 bg-sky-50 dark:bg-sky-950/60 rounded-full flex items-center justify-center text-sky-500 text-lg shadow-xs">
-                            <i class="fa-solid fa-question"></i>
+            </div>
+
+            <!-- 2. Orders Content (Cards List Layout Matching User Screenshot) -->
+            <?php if (empty($orders)): ?>
+            <!-- Empty State Illustration Matching Screenshot -->
+            <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs py-20 text-center px-4">
+                <div class="w-36 h-36 mx-auto mb-4 relative flex items-center justify-center">
+                    <div class="w-28 h-28 bg-amber-50 dark:bg-amber-950/60 rounded-full flex items-center justify-center text-5xl text-amber-400">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </div>
+                    <div class="absolute top-1 right-2 w-10 h-10 bg-sky-50 dark:bg-sky-950/60 rounded-full flex items-center justify-center text-sky-500 text-lg shadow-xs">
+                        <i class="fa-solid fa-question"></i>
+                    </div>
+                </div>
+                <h3 class="font-bold text-slate-800 dark:text-slate-200 text-sm sm:text-base">Kamu belum memiliki pesanan</h3>
+                <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Pesanan yang masuk akan tampil otomatis di sini.</p>
+            </div>
+            <?php else: ?>
+            <div class="space-y-4">
+                <?php foreach ($orders as $o): 
+                    // Compute status display text matching screenshot
+                    $statusText = 'Menunggu Pembayaran';
+                    $statusClass = 'text-amber-600 dark:text-amber-400';
+                    if ($o['status'] === 'PAID') {
+                        $statusText = 'Butuh diproses';
+                        $statusClass = 'text-slate-900 dark:text-white font-extrabold';
+                    } elseif ($o['status'] === 'PROCESSING') {
+                        $statusText = 'Sedang dikirim';
+                        $statusClass = 'text-purple-600 dark:text-purple-400 font-extrabold';
+                    } elseif ($o['status'] === 'SUCCESS') {
+                        $statusText = 'Pesanan Selesai';
+                        $statusClass = 'text-emerald-600 dark:text-emerald-400 font-extrabold';
+                    } elseif ($o['status'] === 'CANCELLED') {
+                        $statusText = 'Pesanan Dibatalkan';
+                        $statusClass = 'text-rose-600 dark:text-rose-400 font-extrabold';
+                    }
+                ?>
+                <!-- Individual Order Card (Itemku Seller Style) -->
+                <div class="bg-white dark:bg-[#0c1e33] rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs overflow-hidden transition hover:shadow-sm">
+                    
+                    <!-- Card Top Strip (4 Columns: Status, Invoice, Tanggal, Respons Sebelum) -->
+                    <div class="px-4 py-3 sm:px-6 sm:py-3.5 bg-slate-50/70 dark:bg-slate-900/60 border-b border-slate-100 dark:border-slate-800">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 text-xs">
+                            <!-- 1. Status Pesanan -->
+                            <div>
+                                <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Status Pesanan</span>
+                                <span class="text-xs <?= $statusClass ?> block truncate mt-0.5">
+                                    <?= $statusText ?>
+                                </span>
+                            </div>
+
+                            <!-- 2. Nomor Pesanan -->
+                            <div>
+                                <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Nomor Pesanan</span>
+                                <a href="/order/<?= htmlspecialchars($o['invoice_number']) ?>" target="_blank" class="font-mono font-bold text-xs text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center gap-1 mt-0.5" title="Lihat Invoice Pembeli">
+                                    <span><?= htmlspecialchars($o['invoice_number']) ?></span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                </a>
+                            </div>
+
+                            <!-- 3. Tanggal Transaksi -->
+                            <div>
+                                <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Tanggal Transaksi</span>
+                                <span class="font-semibold text-xs text-slate-700 dark:text-slate-300 block mt-0.5">
+                                    <?= date('d M Y H:i:s', strtotime($o['created_at'])) ?>
+                                </span>
+                            </div>
+
+                            <!-- 4. Respons Sebelum -->
+                            <div>
+                                <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Respons Sebelum</span>
+                                <span class="font-semibold text-xs text-slate-700 dark:text-slate-300 block mt-0.5">
+                                    <?= date('d M Y H:i:s', strtotime($o['created_at'] . ' +2 days')) ?>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <h3 class="font-bold text-slate-800 dark:text-slate-200 text-sm sm:text-base">Kamu belum memiliki pesanan</h3>
-                    <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Pesanan yang masuk akan tampil otomatis di sini.</p>
-                </div>
-                <?php else: ?>
-                <!-- Clean Orders Table -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 whitespace-nowrap">
-                                <th class="py-3 px-3 sm:px-5">Info Invoice</th>
-                                <th class="py-3 px-3">Pembeli (Roblox)</th>
-                                <th class="py-3 px-3 min-w-[200px]">Dagangan</th>
-                                <th class="py-3 px-3">Total Bayar</th>
-                                <th class="py-3 px-3 text-center">Live Chat</th>
-                                <th class="py-3 px-3">Status</th>
-                                <th class="py-3 px-3 sm:px-5 text-right">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-xs font-medium text-slate-700 dark:text-slate-300">
-                            <?php foreach ($orders as $o): ?>
-                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-900/50 transition">
-                                
-                                <!-- Invoice & Date (No line break) -->
-                                <td class="py-3.5 px-3 sm:px-5 whitespace-nowrap">
-                                    <a href="/order/<?= htmlspecialchars($o['invoice_number']) ?>" target="_blank" class="font-mono font-bold text-xs text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center gap-1.5 whitespace-nowrap">
-                                        <span><?= htmlspecialchars($o['invoice_number']) ?></span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-sky-400"></i>
-                                    </a>
-                                    <span class="block text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 whitespace-nowrap">
-                                        <?= date('d M Y, H:i', strtotime($o['created_at'])) ?>
-                                    </span>
-                                </td>
 
-                                <!-- Roblox Avatar & Username -->
-                                <td class="py-3.5 px-3 whitespace-nowrap">
-                                    <div class="flex items-center gap-2">
-                                        <img src="<?= htmlspecialchars($o['roblox_avatar_url'] ?? '') ?>" 
-                                             alt="" 
-                                             class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 object-cover shadow-2xs flex-shrink-0"
-                                             onerror="this.src='https://ui-avatars.com/api/?name=<?= urlencode($o['roblox_username'] ?? 'User') ?>&background=0284c7&color=fff'">
-                                        <div>
-                                            <span class="font-extrabold text-slate-900 dark:text-white block text-xs whitespace-nowrap"><?= htmlspecialchars($o['roblox_username'] ?? '') ?></span>
-                                            <button type="button" 
-                                                    onclick="navigator.clipboard.writeText('<?= addslashes($o['roblox_username']) ?>'); alert('Username disalin: <?= addslashes($o['roblox_username']) ?>')" 
-                                                    class="text-[9.5px] font-bold text-sky-600 dark:text-sky-400 hover:underline inline-flex items-center gap-1 mt-0.5 whitespace-nowrap">
-                                                <i class="fa-regular fa-copy text-[8.5px]"></i> Salin
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
+                    <!-- Card Body -->
+                    <div class="p-4 sm:p-6 space-y-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            
+                            <!-- Left: Product Information (Col 1-5) -->
+                            <div class="lg:col-span-5 space-y-1">
+                                <h3 class="font-black text-slate-900 dark:text-white text-sm sm:text-base leading-snug">
+                                    <?= htmlspecialchars($o['product_name']) ?>
+                                </h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+                                    <?= htmlspecialchars($o['category_name'] ?? 'Roblox') ?>
+                                </p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                                    1 <?= htmlspecialchars($o['sub_category'] ?? 'Pets') ?>
+                                </p>
+                                <p class="text-xs font-bold text-slate-800 dark:text-slate-200 pt-0.5">
+                                    Rp <?= number_format($o['price'], 0, ',', '.') ?>
+                                </p>
+                            </div>
 
-                                <!-- Produk & Kategori (No truncation ellipsis) -->
-                                <td class="py-3.5 px-3 min-w-[200px]">
-                                    <span class="inline-block text-[9.5px] font-extrabold text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/80 px-1.5 py-0.5 rounded uppercase tracking-wider border border-sky-100 dark:border-sky-800/60 mb-0.5 whitespace-nowrap">
-                                        <?= htmlspecialchars($o['category_name'] ?? 'Roblox') ?>
+                            <!-- Right: Pembeli, Username Roblox, Catatan (Col 6-12) -->
+                            <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs pt-1">
+                                <!-- Pembeli -->
+                                <div class="space-y-0.5">
+                                    <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Pembeli</span>
+                                    <span class="font-bold text-slate-800 dark:text-slate-200 block truncate">
+                                        <?= htmlspecialchars($o['buyer_name'] ?? $o['roblox_username'] ?? 'Pembeli') ?>
                                     </span>
-                                    <span class="font-bold text-slate-800 dark:text-slate-200 block text-xs leading-snug">
-                                        <?= htmlspecialchars($o['product_name']) ?>
-                                    </span>
-                                </td>
-
-                                <!-- Total Harga (Single Line) -->
-                                <td class="py-3.5 px-3 whitespace-nowrap">
-                                    <span class="font-black text-slate-900 dark:text-white text-xs sm:text-sm whitespace-nowrap">
-                                        Rp <?= number_format($o['price'], 0, ',', '.') ?>
-                                    </span>
-                                </td>
-
-                                <!-- Live Chat Button -->
-                                <td class="py-3.5 px-3 text-center whitespace-nowrap">
                                     <button type="button" 
                                             onclick="openChatDockForInvoice('<?= htmlspecialchars($o['invoice_number']) ?>')" 
-                                            class="inline-flex items-center gap-1.5 py-1 px-2.5 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800/80 rounded-xl text-xs font-bold transition shadow-2xs active:scale-95 whitespace-nowrap">
-                                        <i class="fa-solid fa-comments text-xs"></i>
-                                        <span>Chat</span>
+                                            class="text-sky-600 dark:text-sky-400 hover:underline font-bold text-[11px] inline-flex items-center gap-1 cursor-pointer pt-0.5">
+                                        <i class="fa-solid fa-comments text-[10px]"></i>
+                                        <span>Hubungi Pembeli</span>
                                         <?php if (!empty($o['unread_chat_count']) && $o['unread_chat_count'] > 0): ?>
-                                            <span class="w-4 h-4 rounded-full bg-rose-500 text-white text-[8.5px] font-black flex items-center justify-center animate-pulse">
+                                            <span class="px-1 py-0.2 rounded-full bg-rose-500 text-white text-[8px] font-black animate-pulse">
                                                 <?= $o['unread_chat_count'] ?>
                                             </span>
                                         <?php endif; ?>
                                     </button>
-                                </td>
+                                </div>
 
-                                <!-- Status Badge (Single Line) -->
-                                <td class="py-3.5 px-3 whitespace-nowrap">
-                                    <?php if ($o['status'] === 'PENDING'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 whitespace-nowrap">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Menunggu Bayar
+                                <!-- Username Roblox -->
+                                <div class="space-y-0.5">
+                                    <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Username Roblox</span>
+                                    <div class="flex items-center gap-1.5">
+                                        <?php if (!empty($o['roblox_avatar_url'])): ?>
+                                            <img src="<?= htmlspecialchars($o['roblox_avatar_url']) ?>" alt="" class="w-5 h-5 rounded-full border border-slate-200 dark:border-slate-700 bg-white object-cover">
+                                        <?php endif; ?>
+                                        <span class="font-extrabold text-slate-900 dark:text-white truncate">
+                                            <?= htmlspecialchars($o['roblox_username'] ?? '-') ?>
                                         </span>
-                                    <?php elseif ($o['status'] === 'PAID'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 whitespace-nowrap">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span> Sudah Dibayar
-                                        </span>
-                                    <?php elseif ($o['status'] === 'PROCESSING'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60 whitespace-nowrap">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-spin"></span> Sedang Dikirim
-                                        </span>
-                                    <?php elseif ($o['status'] === 'SUCCESS'): ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 whitespace-nowrap">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Selesai
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 whitespace-nowrap">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Dibatalkan
-                                        </span>
-                                    <?php endif; ?>
-                                </td>
-
-                                <!-- Action Button -->
-                                <td class="py-3.5 px-3 sm:px-5 text-right whitespace-nowrap">
+                                    </div>
                                     <button type="button" 
-                                            onclick="openEditOrderModal(<?= htmlspecialchars(json_encode($o)) ?>)" 
-                                            class="inline-flex items-center gap-1 py-1 px-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold transition shadow-2xs active:scale-95 whitespace-nowrap">
-                                        <i class="fa-solid fa-pen-to-square text-sky-500"></i>
-                                        <span>Update</span>
+                                            onclick="navigator.clipboard.writeText('<?= addslashes($o['roblox_username']) ?>'); alert('Username disalin: <?= addslashes($o['roblox_username']) ?>')" 
+                                            class="text-sky-600 dark:text-sky-400 hover:underline font-bold text-[11px] inline-flex items-center gap-1 cursor-pointer pt-0.5">
+                                        <i class="fa-regular fa-copy text-[10px]"></i>
+                                        <span>Salin</span>
                                     </button>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <?php endif; ?>
+                                </div>
 
+                                <!-- Catatan -->
+                                <div class="space-y-0.5">
+                                    <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Catatan</span>
+                                    <p class="font-medium text-slate-600 dark:text-slate-300 line-clamp-3 text-xs">
+                                        <?= !empty($o['note']) ? htmlspecialchars($o['note']) : '-' ?>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Tulis Catatan / Update Trigger Button on Left -->
+                        <div class="pt-2 flex items-center gap-3">
+                            <button type="button" 
+                                    onclick="openEditOrderModal(<?= htmlspecialchars(json_encode($o)) ?>)" 
+                                    class="text-sky-600 dark:text-sky-400 hover:underline font-bold text-xs inline-flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-pen text-[10px]"></i>
+                                <span>Tulis Catatan</span>
+                            </button>
+                        </div>
+
+                        <!-- Jika ada account data terkirim -->
+                        <?php if (!empty($o['account_data'])): ?>
+                        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-800 dark:text-slate-200 space-y-1">
+                            <div class="text-[10.5px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Data Akun Terkirim:</div>
+                            <div class="whitespace-pre-wrap leading-relaxed"><?= htmlspecialchars($o['account_data']) ?></div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Footer Strip of Card -->
+                    <div class="px-4 py-3 sm:px-6 bg-white dark:bg-[#0c1e33] border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                        <!-- Total Pendapatan -->
+                        <div>
+                            <span class="block text-[10.5px] text-slate-400 dark:text-slate-500 font-medium">Total Pendapatan</span>
+                            <span class="font-black text-sm sm:text-base text-orange-500 dark:text-orange-400">
+                                Rp <?= number_format($o['price'], 0, ',', '.') ?>
+                            </span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-2.5">
+                            <button type="button" 
+                                    onclick="openCancelOrderModal(<?= htmlspecialchars(json_encode($o)) ?>)" 
+                                    class="px-3.5 py-1.5 rounded-lg border border-sky-500 text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-slate-800 font-bold text-xs transition active:scale-95 cursor-pointer">
+                                Batalkan Pesanan
+                            </button>
+                            <button type="button" 
+                                    onclick="openEditOrderModal(<?= htmlspecialchars(json_encode($o)) ?>)" 
+                                    class="px-4 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition shadow-xs active:scale-95 cursor-pointer">
+                                <?= ($o['status'] === 'SUCCESS') ? 'Pesanan Selesai' : 'Sudah Dikirim' ?>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <?php endforeach; ?>
             </div>
+            <?php endif; ?>
 
         </div>
     </main>
@@ -348,7 +408,7 @@
                     <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Ubah Status Pengiriman</label>
                     <select name="status" id="editOrderStatus" class="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 dark:text-white focus:outline-none focus:border-sky-500">
                         <option value="PENDING">Menunggu Pembayaran (PENDING)</option>
-                        <option value="PAID">Sudah Dibayar (PAID)</option>
+                        <option value="PAID">Sudah Dibayar / Butuh Diproses (PAID)</option>
                         <option value="PROCESSING">Sedang Diproses Pengiriman (PROCESSING)</option>
                         <option value="SUCCESS">Pesanan Selesai (SUCCESS)</option>
                         <option value="CANCELLED">Dibatalkan (CANCELLED)</option>
@@ -386,6 +446,15 @@
         document.getElementById('editOrderBuyer').innerText = order.roblox_username;
         document.getElementById('editOrderProduct').innerText = order.product_name;
         document.getElementById('editOrderStatus').value = order.status;
+        document.getElementById('editOrderAccountData').value = order.account_data || '';
+        document.getElementById('orderModal').classList.remove('hidden');
+    }
+    function openCancelOrderModal(order) {
+        document.getElementById('editOrderId').value = order.id;
+        document.getElementById('editOrderInvoice').innerText = order.invoice_number;
+        document.getElementById('editOrderBuyer').innerText = order.roblox_username;
+        document.getElementById('editOrderProduct').innerText = order.product_name;
+        document.getElementById('editOrderStatus').value = 'CANCELLED';
         document.getElementById('editOrderAccountData').value = order.account_data || '';
         document.getElementById('orderModal').classList.remove('hidden');
     }
