@@ -11,7 +11,7 @@ class Database
     private static string $driver = 'sqlite';
 
     /**
-     * Parse file .env sederhana
+     * Parse file .env sederhana & environment variables (Vercel/Hosting)
      */
     private static function loadEnv(): array
     {
@@ -32,6 +32,17 @@ class Database
             }
         }
 
+        // Support environment variables dari sistem / Vercel Dashboard
+        $envKeys = ['DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD', 'VERCEL'];
+        foreach ($envKeys as $k) {
+            $val = getenv($k);
+            if ($val !== false && $val !== '') {
+                $config[$k] = $val;
+            } elseif (isset($_ENV[$k]) && $_ENV[$k] !== '') {
+                $config[$k] = $_ENV[$k];
+            }
+        }
+
         return $config;
     }
 
@@ -44,7 +55,7 @@ class Database
         $env = self::loadEnv();
         $preferDriver = strtolower($env['DB_CONNECTION'] ?? 'sqlite');
 
-        // 1. Coba koneksi MySQL terlebih dahulu jika dikonfigurasi / Laragon aktif
+        // 1. Coba koneksi MySQL terlebih dahulu jika dikonfigurasi / Laragon / Cloud MySQL (TiDB, Aiven, Supabase, dll)
         if ($preferDriver === 'mysql') {
             $host = $env['DB_HOST'] ?? '127.0.0.1';
             $port = (int)($env['DB_PORT'] ?? 3306);
@@ -52,22 +63,16 @@ class Database
             $username = $env['DB_USERNAME'] ?? 'root';
             $password = $env['DB_PASSWORD'] ?? '';
 
-            // Cek port cepat (0.1 detik) agar tidak blocking/delay jika MySQL offline
-            $socket = @fsockopen($host, $port, $errno, $errstr, 0.1);
+            // Cek port cepat (1 detik untuk remote cloud database)
+            $socket = @fsockopen($host, $port, $errno, $errstr, 1.0);
             if ($socket) {
                 fclose($socket);
                 try {
-                    // Pastikan server MySQL reachable & auto-create database jika belum ada
-                    $initPdo = new PDO("mysql:host={$host};port={$port}", $username, $password, [
-                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                        PDO::ATTR_TIMEOUT => 1
-                    ]);
-                    $initPdo->exec("CREATE DATABASE IF NOT EXISTS `{$database}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-
                     // Koneksi ke database target
                     self::$pdo = new PDO("mysql:host={$host};port={$port};dbname={$database};charset=utf8mb4", $username, $password, [
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                        PDO::ATTR_TIMEOUT => 5
                     ]);
 
                     self::$driver = 'mysql';
@@ -81,11 +86,26 @@ class Database
 
         // 2. Fallback ke SQLite jika MySQL tidak aktif atau driver diset sqlite
         $dbDir = dirname(__DIR__, 2) . '/database';
-        if (!is_dir($dbDir)) {
-            mkdir($dbDir, 0777, true);
+        $isVercel = !empty($env['VERCEL']) || !empty(getenv('VERCEL'));
+
+        // Di serverless environment seperti Vercel (read-only filesystem), gunakan /tmp jika root tidak writable
+        if ($isVercel || (!is_dir($dbDir) && !@mkdir($dbDir, 0777, true)) || (is_dir($dbDir) && !is_writable($dbDir))) {
+            $tmpDir = sys_get_temp_dir() . '/itempedia_db';
+            if (!is_dir($tmpDir)) {
+                @mkdir($tmpDir, 0777, true);
+            }
+            $dbPath = $tmpDir . '/itempedia.sqlite';
+            $seedOriginal = $dbDir . '/itempedia.sqlite';
+            if (!file_exists($dbPath) && file_exists($seedOriginal)) {
+                @copy($seedOriginal, $dbPath);
+            }
+        } else {
+            if (!is_dir($dbDir)) {
+                mkdir($dbDir, 0777, true);
+            }
+            $dbPath = $dbDir . '/itempedia.sqlite';
         }
 
-        $dbPath = $dbDir . '/itempedia.sqlite';
         try {
             self::$pdo = new PDO("sqlite:" . $dbPath, null, null, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
