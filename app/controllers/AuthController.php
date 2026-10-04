@@ -9,8 +9,7 @@ use PDO;
 class AuthController
 {
     /**
-     * Endpoint API: Login / Autentikasi Menggunakan Akun Google
-     * Pembeli cukup klik akun Google (tanpa memasukkan password secara manual)
+     * Endpoint API: Login / Autentikasi Menggunakan Akun Google Resmi (Google Identity Services / OAuth 2.0)
      */
     public static function loginGoogle(): void
     {
@@ -20,29 +19,76 @@ class AuthController
 
         $db = Database::getConnection();
 
+        // Support both JSON body and POST FormData
         $input = Flight::request()->data;
+        $rawBody = Flight::request()->getBody();
+        if (empty($input->credential) && empty($input->email) && !empty($rawBody)) {
+            $jsonInput = json_decode($rawBody, true);
+            if (is_array($jsonInput)) {
+                $input = (object)$jsonInput;
+            }
+        }
+
+        $credential = trim($input->credential ?? '');
         $email = trim($input->email ?? '');
         $name = trim($input->name ?? '');
         $avatar = trim($input->avatar ?? '');
         $googleId = trim($input->google_id ?? '');
 
-        // Jika email tidak berformat @gmail.com atau @..., otomatis lengkapi jika cuma username
+        // 1. Jika menerima Google ID Token JWT (dari Google Identity Services SDK Resmi)
+        if (!empty($credential)) {
+            $jwtParts = explode('.', $credential);
+            if (count($jwtParts) === 3) {
+                $payloadJson = base64_decode(strtr($jwtParts[1], '-_', '+/'));
+                $googlePayload = json_decode($payloadJson, true);
+                if (is_array($googlePayload) && !empty($googlePayload['email'])) {
+                    $email = strtolower(trim($googlePayload['email']));
+                    $name = trim($googlePayload['name'] ?? ($googlePayload['given_name'] ?? explode('@', $email)[0]));
+                    $avatar = trim($googlePayload['picture'] ?? '');
+                    $googleId = trim($googlePayload['sub'] ?? ('goog_' . md5($email)));
+                }
+            }
+
+            // Fallback verifikasi online via Google TokenInfo API jika data belum lengkap
+            if (empty($email) && function_exists('curl_init')) {
+                try {
+                    $ch = curl_init("https://oauth2.googleapis.com/tokeninfo?id_token=" . urlencode($credential));
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    $res = curl_exec($ch);
+                    curl_close($ch);
+                    if ($res) {
+                        $verifiedData = json_decode($res, true);
+                        if (!empty($verifiedData['email'])) {
+                            $email = strtolower(trim($verifiedData['email']));
+                            $name = trim($verifiedData['name'] ?? explode('@', $email)[0]);
+                            $avatar = trim($verifiedData['picture'] ?? '');
+                            $googleId = trim($verifiedData['sub'] ?? ('goog_' . md5($email)));
+                        }
+                    }
+                } catch (\Exception $e) {
+                    error_log("Google TokenInfo Verification Notice: " . $e->getMessage());
+                }
+            }
+        }
+
+        // 2. Sanitasi Email
         if (!empty($email) && !str_contains($email, '@')) {
             $email .= '@gmail.com';
         }
 
         if (empty($email)) {
-            Flight::json(['success' => false, 'message' => 'Email Google tidak boleh kosong'], 400);
+            Flight::json(['success' => false, 'message' => 'Gagal memverifikasi akun Google Anda. Silakan coba lagi.'], 400);
             return;
         }
 
-        // Jika nama kosong, ambil dari bagian depan email
+        // Nama & Avatar default jika tidak disediakan
         if (empty($name)) {
             $parts = explode('@', $email);
             $name = ucwords(str_replace(['.', '_', '-'], ' ', $parts[0]));
         }
 
-        // Jika avatar kosong, buatkan avatar Google Material Design cantik
         if (empty($avatar)) {
             $avatar = "https://ui-avatars.com/api/?name=" . urlencode($name) . "&background=4285F4&color=fff&bold=true&size=150";
         }
@@ -58,9 +104,9 @@ class AuthController
             $existingBuyer = $stmt->fetch();
 
             if ($existingBuyer) {
-                // Update login terakhir & avatar
-                $upd = $db->prepare("UPDATE buyers SET name = ?, avatar_url = ?, last_login = CURRENT_TIMESTAMP WHERE id = ?");
-                $upd->execute([$name, $avatar, $existingBuyer['id']]);
+                // Update login terakhir, nama & avatar profil Google
+                $upd = $db->prepare("UPDATE buyers SET name = ?, avatar_url = ?, google_id = ?, last_login = CURRENT_TIMESTAMP WHERE id = ?");
+                $upd->execute([$name, $avatar, $googleId, $existingBuyer['id']]);
                 $buyerId = $existingBuyer['id'];
             } else {
                 // Daftarkan pembeli baru
@@ -80,7 +126,7 @@ class AuthController
 
             Flight::json([
                 'success' => true,
-                'message' => 'Login Google berhasil!',
+                'message' => 'Login Google Berhasil! Selamat datang, ' . $name,
                 'user' => $_SESSION['buyer_user']
             ]);
         } catch (\Exception $e) {

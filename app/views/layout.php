@@ -81,6 +81,9 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         }
     </script>
     
+    <!-- Official Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
     <!-- Font Awesome 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -498,22 +501,24 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         </div>
     </footer>
 
-    <!-- ================= MODAL LOGIN GOOGLE PEMBELI ================= -->
+    <!-- ================= MODAL LOGIN GOOGLE PEMBELI RESMI ================= -->
     <div id="googleLoginModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white dark:bg-[#0f172a] rounded-3xl w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in-95">
             
             <!-- Modal Header -->
             <div class="p-6 pb-4 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between">
                 <div class="flex items-center gap-3">
-                    <svg class="w-8 h-8 flex-shrink-0" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                    </svg>
+                    <div class="w-10 h-10 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-2 shadow-xs flex-shrink-0">
+                        <svg class="w-full h-full" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
                     <div>
-                        <h3 class="text-base font-black text-slate-900 dark:text-white leading-tight">Pilih akun Google</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">untuk login pembeli di ItemPedia</p>
+                        <h3 class="text-base font-black text-slate-900 dark:text-white leading-tight">Masuk Akun Google</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Autentikasi 1-Klik Resmi Akun Google Kamu</p>
                     </div>
                 </div>
 
@@ -522,74 +527,66 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
                 </button>
             </div>
 
-            <!-- Akun Cepat 1-Klik (Tanpa Password) -->
-            <div class="p-6 space-y-3">
-                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Pilih akun yang tersedia:</p>
-                
-                <!-- Akun 1: Fahrul Gunawan -->
-                <button type="button" 
-                        onclick="loginWithGoogleAccount('Fahrul Gunawan', 'fahru.roblox@gmail.com', 'https://ui-avatars.com/api/?name=Fahrul+Gunawan&background=4285F4&color=fff&bold=true')" 
-                        class="w-full p-3 rounded-2xl border-2 border-slate-200 hover:border-sky-400 hover:bg-sky-50/50 transition flex items-center gap-3.5 text-left group">
-                    <img src="https://ui-avatars.com/api/?name=Fahrul+Gunawan&background=4285F4&color=fff&bold=true" 
-                         alt="Fahrul Gunawan" 
-                         class="w-10 h-10 rounded-full border border-slate-200 object-cover flex-shrink-0">
-                    <div class="min-w-0 flex-grow">
-                        <div class="text-xs font-black text-slate-900 group-hover:text-sky-600 transition truncate">Fahrul Gunawan</div>
-                        <div class="text-[11px] text-slate-500 truncate">fahru.roblox@gmail.com</div>
-                    </div>
-                    <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-sky-500 transition"></i>
-                </button>
-
-                <!-- Akun 2: Pembeli Roblox -->
-                <button type="button" 
-                        onclick="loginWithGoogleAccount('Pembeli Roblox', 'buyer.roblox@gmail.com', 'https://ui-avatars.com/api/?name=Pembeli+Roblox&background=34A853&color=fff&bold=true')" 
-                        class="w-full p-3 rounded-2xl border-2 border-slate-200 hover:border-sky-400 hover:bg-sky-50/50 transition flex items-center gap-3.5 text-left group">
-                    <img src="https://ui-avatars.com/api/?name=Pembeli+Roblox&background=34A853&color=fff&bold=true" 
-                         alt="Pembeli Roblox" 
-                         class="w-10 h-10 rounded-full border border-slate-200 object-cover flex-shrink-0">
-                    <div class="min-w-0 flex-grow">
-                        <div class="text-xs font-black text-slate-900 group-hover:text-sky-600 transition truncate">Pembeli Roblox</div>
-                        <div class="text-[11px] text-slate-500 truncate">buyer.roblox@gmail.com</div>
-                    </div>
-                    <i class="fa-solid fa-arrow-right text-xs text-slate-300 group-hover:text-sky-500 transition"></i>
-                </button>
-
-                <!-- Opsi Ketik Gmail Lainnya (Tanpa Password!) -->
-                <div class="pt-2 border-t border-slate-100">
-                    <button type="button" 
-                            id="btnToggleCustomGmail" 
-                            onclick="toggleCustomGmailInput()" 
-                            class="text-xs font-black text-sky-600 hover:text-sky-700 flex items-center gap-2 py-1">
-                        <i class="fa-solid fa-user-plus text-xs"></i>
-                        <span>Gunakan akun Google / Gmail lainnya</span>
-                    </button>
-
-                    <div id="customGmailForm" class="hidden mt-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                        <label class="block text-[11px] font-black uppercase tracking-wider text-slate-600">
-                            Masukkan Akun Gmail Kamu:
-                        </label>
-                        <div class="flex gap-2">
-                            <input type="text" 
-                                   id="customGmailInput" 
-                                   placeholder="namaanda@gmail.com" 
-                                   class="w-full px-3 py-2 bg-white border-2 border-slate-200 rounded-xl text-xs font-bold text-slate-900 focus:outline-none focus:border-sky-500">
-                            <button type="button" 
-                                    onclick="submitCustomGmailLogin()" 
-                                    class="px-4 py-2 bg-sky-500 hover:bg-sky-600 text-white font-black text-xs rounded-xl shadow transition flex-shrink-0">
-                                Masuk
-                            </button>
-                        </div>
-                        <p class="text-[10px] text-slate-400 font-medium">
-                            <i class="fa-solid fa-circle-check text-emerald-500"></i> Langsung masuk 1-klik otomatis tanpa perlu memasukkan password manual.
-                        </p>
-                    </div>
+            <!-- Modal Body -->
+            <div class="p-6 space-y-4">
+                <div class="text-center space-y-1">
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Lacak pesanan otomatis, akses invoice kilat, dan chat in-app dengan seller menggunakan akun Google Anda.
+                    </p>
                 </div>
 
+                <!-- Google Official Sign-In Button Container -->
+                <div class="flex flex-col items-center justify-center pt-2 space-y-2.5">
+                    <div id="g_id_signin_wrap" class="min-h-[44px] flex justify-center w-full"></div>
+                    
+                    <!-- Direct Trigger Button for Google One-Tap & Popup -->
+                    <button type="button" 
+                            id="btnGoogleDirectPrompt"
+                            onclick="triggerGooglePrompt()" 
+                            class="w-full py-3.5 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border-2 border-slate-200 dark:border-slate-700 hover:border-sky-400 dark:hover:border-sky-500 rounded-2xl shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-3 text-slate-800 dark:text-white font-extrabold text-xs sm:text-sm active:scale-95">
+                        <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                        <span id="btnGoogleDirectText">Lanjutkan dengan Akun Google</span>
+                    </button>
+                </div>
+
+                <div class="relative flex py-1 items-center">
+                    <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+                    <span class="flex-shrink mx-3 text-[10px] font-black uppercase tracking-wider text-slate-400">atau login via email Gmail</span>
+                    <div class="flex-grow border-t border-slate-200 dark:border-slate-800"></div>
+                </div>
+
+                <!-- Input Alamat Gmail Cepat -->
+                <div class="space-y-2">
+                    <div class="flex gap-2">
+                        <div class="relative flex-grow">
+                            <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input type="email" 
+                                   id="customGmailInput" 
+                                   placeholder="namaanda@gmail.com" 
+                                   class="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:border-sky-500 transition">
+                        </div>
+                        <button type="button" 
+                                onclick="submitCustomGmailLogin()" 
+                                class="px-4 py-2.5 bg-sky-500 hover:bg-sky-600 active:scale-95 text-white font-black text-xs rounded-xl shadow-xs transition flex-shrink-0 flex items-center gap-1.5">
+                            <span>Masuk</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-slate-400 flex items-center gap-1.5 font-medium">
+                        <i class="fa-solid fa-shield-halved text-emerald-500 text-xs"></i>
+                        <span>100% Aman tanpa perlu memasukkan password Gmail kamu</span>
+                    </p>
+                </div>
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-4 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-400 text-center leading-relaxed">
-                Untuk melanjutkan, Google akan memverifikasi nama, email, dan foto profil Anda ke ItemPedia secara aman.
+            <div class="p-3.5 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-100 dark:border-slate-800 text-[10px] text-slate-400 dark:text-slate-500 text-center leading-relaxed">
+                ItemPedia menggunakan protokol Google Identity resmi untuk melindungi data privasi Anda.
             </div>
 
         </div>
@@ -1154,19 +1151,127 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
         }
     });
 
+    // ================= GOOGLE IDENTITY SERVICES (GSI) =================
+    const GOOGLE_CLIENT_ID = "<?= htmlspecialchars($settings['google_client_id'] ?? '753896593467-3a131b0u5nsl0p9ck6a4s3n2587fce3j.apps.googleusercontent.com') ?>";
+
+    function initGoogleIdentity() {
+        if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            try {
+                google.accounts.id.initialize({
+                    client_id: GOOGLE_CLIENT_ID,
+                    callback: handleGoogleCredentialResponse,
+                    auto_select: false,
+                    cancel_on_tap_outside: true
+                });
+
+                const wrap = document.getElementById('g_id_signin_wrap');
+                if (wrap) {
+                    wrap.innerHTML = '';
+                    google.accounts.id.renderButton(wrap, {
+                        theme: 'outline',
+                        size: 'large',
+                        type: 'standard',
+                        shape: 'pill',
+                        text: 'continue_with',
+                        logo_alignment: 'left',
+                        width: 280
+                    });
+                }
+            } catch (err) {
+                console.warn('Google Identity initialization notice:', err);
+            }
+        }
+    }
+
+    // Initialize GSI when window loads or script is ready
+    window.addEventListener('load', function() {
+        initGoogleIdentity();
+    });
+
     function openGoogleLoginModal() {
-        document.getElementById('googleLoginModal').classList.remove('hidden');
+        const modal = document.getElementById('googleLoginModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            initGoogleIdentity();
+            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                try {
+                    google.accounts.id.prompt();
+                } catch(e) {}
+            }
+        }
     }
 
     function closeGoogleLoginModal() {
-        document.getElementById('googleLoginModal').classList.add('hidden');
+        const modal = document.getElementById('googleLoginModal');
+        if (modal) modal.classList.add('hidden');
+    }
+
+    function triggerGooglePrompt() {
+        const btnText = document.getElementById('btnGoogleDirectText');
+        if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Membuka Akun Google...';
+        
+        if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            try {
+                google.accounts.id.prompt((notification) => {
+                    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                        const input = document.getElementById('customGmailInput');
+                        if (input) {
+                            input.focus();
+                            input.placeholder = 'Ketik email Gmail kamu disini...';
+                        }
+                    }
+                    if (btnText) btnText.innerHTML = 'Lanjutkan dengan Akun Google';
+                });
+            } catch(e) {
+                console.error(e);
+                if (btnText) btnText.innerHTML = 'Lanjutkan dengan Akun Google';
+            }
+        } else {
+            if (btnText) btnText.innerHTML = 'Lanjutkan dengan Akun Google';
+            const input = document.getElementById('customGmailInput');
+            if (input) input.focus();
+        }
+    }
+
+    async function handleGoogleCredentialResponse(response) {
+        if (!response || !response.credential) {
+            alert('Gagal memperoleh kredensial akun Google.');
+            return;
+        }
+
+        const btnText = document.getElementById('btnGoogleDirectText');
+        if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Memverifikasi Akun Google...';
+
+        try {
+            const formData = new FormData();
+            formData.append('credential', response.credential);
+
+            const res = await fetch('/auth/google', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                closeGoogleLoginModal();
+                window.location.reload();
+            } else {
+                alert(data.message || 'Login dengan Google gagal');
+                if (btnText) btnText.innerHTML = 'Lanjutkan dengan Akun Google';
+            }
+        } catch (err) {
+            console.error('Google auth error:', err);
+            alert('Terjadi kendala saat memverifikasi akun Google.');
+            if (btnText) btnText.innerHTML = 'Lanjutkan dengan Akun Google';
+        }
     }
 
     function toggleCustomGmailInput() {
         const box = document.getElementById('customGmailForm');
-        box.classList.toggle('hidden');
-        if (!box.classList.contains('hidden')) {
-            document.getElementById('customGmailInput').focus();
+        if (box) {
+            box.classList.toggle('hidden');
+            if (!box.classList.contains('hidden')) {
+                document.getElementById('customGmailInput')?.focus();
+            }
         }
     }
 
@@ -1203,12 +1308,13 @@ $waDisplay = $settings['whatsapp_display'] ?? '+62 812-3456-7890';
             }
         } catch (err) {
             console.error('Google login error:', err);
-            alert('Terjadi kesalahan saat masuk dengan Google.');
+            alert('Terjadi kesalahan saat masuk.');
         }
     }
 
     function submitCustomGmailLogin() {
         const input = document.getElementById('customGmailInput');
+        if (!input) return;
         const val = input.value.trim();
         if (!val) {
             alert('Silakan masukkan alamat Gmail kamu');
